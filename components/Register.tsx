@@ -12,13 +12,23 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import InputError from "./InputError";
+import AuthSessionStatus from "@/app/(auth)/AuthSessionStatus";
+import { useAuth } from "@/hooks/auth";
+import { RegisterErrorType } from "@/types";
 
 const FormSchema = z
   .object({
-    name: z
+    firstname: z
       .string()
       .min(2, {
-        message: "Username must be at least 2 characters.",
+        message: "Firstname must be at least 2 characters.",
+      })
+      .max(50),
+    lastname: z
+      .string()
+      .min(2, {
+        message: "Lastname must be at least 2 characters.",
       })
       .max(50),
     email: z.string().email({ message: "Invalid email address" }),
@@ -37,36 +47,39 @@ const FormSchema = z
 
 const Register = () => {
 
-  // const { register } = useAuth({
-  //   middleware: "guest",
-  //   redirectIfAuthenticated: "/dashboard",
-  // });
+  const { register } = useAuth({
+    middleware: "guest",
+    redirectIfAuthenticated: "/home",
+  });
 
-  const [errors, setErrors] = useState({});
+  const [errors, setErrors] = useState<RegisterErrorType>({});
 
   const submitForm = (
     event: { preventDefault: () => void },
     name: string,
+    lastname: string,
     email: string,
     password: string,
     password_confirmation: string
   ) => {
     event.preventDefault();
 
-    // register({
-    //   name,
-    //   email,
-    //   password,
-    //   password_confirmation,
-    //   setErrors,
-    // });
+    register({
+      name,
+      lastname,
+      email,
+      password,
+      password_confirmation,
+      setErrors,
+    });
   };
 
   // 1. Define your form.
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      name: "",
+      firstname: "",
+      lastname: "",
       email: "",
       password: "",
       password_confirmation: "",
@@ -75,25 +88,15 @@ const Register = () => {
 
   // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof FormSchema>, event: any) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    //   setName(values.name)
-    //   setEmail(values.email)
-    //   setPassword(values.password)
-    //   setPasswordConfirmation(values.password_confirmation)
     submitForm(
       event,
-      values.name,
+      values.firstname,
+      values.lastname,
       values.email,
       values.password,
       values.password_confirmation
     );
-    console.log(
-      values.name,
-      values.email,
-      values.password,
-      values.password_confirmation
-    );
+    console.log( values.firstname, values.lastname, values.email, values.password, values.password_confirmation );
   }
 
   return (
@@ -105,15 +108,15 @@ const Register = () => {
             <CardDescription>Enter your credentials below to create your account</CardDescription>
           </CardHeader>
           <CardContent>
-            {/* <AuthSessionStatus className={'mb-4'} status={status} /> */}
+            <AuthSessionStatus className={'mb-4'} status={status} />
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2">
                 <FormField
                   control={form.control}
-                  name="name"
+                  name="firstname"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className=" text-primary-foreground">Name</FormLabel>
+                      <FormLabel className=" text-primary-foreground">Firstname</FormLabel>
                       <FormControl>
                         <Input 
                           className="text-primary-foreground border-border focus-visible:ring-ring"
@@ -122,7 +125,25 @@ const Register = () => {
                         />
                       </FormControl>
                       <FormMessage/>
-                      {/* <InputError messages={errors.email} /> */}
+                      <InputError messages={errors.email} />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="lastname"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className=" text-primary-foreground">Lastname</FormLabel>
+                      <FormControl>
+                        <Input 
+                          className="text-primary-foreground border-border focus-visible:ring-ring"
+                          placeholder="John Doe"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage/>
+                      <InputError messages={errors.email} />
                     </FormItem>
                   )}
                 />
@@ -140,7 +161,7 @@ const Register = () => {
                         />
                       </FormControl>
                       <FormMessage/>
-                      {/* <InputError messages={errors.email} /> */}
+                      <InputError messages={errors.email} />
                     </FormItem>
                   )}
                 />
@@ -159,7 +180,7 @@ const Register = () => {
                         />
                       </FormControl>
                       <FormMessage/>
-                      {/* <InputError messages={errors.password} /> */}
+                      <InputError messages={errors.password} />
                     </FormItem>
                   )}
                 />

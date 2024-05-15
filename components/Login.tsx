@@ -8,10 +8,15 @@ import Link from 'next/link';
 import { Checkbox } from './ui/checkbox';
 import { z } from 'zod';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { TabsContent } from "./ui/tabs";
+import { signIn } from "next-auth/react";
+import InputError from "./InputError";
+import { useAuth } from "@/hooks/auth";
+import AuthSessionStatus from "@/app/(auth)/AuthSessionStatus";
+import { LoginErrorType } from "@/types";
 
 const FormSchema = z.object({
   email: z.string().email({message: 'Invalid email address'}),
@@ -25,22 +30,23 @@ const Login = () => {
 
   const router = useRouter()
   
-  // const { login } = useAuth({
-  //   middleware: 'guest',
-  //   redirectIfAuthenticated: '/dashboard'
-  // });
+  const { login } = useAuth({
+    middleware: 'guest',
+    redirectIfAuthenticated: '/home'
+  });
 
-  const [errors, setErrors] = useState({})
+  const [errors, setErrors] = useState<LoginErrorType>({})
   const [status, setStatus] = useState<string | null>(null)
   const [shouldRemember, setShouldRemember] = useState(false)
 
   // useEffect(() => {
-  //   if (router.reset?.length > 0 && Object.keys(errors).length === 0) {
-  //     setStatus(atob(router.reset))
-  //   } else {
-  //     setStatus(null)
-  //   }
-  
+  //   // if (router.reset?.length > 0 && Object.keys(errors).length === 0) {
+  //   //   setStatus(atob(router.reset))
+  //   // } else {
+  //   //   setStatus(null)
+  //   // }
+
+  //   console.log(router.refresh);
   // })
   
   // console.log(Object.keys(errors).length === 0);
@@ -53,7 +59,7 @@ const Login = () => {
   ) => {
     event.preventDefault();
 
-    // login({email, password, remember, setErrors, setStatus});
+    login({email, password, remember, setErrors, setStatus});
   };
 
   const form = useForm<z.infer<typeof FormSchema>>({
@@ -85,7 +91,7 @@ const Login = () => {
             <CardDescription>Enter your credentials to log into your account</CardDescription>
           </CardHeader>
           <CardContent>
-            {/* <AuthSessionStatus className={'mb-4'} status={status} /> */}
+            <AuthSessionStatus className={'mb-4'} status={status} />
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2">
                 <FormField
@@ -102,7 +108,7 @@ const Login = () => {
                         />
                       </FormControl>
                       <FormMessage/>
-                      {/* <InputError messages={errors.email} /> */}
+                      <InputError messages={errors.email} />
                     </FormItem>
                   )}
                 />
@@ -121,7 +127,7 @@ const Login = () => {
                         />
                       </FormControl>
                       <FormMessage/>
-                      {/* <InputError messages={errors.password} /> */}
+                      <InputError messages={errors.password} />
                     </FormItem>
                   )}
                 />
@@ -147,12 +153,10 @@ const Login = () => {
                           </label>
                         </div>
                       </FormControl>
-                      <FormMessage/>
-                      {/* <InputError messages={errors.password} /> */}
                     </FormItem>
                   )}
                 />
-                <Button type="submit" className='text-input' >Submit</Button>
+                <Button type="submit" className='text-input'>Sign In</Button>
               </form>
             </Form>
           </CardContent>

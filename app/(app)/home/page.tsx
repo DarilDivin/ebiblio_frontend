@@ -11,12 +11,12 @@ const Home = () => {
   console.log(user)
 
   return (
-    <div>
+    <>
       <p>Welcome back in your HomePage {user?.name}</p>
       <button onClick={logout}>
         Logout
       </button>
-    </div>
+    </>
   )
 }
 

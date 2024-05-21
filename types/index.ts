@@ -1,5 +1,11 @@
 import { Dispatch, SetStateAction } from "react";
 
+export interface UserType {
+    name: string;
+    lastname: string;
+    email: string;
+}
+
 export interface InputErrorProps {
     messages?: string[];
     className?: string;
@@ -25,6 +31,10 @@ export interface ResetPasswordErrorType {
     password?: string[];
 }
 
+export interface ConfirmPasswordErrorType {
+    password?: string[];
+}
+
 
 export interface RegisterProps {
     setErrors: Dispatch<SetStateAction<RegisterErrorType>>;
@@ -33,6 +43,13 @@ export interface RegisterProps {
     email: string;
     password: string;
     password_confirmation: string;
+}
+
+export interface UpdateProfileProps {
+    setErrors: Dispatch<SetStateAction<RegisterErrorType>>;
+    name: string;
+    lastname: string;
+    email: string;
 }
 
 export interface LoginProps {
@@ -59,5 +76,11 @@ export interface ResetPasswordProps {
     password: string;
     password_confirmation: string,
     setErrors: Dispatch<SetStateAction<ResetPasswordErrorType>>;
+    setStatus: Dispatch<SetStateAction<string | null>>;
+}
+
+export interface ConfirmPasswordProps {
+    password: string;
+    setErrors: Dispatch<SetStateAction<ConfirmPasswordErrorType>>;
     setStatus: Dispatch<SetStateAction<string | null>>;
 }

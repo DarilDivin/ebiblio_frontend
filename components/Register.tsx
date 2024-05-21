@@ -108,7 +108,6 @@ const Register = () => {
             <CardDescription>Enter your credentials below to create your account</CardDescription>
           </CardHeader>
           <CardContent>
-            <AuthSessionStatus className={'mb-4'} status={status} />
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2">
                 <FormField

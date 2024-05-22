@@ -15,7 +15,9 @@ import { useForm } from 'react-hook-form'
 import { z } from 'zod' 
 import AppLayout from '../layout'
 import Link from 'next/link'
-// import UpdateProfile from '@/components/UpdateProfile'
+import UpdateProfile from '@/components/UpdateProfile'
+import UpdatePassword from '@/components/UpdatePassword'
+import TwoFactorAuthentication from '@/components/TwoFactorAuthentication'
 
 const FormSchema = z
   .object({
@@ -32,7 +34,7 @@ const Settings = () => {
 
 
   console.log(user)
-  console.log(status)
+  // console.log(status)
 
   const submitForm = (
     event: { preventDefault: () => void },
@@ -173,17 +175,20 @@ const Settings = () => {
     //     </div>
     //   }
     // </div>
-    <div className='w-full h-screen flex justify-center items-start gap-4 px-12'>
-      <div className='w-1/4 h-full relative'>
+    <div className='w-full h-screen flex justify-center items-start gap-4 px-28 max-lg:px-6 max-sm:px-2'>
+      <div className='w-1/4 h-full relative max-lg:hidden'>
         <div className='sticky flex flex-col gap-5 p-2 w-full top-8'>
-          <Link href='/settings#profile' className='p-2 rounded-lg text-xl w-3/4 font-semibold text-primary'>Profile</Link>
-          <Link href='/settings#2fa' className='p-2 text-foreground rounded-lg text-xl w-3/4 font-semibold'>2FA</Link>
+          <Link href='/settings#update_profile' className='p-2 rounded-lg text-xl w-3/4 font-semibold text-foreground/80 hover:text-primary'>Profile</Link>
+          <Link href='/settings#update_password' className='p-2 text-foreground/80 rounded-lg text-xl w-3/4 font-semibold hover:text-primary'>Update Password</Link>
+          <Link href='/settings#2fa' className='p-2 text-foreground/80 rounded-lg text-xl w-3/4 font-semibold hover:text-primary'>2 Factor Authentication</Link>
         </div>
       </div>
-      <div className='w-3/4 h-full p-2 flex flex-col gap-4'>
-        <div>
-          {/* <UpdateProfile user={user}/> */}
-        </div>
+      <div className='w-3/4 max-sm:w-full h-full p-2 flex flex-col gap-4'>
+        {/* <div> */}
+          <UpdateProfile user={user}/>
+          <UpdatePassword/>
+          <TwoFactorAuthentication />
+        {/* </div> */}
       </div>
     </div>
   )

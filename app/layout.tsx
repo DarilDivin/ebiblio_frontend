@@ -1,8 +1,20 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import "./globals.css";
+import localFont from 'next/font/local'
+import {Poppins} from 'next/font/google'
 
-const inter = Inter({ subsets: ["latin"] });
+const poppins = Poppins({
+    subsets: ['latin'],
+    display: 'swap',
+    variable: '--font-poppins',
+    weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900']
+})
+
+const alexana = localFont({
+  src: '../Alexana.ttf',
+  display: 'swap',
+  variable: '--font-alexana',
+})
 
 export const metadata: Metadata = {
   title: "EBiblio",
@@ -16,7 +28,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={`${poppins.variable} ${alexana.variable}`}>{children}</body>
     </html>
   );
 }

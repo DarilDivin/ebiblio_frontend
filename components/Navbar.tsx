@@ -2,6 +2,20 @@
 
 import { useState } from "react"
 import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion"
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
+import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
@@ -12,6 +26,7 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import Link from "next/link"
 import { useAuth } from "@/hooks/auth"
+import { Button } from "./ui/button"
 
 
 
@@ -31,36 +46,135 @@ const Navbar = () => {
       setShowBiblioPages(false)
     }
   }
+
+  const [mobileMenuIsOpen, setMobileMenuIsOpen] = useState(true)
+
   return (
-    <div className="w-full px-2 py-4 flex justify-center items-center">
-      <div className="w-full bg-slate-50 shadow-lg rounded-lg h-[60px] sticky flex items-center justify-between px-28 py-2">
-        <div className="font-semibold text-primary-foreground cursor-pointer">
+    <div className="w-full px-2 py-1 flex justify-center items-center ">
+      <div className="w-full bg-slate-50 shadow-lg rounded-lg h-[50px] flex gap-4 items-center justify-between px-2 lg:px-20 py-2 relative">
+        <div className="font-semibold text-primary-foreground cursor-pointer flex items-center h-full p-1 max-sm:hidden">
           <Link href='/home'>
-            <span className="text-primary font-bold text-3xl">E</span>
+            <span className="text-primary font-bold text-2xl font-alexana">E</span>
             <span>Biblio</span>
           </Link>
         </div>
-        <div>
-          <div className="w-[250px] sm:w-[300px] lg:w-[510px] bg-primary h-[45px] rounded-[6px] p-[3px] flex justify-between">
-              <button className={`${showBiblioPages ? 'text-white cursor-default' : 'bg-slate-50 text-primary'} text-[10px] sm:text-xs lg:text-base h-full  w-[300px] px-8 rounded font-semibold`} onClick={toggleTabs}>Bibliothèque</button>
-              <button className={`${showBiblioPages ? 'bg-slate-50 text-primary' : 'text-white cursor-default'} text-[10px] sm:text-xs lg:text-base w-[200px] font-semibold h-full rounded `} onClick={toggleTabs}>Mémoires</button>
+        <div className="max-sm:hidden">
+          <div className="w-[250px] sm:w-[300px] lg:w-fit bg-primary h-[40px] rounded-[6px] p-[3px] flex justify-between">
+              <button className={`${!showBiblioPages ? 'text-white' : 'bg-slate-50 text-primary cursor-default'} text-[10px] sm:text-xs lg:text-base h-full  w-[200px] px-8 rounded font-semibold`} onClick={toggleTabs}>Bibliothèque</button>
+              <button className={`${!showBiblioPages ? 'bg-slate-50 text-primary cursor-default' : 'text-white '} text-[10px] sm:text-xs lg:text-base w-[150px] font-semibold h-full rounded `} onClick={toggleTabs}>Mémoires</button>
           </div>
         </div>
-        <div className="flex justify-start gap-8 list-none w-[700px]">
+        <div className="flex justify-start gap-8 list-none lg:w-[700px] max-sm:hidden ">
+        {/* max-sm:absolute max-sm:bg-green-50/80 max-sm:p-4 max-sm:rounded max-sm:border max-sm:top-14 max-sm:w-[96%] max-sm:flex-wrap max-sm:grid max-sm:grid-cols-2 transition-all -translate-y-40 duration-500 */}
           {showBiblioPages ? 
             <>
-              <Link href='/home' className="hover:text-primary">Dépôt de Biblio</Link>
-              <Link href='/home' className="hover:text-primary">Dépôt de Biblio</Link>
-              <Link href='/home' className="hover:text-primary">Dépôt de Biblio</Link>
-              <Link href='/home' className="hover:text-primary">Consulter</Link>
+              <Link href='/home' className="hover:text-primary text-sm lg:text-sm">Dépôt de Biblio</Link>
+              <Link href='/home' className="hover:text-primary text-sm lg:text-sm">Dépôt de Biblio</Link>
+              <Link href='/home' className="hover:text-primary text-sm lg:text-sm">Dépôt de Biblio</Link>
+              <Link href='/home' className="hover:text-primary text-sm lg:text-sm">Consulter</Link>
             </>
           :   
             <>
-              <Link href='/home' className="hover:text-primary">Dépôt de mémoires</Link>
-              <Link href='/home' className="hover:text-primary">Consulter</Link>
+              <Link href='/home' className="hover:text-primary text-sm lg:text-sm">Dépôt de mémoires</Link>
+              <Link href='/home' className="hover:text-primary text-sm lg:text-sm">Consulter</Link>
             </>
           }
         </div>
+
+          {/* --------------------------- Mobile Navbar -------------------------- */}
+
+          <div 
+            className={
+              `h-full bg-green-100/80 min-w-[35%] rounded-2xl flex items-center justify-between p-[2px] gap-4 sm:hidden`
+            }>
+            <div>
+              <Link href='/home' className="bg-green-100">
+                <p className="translate-y-[3px] translate-x-[5px]">
+                  <span className="text-primary font-bold text-2xl font-alexana">E</span>
+                  <span className="font-alexana tracking-[-0.1em]">Biblio</span>
+                </p>
+              </Link>
+            </div>
+            {/* <Button className="h-[29px] rounded-2xl text-primary-foreground font-poppins">Menu</Button> */}
+            <Dialog>
+              <DialogTrigger className="h-[29px] rounded-2xl text-primary-foreground bg-primary px-4 font-poppins">Menu</DialogTrigger>
+              <DialogContent
+                className={"top-[10px] left-[16px] border-[0.25px] bg-secondary rounded-3xl w-[300px] origin-top-left translate-x-[0%] translate-y-[0%] bg-green-950 text-white"}
+              >
+                <div className="absolute left-2 top-1">
+                  <Link href='/home' className="bg-green-100">
+                    <p className="translate-y-[3px] translate-x-[5px]">
+                      <span className="text-primary font-bold text-2xl font-alexana">E</span>
+                      <span className="font-alexana tracking-[-0.1em]">Biblio</span>
+                    </p>
+                  </Link>
+                </div>
+                {/* <DialogHeader className="">
+                  <DialogTitle>Title</DialogTitle>
+                  <DialogDescription>
+                    This action cannot be undone. This will permanently delete your account
+                    and remove your data from our servers.
+                  </DialogDescription>
+                </DialogHeader> */}
+                <div>
+                  <Accordion type="single" collapsible>
+                    <AccordionItem value="item-1">
+                      <AccordionTrigger>
+                        Bibliothèque
+                      </AccordionTrigger>
+                      <AccordionContent className='flex flex-col space-y-2'>
+                        <Link 
+                          href='/home' 
+                          className="hover:text-white text-sm lg:text-sm ml-2 hover:bg-primary/50 w-[90%] p-1 rounded"
+                        >
+                          Dépôt de Biblio
+                        </Link>
+                        <Link 
+                          href='/home' 
+                          className="hover:text-white text-sm lg:text-sm ml-2 hover:bg-primary/50 w-[90%] p-1 rounded"
+                        >
+                          Dépôt de Biblio
+                        </Link>
+                        <Link 
+                          href='/home' 
+                          className="hover:text-white text-sm lg:text-sm ml-2 hover:bg-primary/50 w-[90%] p-1 rounded"
+                        >
+                          Dépôt de Biblio
+                        </Link>
+                        <Link 
+                          href='/home' 
+                          className="hover:text-white text-sm lg:text-sm ml-2 hover:bg-primary/50 w-[90%] p-1 rounded"
+                        >
+                          Consulter
+                        </Link>
+                      </AccordionContent>
+                    </AccordionItem>
+                    <AccordionItem value="item-2">
+                      <AccordionTrigger>
+                        Mémoire
+                      </AccordionTrigger>
+                      <AccordionContent className='flex flex-col space-y-2'>
+                        <Link 
+                          href='/home' 
+                          className="hover:text-white text-sm lg:text-sm ml-2 hover:bg-primary/50 w-[90%] p-1 rounded"
+                        >
+                          Dépôt de Mémoire
+                        </Link>
+                        <Link 
+                          href='/home' 
+                          className="hover:text-white text-sm lg:text-sm ml-2 hover:bg-primary/50 w-[90%] p-1 rounded"
+                        >
+                          Consulter Mémoire
+                        </Link>
+                      </AccordionContent>
+                    </AccordionItem>
+                  </Accordion>
+                </div>
+              </DialogContent>
+            </Dialog>
+
+          </div>
+
         <DropdownMenu>
           <DropdownMenuTrigger>
             <Avatar>

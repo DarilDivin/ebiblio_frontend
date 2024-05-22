@@ -1,5 +1,5 @@
 import axios from '@/lib/axios'
-import { ConfirmPasswordProps, ForgotPasswordProps, LoginProps, RegisterProps, ResetPasswordProps, UpdateProfileProps, UseAuthProps } from '@/types'
+import { ConfirmPasswordProps, ForgotPasswordProps, LoginProps, RegisterProps, ResetPasswordProps, UpdatePasswordProps, UpdateProfileProps, UseAuthProps } from '@/types'
 import { useParams, useRouter } from "next/navigation"
 import { Dispatch, SetStateAction, useEffect } from "react"
 import useSWR from "swr"
@@ -35,19 +35,43 @@ export const useAuth = ({ middleware, redirectIfAuthenticated }: UseAuthProps = 
             })
     }
 
-    const updateProfile = async ({ setErrors, ...props}: UpdateProfileProps) => {
+    const updateProfile = async ({ setErrors, setStatus, ...props}: UpdateProfileProps) => {
         await csrf()
         setErrors({})
+        setStatus(null)
 
         axios
-            .post('/user/profile-information')
-            .then(() => mutate())
+            .put('/user/profile-information', props)
+            .then(response => {
+                mutate();
+                console.log(response);
+                setStatus('Informations modifiées avec succès')
+            })
             .catch(error => {
                 if (error.response.status !== 422) throw error
                 console.log(error.response.data.errors);
                 setErrors(error.response.data.errors)
             })
 
+    }
+
+    const updatePassword = async ({ setErrors, setStatus, ...props}: UpdatePasswordProps) => {
+        await csrf();
+        setErrors({})
+        setStatus(null)
+
+        axios
+            .put('user/password', props)
+            .then(response => {
+                console.log(response)
+                mutate()
+                setStatus('Mot de passe modifié avec succès')
+            })
+            .catch(error => {
+                if (error.response.status !== 422) throw error
+                console.log(error.response.data.errors);
+                setErrors(error.response.data.errors)
+            })
     }
 
     const login = async ({ setErrors, setStatus, ...props }: LoginProps) => {
@@ -154,12 +178,14 @@ export const useAuth = ({ middleware, redirectIfAuthenticated }: UseAuthProps = 
 
     const twoFactorQrCode = async ({ setSvgQrCode }: {setSvgQrCode: Dispatch<React.SetStateAction<string | TrustedHTML>>}) => {
 
-        axios
-            .get('/user/two-factor-qr-code')
-            .then(response => {
-                console.log(response)
-                setSvgQrCode(response.data.svg)
-            })
+        await(
+            axios
+                .get('/user/two-factor-qr-code')
+                .then(response => {
+                    console.log(response)
+                    setSvgQrCode(response.data.svg)
+                })
+        )
 
     }
 
@@ -225,6 +251,7 @@ export const useAuth = ({ middleware, redirectIfAuthenticated }: UseAuthProps = 
         resetPassword,
         resendEmailVerification,
         updateProfile,
+        updatePassword,
         twoFactorAuthenticationEnable,
         twoFactorAuthenticationDisable,
         twoFactorQrCode,

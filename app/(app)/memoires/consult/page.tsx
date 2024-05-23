@@ -1,11 +1,15 @@
+import DocumentListItem from "@/components/DocumentListItem"
 import MemoireSearchbar from "@/components/MemoireSearchbar"
+import { Button } from "@/components/ui/button"
+import { Separator } from "@/components/ui/separator"
+import { Star } from "lucide-react"
 import Image from "next/image"
 
 const MemoireListingPage = () => {
   return (
     <div className="p-2">
       <div className="h-[55vh] max-sm:h-[35vh] w-full bg-green-50 grid grid-cols-2 max-sm:grid-cols-1 justify-center items-center px-72 max-sm:px-12 pt-8 rounded-lg">
-        <p className="text-[3rem] max-sm:text-[1.5rem] max-sm:text-center font-bold font-poppins text-primary justify-self-end">Trouver facilement les anciens mémoires de l'Eneam</p>
+        <p className="text-[3rem] max-sm:text-[1.5rem] max-sm:text-center font-bold font-poppins text-primary justify-self-end">Trouver facilement les anciens mémoires de l'Eneam.</p>
         <div className="h-full overflow-hidden max-sm:hidden" >
           <Image src={'/file_searching.svg'} alt="Searching File Image" className="object-contain w-full h-full" width={800} height={800} priority/>
         </div>
@@ -13,8 +17,15 @@ const MemoireListingPage = () => {
       <div className="w-full flex justify-center items-center -translate-y-1/2 max-sm:-translate-y-8">
         <MemoireSearchbar />
       </div>
-      <div>
-        Listing ohhh
+      <div className="w-full px-12">
+        <div>
+          <div> Listing des mémoires </div>
+          <div className="px-8 py-4  flex flex-col gap-2">
+            <DocumentListItem />
+            <DocumentListItem />
+            <DocumentListItem />
+          </div>
+        </div>
       </div>
     </div>
   )

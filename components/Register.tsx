@@ -17,8 +17,7 @@ import AuthSessionStatus from "@/app/(auth)/AuthSessionStatus";
 import { useAuth } from "@/hooks/auth";
 import { RegisterErrorType } from "@/types";
 
-const FormSchema = z
-  .object({
+const FormSchema = z.object({
     firstname: z
       .string()
       .min(2, {

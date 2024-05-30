@@ -47,7 +47,7 @@ const DialogContent = React.forwardRef<
       <DialogPrimitive.Close className="absolute right-[5px] top-[8px] rounded-sm opacity-70 transition-opacity hover:opacity-100 focus:outline-none disabled:pointer-events-none data-[state=open]:bg-slate-100 data-[state=open]:text-slate-500 dark:ring-offset-slate-950 dark:focus:ring-slate-300 dark:data-[state=open]:bg-slate-800 dark:data-[state=open]:text-slate-400">
         {/* <X className="h-4 w-4" /> */}
         {/* Je vais retirer la seule classe "sr-only" qu'il y avait dans la span */}
-        <span className="h-[35px] rounded-2xl text-white bg-primary px-4 py-1 font-poppins">Close</span>
+        <span className="h-[35px] rounded-2xl text-white bg-primary px-4 py-1 font-poppins">Fermer</span>
       </DialogPrimitive.Close>
     </DialogPrimitive.Content>
   </DialogPortal>

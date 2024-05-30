@@ -93,3 +93,52 @@ export interface ConfirmPasswordProps {
     setErrors: Dispatch<SetStateAction<ConfirmPasswordErrorType>>;
     setStatus: Dispatch<SetStateAction<string | null>>;
 }
+
+
+export interface DepotMemoireErrorType {
+    first_author_matricule?: string[]; 
+    first_author_firstname?: string[]; 
+    first_author_lastname?: string[]; 
+    first_author_email?: string[]; 
+    first_author_phone?: string[]; 
+  
+    second_author_matricule?: string[]; 
+    second_author_firstname?: string[]; 
+    second_author_lastname?: string[]; 
+    second_author_email?: string[]; 
+    second_author_phone?: string[]; 
+  
+    theme?: string[];
+    filiere?: string[];
+    soutenance_date?: string[]; 
+    soutenance_hour?: string[]; 
+    jury_president?: string[]; 
+    memory_master?: string[]; 
+    memory_year?: string[]; 
+    file_path?: string[];
+    cover_page_path?: string[]; 
+}
+
+export interface MemoireType {
+    first_author_matricule: number; 
+    first_author_firstname: string; 
+    first_author_lastname: string; 
+    first_author_email: string; 
+    first_author_phone: string; 
+  
+    second_author_matricule?: string; 
+    second_author_firstname?: string; 
+    second_author_lastname?: string; 
+    second_author_email?: string; 
+    second_author_phone?: string; 
+  
+    theme: string;
+    filiere: string;
+    soutenance_date: string; 
+    soutenance_hour: string; 
+    jury_president: string; 
+    memory_master: string; 
+    memory_year: string; 
+    file_path: string;
+    cover_page_path: string; 
+}

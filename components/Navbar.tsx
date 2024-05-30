@@ -26,7 +26,6 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import Link from "next/link"
 import { useAuth } from "@/hooks/auth"
-import { Button } from "./ui/button"
 
 
 
@@ -68,15 +67,13 @@ const Navbar = () => {
         {/* max-sm:absolute max-sm:bg-green-50/80 max-sm:p-4 max-sm:rounded max-sm:border max-sm:top-14 max-sm:w-[96%] max-sm:flex-wrap max-sm:grid max-sm:grid-cols-2 transition-all -translate-y-40 duration-500 */}
           {showBiblioPages ? 
             <>
-              <Link href='/home' className="hover:text-primary text-sm lg:text-sm">Dépôt de Biblio</Link>
-              <Link href='/home' className="hover:text-primary text-sm lg:text-sm">Dépôt de Biblio</Link>
-              <Link href='/home' className="hover:text-primary text-sm lg:text-sm">Dépôt de Biblio</Link>
-              <Link href='/home' className="hover:text-primary text-sm lg:text-sm">Consulter</Link>
+              <Link href='/home' className="hover:text-primary text-sm lg:text-sm">Liste des Livres</Link>
+              <Link href='/home' className="hover:text-primary text-sm lg:text-sm">---</Link>
             </>
           :   
             <>
-              <Link href='/home' className="hover:text-primary text-sm lg:text-sm">Dépôt de mémoires</Link>
-              <Link href='/home' className="hover:text-primary text-sm lg:text-sm">Consulter</Link>
+              <Link href='/memoires/deposer' className="hover:text-primary text-sm lg:text-sm">Dépôt de mémoires</Link>
+              <Link href='/memoires/consulter' className="hover:text-primary text-sm lg:text-sm">Consulter</Link>
             </>
           }
         </div>
@@ -190,6 +187,9 @@ const Navbar = () => {
               <Link href="/settings">Settings</Link>
             </DropdownMenuItem>
             <DropdownMenuItem onClick={logout} className="cursor-pointer">Logout</DropdownMenuItem> 
+            <DropdownMenuItem className="cursor-pointer">
+                <Link href="/admin">Dashboard</Link>
+            </DropdownMenuItem> 
           </DropdownMenuContent>
         </DropdownMenu>
       </div>

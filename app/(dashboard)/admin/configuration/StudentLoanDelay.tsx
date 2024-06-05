@@ -24,22 +24,40 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Edit } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { useLastConfig } from "@/services/queries";
+import { updateStudentLoanDelay } from "@/lib/data/configuration";
 
 const FormSchema = z.object({
   student_loan_delay: z.string().min(1, { message: "Entrez un nombre avec au moins 1 chiffres" }),
 });
 
 
-const StudentLoanDelay = () => {
+const StudentLoanDelay = ({delay}: {delay: number}) => {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      student_loan_delay: '14' ,
+      student_loan_delay: delay.toString(),
     },
   });
 
-  function onSubmit(values: z.infer<typeof FormSchema>) {
-    console.log(values);
+  const {mutate} = useLastConfig();
+
+  const submitForm = async (
+    event: { preventDefault: () => void },
+    student_loan_delay: number
+  ) => {
+    event.preventDefault();
+
+    await updateStudentLoanDelay({student_loan_delay});
+    mutate()
+  };
+
+  function onSubmit(values: z.infer<typeof FormSchema>, event: any) {
+    // console.log(values);
+    submitForm(
+      event,
+      parseInt(values.student_loan_delay),
+    )
   }
 
   return (

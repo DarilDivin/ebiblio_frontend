@@ -24,23 +24,42 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Edit } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { updateMaxBookPerStudent, updateMaxBookPerTeacher } from "@/lib/data/configuration";
+import { useLastConfig } from "@/services/queries";
 
 const FormSchema = z.object({
   max_books_per_teacher: z.string().min(1, { message: "Entrez un nombre avec au moins 1 chiffres" }),
 });
 
 
-const TeacherMaxBooksLoan = () => {
+const TeacherMaxBooksLoan = ({max}: {max: number}) => {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      max_books_per_teacher: '1' ,
+      max_books_per_teacher: max.toString() ,
     },
   });
 
-  function onSubmit(values: z.infer<typeof FormSchema>) {
-    console.log(values);
+  const {mutate} = useLastConfig();
+
+  const submitForm = async (
+    event: { preventDefault: () => void },
+    max_books_per_teacher: number
+  ) => {
+    event.preventDefault();
+
+    await updateMaxBookPerTeacher({max_books_per_teacher});
+    mutate()
+  };
+
+  function onSubmit(values: z.infer<typeof FormSchema>, event: any) {
+    // console.log(values);
+    submitForm(
+      event,
+      parseInt(values.max_books_per_teacher),
+    )
   }
+
 
   return (
     <Dialog>

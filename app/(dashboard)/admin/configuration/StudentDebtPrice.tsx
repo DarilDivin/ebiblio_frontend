@@ -24,21 +24,40 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Edit } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { useLastConfig } from "@/services/queries";
+import { updateStudentDebtAmount } from "@/lib/data/configuration";
 
 const FormSchema = z.object({
   student_debt_price: z.string().min(3, { message: "Entrez un nombre avec au moins 3 chiffres" }),
 });
 
-const StudentDebtPrice = () => {
+const StudentDebtPrice = ({amount}: {amount: number}) => {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      student_debt_price: '500' ,
+      student_debt_price: amount.toString() ,
     },
   });
 
-  function onSubmit(values: z.infer<typeof FormSchema>) {
+  const {mutate} = useLastConfig();
+
+  const submitForm = async (
+    event: { preventDefault: () => void },
+    student_debt_amount: number
+  ) => {
+    event.preventDefault();
+
+    await updateStudentDebtAmount({student_debt_amount});
+    mutate()
+  };
+
+  function onSubmit(values: z.infer<typeof FormSchema>, event: any) {
     console.log(values);
+
+    submitForm(
+      event,
+      parseInt(values.student_debt_price),
+    )
   }
 
   return (

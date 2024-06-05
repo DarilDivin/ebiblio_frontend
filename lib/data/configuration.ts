@@ -13,10 +13,10 @@ export const getLastConfig = () => {
   };
 };
 
-export const updateSchoolName = async () => {
+export const updateSchoolName = async ({school_name}: {school_name: string}) => {
   await csrf();
   await axios
-    .patch("/api/config/update/school-name")
+    .patch("/api/config/update/school-name", {school_name: school_name})
     .then(() => toast("Nom de l'université modifié aves succès👍🏾"))
     .catch((error) => {
       if (error.response && error.response.status === 422) {
@@ -35,10 +35,10 @@ export const updateSchoolName = async () => {
     });
 };
 
-export const updateSchoolAcronym = async () => {
+export const updateSchoolAcronym = async ({school_acronym}: {school_acronym: string}) => {
   await csrf();
   await axios
-    .patch("/api/config/update/school-acronym")
+    .patch("/api/config/update/school-acronym", {school_acronym: school_acronym})
     .then(() => toast("Acronyme de l'université modifié aves succès👍🏾"))
     .catch((error) => {
       if (error.response && error.response.status === 422) {
@@ -57,10 +57,10 @@ export const updateSchoolAcronym = async () => {
     });
 };
 
-export const updateSchoolCity = async () => {
+export const updateSchoolCity = async ({school_city}: {school_city: string}) => {
   await csrf();
   await axios
-    .patch("/api/config/update/school-city")
+    .patch("/api/config/update/school-city", {school_city: school_city})
     .then(() => toast("Ville de l'université modifié aves succès👍🏾"))
     .catch((error) => {
       if (error.response && error.response.status === 422) {
@@ -160,10 +160,14 @@ export const updateSubscriptonExpirationDelay = async () => {
     });
 };
 
-export const updateStudentDebtAmount = async () => {
+export const updateStudentDebtAmount = async ({
+  student_debt_amount,
+}: {
+  student_debt_amount: number;
+}) => {
   await csrf();
   await axios
-    .patch("/api/config/update/student-debt-amount")
+    .patch("/api/config/update/student-debt-amount", {student_debt_amount: student_debt_amount})
     .then(() =>
       toast("Montant minimale de la dette étudiante modifié aves succès👍🏾")
     )
@@ -184,10 +188,14 @@ export const updateStudentDebtAmount = async () => {
     });
 };
 
-export const updateTeacherDebtAmount = async () => {
+export const updateTeacherDebtAmount = async ({
+  teacher_debt_amount,
+}: {
+  teacher_debt_amount: number;
+}) => {
   await csrf();
   await axios
-    .patch("/api/config/update/teacher-debt-amount")
+    .patch("/api/config/update/teacher-debt-amount", {teacher_debt_amount: teacher_debt_amount})
     .then(() =>
       toast("Montant minimale de la dette Enseignante modifié aves succès👍🏾")
     )
@@ -208,10 +216,10 @@ export const updateTeacherDebtAmount = async () => {
     });
 };
 
-export const updateStudentLoanDelay = async () => {
+export const updateStudentLoanDelay = async ({student_loan_delay}: {student_loan_delay: number}) => {
   await csrf();
   await axios
-    .patch("/api/config/update/student-loan-delay")
+    .patch("/api/config/update/student-loan-delay", {student_loan_delay: student_loan_delay})
     .then(() =>
       toast("Durée maximale du prêt pour les Etudiants modifié aves succès👍🏾")
     )
@@ -232,10 +240,10 @@ export const updateStudentLoanDelay = async () => {
     });
 };
 
-export const updateTeacherLoanDelay = async () => {
+export const updateTeacherLoanDelay = async ({teacher_loan_delay}: {teacher_loan_delay: number}) => {
   await csrf();
   await axios
-    .patch("/api/config/update/teacher-loan-delay")
+    .patch("/api/config/update/teacher-loan-delay", {teacher_loan_delay: teacher_loan_delay})
     .then(() =>
       toast("Durée maximale du prêt pour les Enseignats modifié aves succès👍🏾")
     )
@@ -256,10 +264,10 @@ export const updateTeacherLoanDelay = async () => {
     });
 };
 
-export const updateStudentRenewalsNumber = async () => {
+export const updateStudentRenewalsNumber = async ({student_renewals_number}: {student_renewals_number: number}) => {
   await csrf();
   await axios
-    .patch("/api/config/update/student-renewals-number")
+    .patch("/api/config/update/student-renewals-number", {student_renewals_number: student_renewals_number})
     .then(() =>
       toast(
         "Nombre de renouvellement possible pour Etudiant modifié aves succès👍🏾"
@@ -282,10 +290,10 @@ export const updateStudentRenewalsNumber = async () => {
     });
 };
 
-export const updateTeacherRenewalsNumber = async () => {
+export const updateTeacherRenewalsNumber = async ({teacher_renewals_number}: {teacher_renewals_number: number}) => {
   await csrf();
   await axios
-    .patch("/api/config/update/teacher-renewals-number")
+    .patch("/api/config/update/teacher-renewals-number", {teacher_renewals_number: teacher_renewals_number})
     .then(() =>
       toast(
         "Nombre de renouvellement possible pour enseignant modifié aves succès👍🏾"
@@ -308,10 +316,10 @@ export const updateTeacherRenewalsNumber = async () => {
     });
 };
 
-export const updateMaxBookPerStudent = async () => {
+export const updateMaxBookPerStudent = async ({max_books_per_student}: {max_books_per_student: number}) => {
   await csrf();
   await axios
-    .patch("/api/config/update/max-books-per-student")
+    .patch("/api/config/update/max-books-per-student", {max_books_per_student: max_books_per_student})
     .then(() =>
       toast(
         "Nombre maximale de livre prêté par un Etudiant modifié aves succès👍🏾"
@@ -334,10 +342,10 @@ export const updateMaxBookPerStudent = async () => {
     });
 };
 
-export const updateMaxBookPerTeacher = async () => {
+export const updateMaxBookPerTeacher = async ({max_books_per_teacher}: {max_books_per_teacher: number}) => {
   await csrf();
   await axios
-    .patch("/api/config/update/max-books-per-teacher")
+    .patch("/api/config/update/max-books-per-teacher", {max_books_per_teacher: max_books_per_teacher})
     .then(() =>
       toast(
         "Nombre maximale de livre prêté par un Enseignant modifié aves succès👍🏾"

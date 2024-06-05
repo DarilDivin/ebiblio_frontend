@@ -24,18 +24,20 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Edit } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { updateEneaminanSubscribeAmount, updateSchoolCity, updateSchoolName } from "@/lib/data/configuration";
 import { useLastConfig } from "@/services/queries";
-import { updateTeacherLoanDelay } from "@/lib/data/configuration";
 
 const FormSchema = z.object({
-  teacher_loan_delay: z.string().min(1, { message: "Entrez un nombre avec au moins 1 chiffres" }),
+  school_city: z
+    .string()
+    .min(1, { message: "Entrez un nombre avec au moins 1 caractère" }),
 });
 
-const TeacherLoanDelay = ({delay}: {delay: number}) => {
+const SchoolCityForm = ({name}: {name: string}) => {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      teacher_loan_delay: delay.toString() ,
+      school_city: name,
     },
   });
 
@@ -43,11 +45,11 @@ const TeacherLoanDelay = ({delay}: {delay: number}) => {
 
   const submitForm = async (
     event: { preventDefault: () => void },
-    teacher_loan_delay: number
+    school_city: string
   ) => {
     event.preventDefault();
 
-    await updateTeacherLoanDelay({teacher_loan_delay});
+    await updateSchoolCity({school_city});
     mutate()
   };
 
@@ -55,13 +57,14 @@ const TeacherLoanDelay = ({delay}: {delay: number}) => {
     // console.log(values);
     submitForm(
       event,
-      parseInt(values.teacher_loan_delay),
+      values.school_city,
     )
   }
 
   return (
     <Dialog>
       <DialogTrigger className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-8 w-8 p-0 hover:bg-accent hover:text-accent-foreground">
+        {/* <span className="sr-only">Open menu</span> */}
         <Edit className="h-4 w-4" />
       </DialogTrigger>
       <DialogContent>
@@ -73,27 +76,37 @@ const TeacherLoanDelay = ({delay}: {delay: number}) => {
             <form onSubmit={form.handleSubmit(onSubmit)}>
               <FormField
                 control={form.control}
-                name="teacher_loan_delay"
+                name="school_city"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Durée d'un prêt Enseignant</FormLabel>
+                    <FormLabel>Montant</FormLabel>
                     <FormControl>
-                      <Input className="outline-none focus-visible:ring-ring w-full" type="number" placeholder="500" {...field} />
+                      <Input
+                        className="outline-none focus-visible:ring-ring w-full"
+                        type="text"
+                        placeholder="Eneam"
+                        {...field}
+                      />
                     </FormControl>
                     <FormDescription>
-                      Ceci est la durée maximale d'un prêt par les Enseignants en jours.
+                      Ceci est le nom de l'établissement
                     </FormDescription>
                     <FormMessage />
                   </FormItem>
                 )}
               />
-              <Button type="submit" className="mt-4 text-primary-foreground">Sauvegarder</Button>
+              <Button type="submit" className="mt-4">
+                Modifier
+              </Button>
             </form>
           </Form>
         </div>
+        {/* <div className="w-full flex justify-end p-2 border-t">
+
+        </div> */}
       </DialogContent>
     </Dialog>
   );
-}
+};
 
-export default TeacherLoanDelay
+export default SchoolCityForm;

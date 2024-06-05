@@ -24,21 +24,39 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Edit } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { useLastConfig } from "@/services/queries";
+import { updateTeacherRenewalsNumber } from "@/lib/data/configuration";
 
 const FormSchema = z.object({
   teacher_max_renewals: z.string().min(1, { message: "Entrez un nombre avec au moins 1 chiffres" }),
 });
 
-const TeacherMaxRenewals = () => {
+const TeacherMaxRenewals = ({max}: {max: number}) => {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      teacher_max_renewals: '1' ,
+      teacher_max_renewals: max.toString() ,
     },
   });
 
-  function onSubmit(values: z.infer<typeof FormSchema>) {
-    console.log(values);
+  const {mutate} = useLastConfig();
+
+  const submitForm = async (
+    event: { preventDefault: () => void },
+    teacher_renewals_number: number
+  ) => {
+    event.preventDefault();
+
+    await updateTeacherRenewalsNumber({teacher_renewals_number});
+    mutate()
+  };
+
+  function onSubmit(values: z.infer<typeof FormSchema>, event: any) {
+    // console.log(values);
+    submitForm(
+      event,
+      parseInt(values.teacher_max_renewals),
+    )
   }
 
   return (

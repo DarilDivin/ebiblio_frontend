@@ -24,23 +24,40 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Edit } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { useLastConfig } from "@/services/queries";
+import { updateStudentRenewalsNumber } from "@/lib/data/configuration";
 
 const FormSchema = z.object({
   student_max_renewals: z.string().min(1, { message: "Entrez un nombre avec au moins 1 chiffres" }),
 });
 
-const StudentMaxRenewals = () => {
+const StudentMaxRenewals = ({max}: {max: number}) => {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      student_max_renewals: '1' ,
+      student_max_renewals: max.toString(),
     },
   });
 
-  function onSubmit(values: z.infer<typeof FormSchema>) {
-    console.log(values);
-  }
+  const {mutate} = useLastConfig();
 
+  const submitForm = async (
+    event: { preventDefault: () => void },
+    student_renewals_number: number
+  ) => {
+    event.preventDefault();
+
+    await updateStudentRenewalsNumber({student_renewals_number});
+    mutate()
+  };
+
+  function onSubmit(values: z.infer<typeof FormSchema>, event: any) {
+    // console.log(values);
+    submitForm(
+      event,
+      parseInt(values.student_max_renewals),
+    )
+  }
   return (
     <Dialog>
       <DialogTrigger className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-8 w-8 p-0 hover:bg-accent hover:text-accent-foreground">

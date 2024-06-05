@@ -36,6 +36,9 @@ import CycleForm from "./(cycle)/CycleForm";
 import { getAllCycle } from "@/lib/data/cycle";
 import { getLastConfig } from "@/lib/data/configuration";
 import { Skeleton } from "@/components/ui/skeleton";
+import SchoolNameForm from "./SchoolNameForm";
+import SchoolAcronymForm from "./SchoolAcronymForm";
+import SchoolCityForm from "./SchoolCityForm";
 
 const ConfigurationPage = () => {
   const cycles = getAllCycle();
@@ -122,6 +125,49 @@ const ConfigurationPage = () => {
                   <TableBody className="text-xs">
                     <TableRow>
                       <TableCell className="font-bold text-nowrap w-full">
+                        Nom de L'université
+                      </TableCell>
+                      <TableCell>
+                        {lastConfig.lastConfig.school_name}
+                      </TableCell>
+                      <TableCell>
+                        <SchoolNameForm
+                          name={lastConfig.lastConfig.school_name}
+                        />
+                      </TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell className="font-bold text-nowrap w-full">
+                        Acronym de l'Université
+                      </TableCell>
+                      <TableCell>
+                        {lastConfig.lastConfig.school_acronym}
+                      </TableCell>
+                      <TableCell>
+                        <SchoolAcronymForm
+                          name={
+                            lastConfig.lastConfig.school_acronym
+                          }
+                        />
+                      </TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell className="font-bold text-nowrap w-full">
+                        Ville de l'Université
+                      </TableCell>
+                      <TableCell>
+                        {lastConfig.lastConfig.school_city}
+                      </TableCell>
+                      <TableCell>
+                        <SchoolCityForm
+                          name={
+                            lastConfig.lastConfig.school_city
+                          }
+                        />
+                      </TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell className="font-bold text-nowrap w-full">
                         Frais bibliothèque Eneamien
                       </TableCell>
                       <TableCell>
@@ -156,7 +202,7 @@ const ConfigurationPage = () => {
                         {lastConfig.lastConfig?.student_debt_amount}
                       </TableCell>
                       <TableCell>
-                        <StudentDebtPrice />
+                        <StudentDebtPrice amount={lastConfig.lastConfig.student_debt_amount} />
                       </TableCell>
                     </TableRow>
                     <TableRow>
@@ -167,7 +213,7 @@ const ConfigurationPage = () => {
                         {lastConfig.lastConfig?.teacher_debt_amount}
                       </TableCell>
                       <TableCell>
-                        <TeacherDebtPrice />
+                        <TeacherDebtPrice amount={lastConfig.lastConfig.teacher_debt_amount} />
                       </TableCell>
                     </TableRow>
                     <TableRow>
@@ -178,7 +224,7 @@ const ConfigurationPage = () => {
                         {lastConfig.lastConfig?.student_loan_delay}
                       </TableCell>
                       <TableCell>
-                        <StudentLoanDelay />
+                        <StudentLoanDelay delay={lastConfig.lastConfig.student_loan_delay} />
                       </TableCell>
                     </TableRow>
                     <TableRow>
@@ -189,7 +235,7 @@ const ConfigurationPage = () => {
                         {lastConfig.lastConfig?.teacher_loan_delay}
                       </TableCell>
                       <TableCell>
-                        <TeacherLoanDelay />
+                        <TeacherLoanDelay delay={lastConfig.lastConfig.teacher_loan_delay} />
                       </TableCell>
                     </TableRow>
                     <TableRow>
@@ -200,7 +246,7 @@ const ConfigurationPage = () => {
                         {lastConfig.lastConfig?.student_renewals_number}
                       </TableCell>
                       <TableCell>
-                        <StudentMaxRenewals />
+                        <StudentMaxRenewals max={lastConfig.lastConfig.student_renewals_number} />
                       </TableCell>
                     </TableRow>
                     <TableRow>
@@ -211,7 +257,7 @@ const ConfigurationPage = () => {
                         {lastConfig.lastConfig?.teacher_renewals_number}
                       </TableCell>
                       <TableCell>
-                        <TeacherMaxRenewals />
+                        <TeacherMaxRenewals max={lastConfig.lastConfig.teacher_renewals_number} />
                       </TableCell>
                     </TableRow>
                     <TableRow>
@@ -222,7 +268,7 @@ const ConfigurationPage = () => {
                         {lastConfig.lastConfig?.max_books_per_student}
                       </TableCell>
                       <TableCell>
-                        <StudentMaxBooksLoan />
+                        <StudentMaxBooksLoan max={lastConfig.lastConfig.max_books_per_student} />
                       </TableCell>
                     </TableRow>
                     <TableRow>
@@ -233,7 +279,7 @@ const ConfigurationPage = () => {
                         {lastConfig.lastConfig?.max_books_per_teacher}
                       </TableCell>
                       <TableCell>
-                        <TeacherMaxBooksLoan />
+                        <TeacherMaxBooksLoan max={lastConfig.lastConfig.max_books_per_teacher} />
                       </TableCell>
                     </TableRow>
                   </TableBody>
@@ -259,45 +305,6 @@ const ConfigurationPage = () => {
               </CardContent>
             </Card>
           )}
-          {/* <Card className="col-span-3 ">
-            <CardHeader>
-              <CardTitle>Configuration rapide</CardTitle>
-              <CardDescription>Quelques configuration rapide</CardDescription>
-            </CardHeader>
-            <CardContent className="">
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead className="w-[100px]">Element</TableHead>
-                    <TableHead>Valeur</TableHead>
-                    <TableHead>Action</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody className="text-xs">
-
-                  <TableRow>
-                    <TableCell className="font-bold text-nowrap w-full">
-                      Frais bibliothèque Eneamien
-                    </TableCell>
-                    <TableCell>500</TableCell>
-                    <TableCell>
-                      <EneamianSubscribeForm />
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell className="font-bold text-nowrap w-full">
-                      Frais bibliothèque Externes
-                    </TableCell>
-                    <TableCell>500</TableCell>
-                    <TableCell>
-                      <ExterneSubscribeForm />
-                    </TableCell>
-                  </TableRow>
-
-                </TableBody>
-              </Table>
-            </CardContent>
-          </Card> */}
         </CardContent>
       </Card>
     </div>

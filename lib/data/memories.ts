@@ -60,7 +60,7 @@ export const supportedMemoireDeposit = async ({
         //   });
         // }
       } else {
-        toast.error("Une erreur s'est produite");
+        toast.error("Une erreur est survenue");
       }
     });
 };

@@ -37,3 +37,14 @@ export interface GetAllCycleResponse {
     total: number;
   };
 }
+
+export interface CreateCycleProps {
+  name: string;
+  code: string;
+}
+
+export interface EditCycleProps {
+  cycle: number;
+  name: string;
+  code: string;
+}

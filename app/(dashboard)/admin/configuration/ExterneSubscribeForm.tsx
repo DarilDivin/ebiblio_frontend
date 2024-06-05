@@ -24,21 +24,37 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Edit } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { useLastConfig } from "@/services/queries";
+import { updateExterneSubscribeAmount } from "@/lib/data/configuration";
 
 const FormSchema = z.object({
-  extern_subscribe_rising: z.string().min(3, { message: "Entrez un nombre avec au moins 3 chiffres" }),
+  extern_subscribe_amount: z.string().min(3, { message: "Entrez un nombre avec au moins 3 chiffres" }),
 });
 
-const ExterneSubscribeForm = () => {
+const ExterneSubscribeForm = ({amount}: {amount: number}) => {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      extern_subscribe_rising: '500' ,
+      extern_subscribe_amount: amount.toString(),
     },
   });
 
-  function onSubmit(values: z.infer<typeof FormSchema>) {
+  const {mutate} = useLastConfig();
+
+  const submitForm = async (
+    event: { preventDefault: () => void },
+    extern_subscribe_amount: number
+  ) => {
+    event.preventDefault();
+
+    await updateExterneSubscribeAmount({extern_subscribe_amount});
+    mutate()
+  };
+
+  function onSubmit(values: z.infer<typeof FormSchema>, event: any) {
     console.log(values);
+
+    submitForm(event, parseInt(values.extern_subscribe_amount))
   }
 
   return (
@@ -56,7 +72,7 @@ const ExterneSubscribeForm = () => {
             <form onSubmit={form.handleSubmit(onSubmit)}>
               <FormField
                 control={form.control}
-                name="extern_subscribe_rising"
+                name="extern_subscribe_amount"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Montant</FormLabel>

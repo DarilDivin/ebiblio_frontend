@@ -1,3 +1,4 @@
+import { LastConfigResponse } from "@/types/configuration";
 import { GetAllCycleResponse } from "@/types/cycle";
 import { GetAllMemoryResponse } from "@/types/memory";
 import { GetAllSectorResponse } from "@/types/sector";
@@ -18,4 +19,8 @@ export function useSector() {
 
 export function useCycle() {
   return useSWR<GetAllCycleResponse>('api/cycle');
+}
+
+export function useLastConfig() {
+  return useSWR<LastConfigResponse>('api/config/last');
 }

@@ -24,21 +24,41 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Edit } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { updateEneaminanSubscribeAmount } from "@/lib/data/configuration";
+import { useLastConfig } from "@/services/queries";
 
 const FormSchema = z.object({
-  eneamien_subscribe_rising: z.string().min(3, { message: "Entrez un nombre avec au moins 3 chiffres" }),
+  eneamien_subscribe_amount: z
+    .string()
+    .min(3, { message: "Entrez un nombre avec au moins 3 chiffres" }),
 });
 
-const EneamianSubscribeForm = () => {
+const EneamianSubscribeForm = ({amount}: {amount: number}) => {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      eneamien_subscribe_rising: '500' ,
+      eneamien_subscribe_amount: amount.toString(),
     },
   });
 
-  function onSubmit(values: z.infer<typeof FormSchema>) {
-    console.log(values);
+  const {mutate} = useLastConfig();
+
+  const submitForm = async (
+    event: { preventDefault: () => void },
+    eneamien_subscribe_amount: number
+  ) => {
+    event.preventDefault();
+
+    await updateEneaminanSubscribeAmount({eneamien_subscribe_amount});
+    mutate()
+  };
+
+  function onSubmit(values: z.infer<typeof FormSchema>, event: any) {
+    // console.log(values);
+    submitForm(
+      event,
+      parseInt(values.eneamien_subscribe_amount),
+    )
   }
 
   return (
@@ -56,21 +76,29 @@ const EneamianSubscribeForm = () => {
             <form onSubmit={form.handleSubmit(onSubmit)}>
               <FormField
                 control={form.control}
-                name="eneamien_subscribe_rising"
+                name="eneamien_subscribe_amount"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Montant</FormLabel>
                     <FormControl>
-                      <Input className="outline-none focus-visible:ring-ring w-full" type="number" placeholder="500" {...field} />
+                      <Input
+                        className="outline-none focus-visible:ring-ring w-full"
+                        type="number"
+                        placeholder="500"
+                        {...field}
+                      />
                     </FormControl>
                     <FormDescription>
-                      Ceci est le montant de l'inscription à la bibliothèque pour les étudiants Enéamiens.
+                      Ceci est le montant de l'inscription à la bibliothèque
+                      pour les étudiants Enéamiens.
                     </FormDescription>
                     <FormMessage />
                   </FormItem>
                 )}
               />
-              <Button type="submit" className="mt-4">Modifier</Button>
+              <Button type="submit" className="mt-4">
+                Modifier
+              </Button>
             </form>
           </Form>
         </div>

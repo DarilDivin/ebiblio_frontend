@@ -1,3 +1,5 @@
+"use client";
+
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   Card,
@@ -17,7 +19,6 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-
 import { Bolt } from "lucide-react";
 import EneamianSubscribeForm from "./EneamianSubscribeForm";
 import ExterneSubscribeForm from "./ExterneSubscribeForm";
@@ -30,51 +31,14 @@ import TeacherMaxRenewals from "./TeacherMaxRenewals";
 import TeacherMaxBooksLoan from "./TeacherMaxBooksLoan";
 import StudentMaxBooksLoan from "./StudentMaxBooksLoan";
 import { CycleDataTable } from "./(cycle)/CycleDatatable";
-import { Cycle, columns } from "./(cycle)/columns";
-import CreateCycleForm from "./(cycle)/CreateCycleForm";
+import { columns } from "./(cycle)/columns";
+import CycleForm from "./(cycle)/CycleForm";
+import { getAllCycle } from "@/lib/data/cycle";
+import { getLastConfig } from "@/lib/data/configuration";
 
-async function getCycleData(): Promise<Cycle[]> {
-  // Fetch data from your API here.
-  return [
-    {
-      id: '1001',
-      name: 'Licence',
-      code: "L",
-      // created_at: "2017-09-25",
-      // updated_at: "2017-09-25",
-      // deleted_at: "2017-09-25",
-      // created_by: "admin",
-      // updated_by: "admin",
-      // deleted_by: "admin"
-    },
-    {
-      id: '1001',
-      name: 'Master',
-      code: "M",
-      // created_at: "2017-09-25",
-      // updated_at: "2017-09-25",
-      // deleted_at: "2017-09-25",
-      // created_by: "admin",
-      // updated_by: "admin",
-      // deleted_by: "admin"
-    },
-    {
-      id: '1001',
-      name: 'Doctorat',
-      code: "D",
-      // created_at: "2017-09-25",
-      // updated_at: "2017-09-25",
-      // deleted_at: "2017-09-25",
-      // created_by: "admin",
-      // updated_by: "admin",
-      // deleted_by: "admin"
-    },
-    // ...
-  ]
-}
-
-const ConfigurationPage = async () => {
-  const data = await getCycleData()
+const ConfigurationPage = () => {
+  const cycles = getAllCycle();
+  const lastConfig = getLastConfig();
   return (
     <div className="container">
       <div className="flex w-full justify-between py-4 ">
@@ -101,7 +65,9 @@ const ConfigurationPage = async () => {
         <CardContent className="grid grid-cols-3 gap-4 pt-6">
           <Card className="col-span-2 h-[400px] overflow-y-scroll bg-card card">
             <CardHeader>
-              <CardTitle className="text-card-foreground">Configuration rapide</CardTitle>
+              <CardTitle className="text-card-foreground">
+                Configuration rapide
+              </CardTitle>
               <CardDescription>Quelques configuration rapide</CardDescription>
             </CardHeader>
             <CardContent className="">
@@ -113,114 +79,148 @@ const ConfigurationPage = async () => {
                     <TableHead>Action</TableHead>
                   </TableRow>
                 </TableHeader>
-                <TableBody className="text-xs">
-
-                  <TableRow>
-                    <TableCell className="font-bold text-nowrap w-full">
-                      Frais bibliothèque Eneamien
-                    </TableCell>
-                    <TableCell>500</TableCell>
-                    <TableCell>
-                      <EneamianSubscribeForm />
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell className="font-bold text-nowrap w-full">
-                      Frais bibliothèque Externes
-                    </TableCell>
-                    <TableCell>1500</TableCell>
-                    <TableCell>
-                      <ExterneSubscribeForm />
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell className="font-bold text-nowrap w-full">
-                      Montant minimale de la dette étudiante
-                    </TableCell>
-                    <TableCell>500</TableCell>
-                    <TableCell>
-                      <StudentDebtPrice />
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell className="font-bold text-nowrap w-full">
-                      Montant minimale de la dette enseignante
-                    </TableCell>
-                    <TableCell>3000</TableCell>
-                    <TableCell>
-                      <TeacherDebtPrice />
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell className="font-bold text-nowrap w-full">
-                      Durée maximale du prêt pour les Etudiants
-                    </TableCell>
-                    <TableCell>14 jours</TableCell>
-                    <TableCell>
-                      <StudentLoanDelay />
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell className="font-bold text-nowrap w-full">
-                      Durée maximale du prêt pour les enseignants
-                    </TableCell>
-                    <TableCell>28 jours</TableCell>
-                    <TableCell>
-                      <TeacherLoanDelay />
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell className="font-bold text-nowrap w-full">
-                      Nombre de renouvellement possible pour Etudiant
-                    </TableCell>
-                    <TableCell>1</TableCell>
-                    <TableCell>
-                      <StudentMaxRenewals />
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell className="font-bold text-nowrap w-full">
-                      Nombre de renouvellement possible pour Enseignant
-                    </TableCell>
-                    <TableCell>1</TableCell>
-                    <TableCell>
-                      <TeacherMaxRenewals />
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell className="font-bold text-nowrap w-full">
-                      Nombre maximale de livre prêté par un Etudiant
-                    </TableCell>
-                    <TableCell>2</TableCell>
-                    <TableCell>
-                      <StudentMaxBooksLoan />
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell className="font-bold text-nowrap w-full">
-                      Nombre maximale de livre prêté par un enseignant
-                    </TableCell>
-                    <TableCell>2</TableCell>
-                    <TableCell>
-                      <TeacherMaxBooksLoan />
-                    </TableCell>
-                  </TableRow>
-
-                </TableBody>
+                {lastConfig.error ? (
+                  <div>Erreur de chargement des données</div>
+                ) : lastConfig.isLoading || !lastConfig.lastConfig ? (
+                  <div>Chargement...</div>
+                ) : (
+                  <TableBody className="text-xs"> 
+                    <TableRow>
+                      <TableCell className="font-bold text-nowrap w-full">
+                        Frais bibliothèque Eneamien
+                      </TableCell>
+                      <TableCell>
+                        {lastConfig.lastConfig.eneamien_subscribe_amount}
+                      </TableCell>
+                      <TableCell>
+                        <EneamianSubscribeForm
+                          amount={lastConfig.lastConfig.eneamien_subscribe_amount}
+                        />
+                      </TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell className="font-bold text-nowrap w-full">
+                        Frais bibliothèque Externes
+                      </TableCell>
+                      <TableCell>
+                        {lastConfig.lastConfig?.extern_subscribe_amount}
+                      </TableCell>
+                      <TableCell>
+                        <ExterneSubscribeForm amount={lastConfig.lastConfig.extern_subscribe_amount}/>
+                      </TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell className="font-bold text-nowrap w-full">
+                        Montant minimale de la dette étudiante
+                      </TableCell>
+                      <TableCell>
+                        {lastConfig.lastConfig?.student_debt_amount}
+                      </TableCell>
+                      <TableCell>
+                        <StudentDebtPrice />
+                      </TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell className="font-bold text-nowrap w-full">
+                        Montant minimale de la dette enseignante
+                      </TableCell>
+                      <TableCell>
+                        {lastConfig.lastConfig?.teacher_debt_amount}
+                      </TableCell>
+                      <TableCell>
+                        <TeacherDebtPrice />
+                      </TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell className="font-bold text-nowrap w-full">
+                        Durée maximale du prêt pour les Etudiants
+                      </TableCell>
+                      <TableCell>
+                        {lastConfig.lastConfig?.student_loan_delay}
+                      </TableCell>
+                      <TableCell>
+                        <StudentLoanDelay />
+                      </TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell className="font-bold text-nowrap w-full">
+                        Durée maximale du prêt pour les enseignants
+                      </TableCell>
+                      <TableCell>
+                        {lastConfig.lastConfig?.teacher_loan_delay}
+                      </TableCell>
+                      <TableCell>
+                        <TeacherLoanDelay />
+                      </TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell className="font-bold text-nowrap w-full">
+                        Nombre de renouvellement possible pour Etudiant
+                      </TableCell>
+                      <TableCell>
+                        {lastConfig.lastConfig?.student_renewals_number}
+                      </TableCell>
+                      <TableCell>
+                        <StudentMaxRenewals />
+                      </TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell className="font-bold text-nowrap w-full">
+                        Nombre de renouvellement possible pour Enseignant
+                      </TableCell>
+                      <TableCell>
+                        {lastConfig.lastConfig?.teacher_renewals_number}
+                      </TableCell>
+                      <TableCell>
+                        <TeacherMaxRenewals />
+                      </TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell className="font-bold text-nowrap w-full">
+                        Nombre maximale de livre prêté par un Etudiant
+                      </TableCell>
+                      <TableCell>
+                        {lastConfig.lastConfig?.max_books_per_student}
+                      </TableCell>
+                      <TableCell>
+                        <StudentMaxBooksLoan />
+                      </TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell className="font-bold text-nowrap w-full">
+                        Nombre maximale de livre prêté par un enseignant
+                      </TableCell>
+                      <TableCell>
+                        {lastConfig.lastConfig?.max_books_per_teacher}
+                      </TableCell>
+                      <TableCell>
+                        <TeacherMaxBooksLoan />
+                      </TableCell>
+                    </TableRow>
+                  </TableBody>
+                )}
               </Table>
             </CardContent>
           </Card>
-          <Card className="col-span-1 h-[400px] overflow-y-scroll card bg-card">
-            <CardHeader>
-              <CardTitle className="text-card-foreground">Cycles</CardTitle>
-              <CardDescription>Retrouvez ici les cycles de l'Eneam</CardDescription>
-            </CardHeader>
-            <CardContent className="">
-              <CreateCycleForm />
-              <CycleDataTable columns={columns} data={data}/>
-            </CardContent>
-          </Card>
-          <Card className="col-span-1">
+          {cycles.error ? (
+            <div>Erreur de chargement des données</div>
+          ) : cycles.isLoading || !cycles.cycles ? (
+            <div>Chargement...</div>
+          ) : (
+            <Card className="col-span-1 h-[400px] overflow-y-scroll card bg-card">
+              <CardHeader>
+                <CardTitle className="text-card-foreground">Cycles</CardTitle>
+                <CardDescription>
+                  Retrouvez ici les cycles de l'Eneam
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="">
+                <CycleForm />
+                <CycleDataTable columns={columns} data={cycles.cycles} />
+              </CardContent>
+            </Card>
+          )}
+          {/* <Card className="col-span-3 ">
             <CardHeader>
               <CardTitle>Configuration rapide</CardTitle>
               <CardDescription>Quelques configuration rapide</CardDescription>
@@ -258,7 +258,7 @@ const ConfigurationPage = async () => {
                 </TableBody>
               </Table>
             </CardContent>
-          </Card>
+          </Card> */}
         </CardContent>
       </Card>
     </div>

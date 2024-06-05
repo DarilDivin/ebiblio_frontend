@@ -1,27 +1,25 @@
-"use client"
+"use client";
 
-import { ColumnDef } from "@tanstack/react-table"
-import { Button } from "@/components/ui/button"
-import { Checkbox } from "@/components/ui/checkbox"
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+import { ColumnDef } from "@tanstack/react-table";
+import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
+// import {
+//   DropdownMenu,
+//   DropdownMenuContent,
+//   DropdownMenuItem,
+//   DropdownMenuLabel,
+//   DropdownMenuSeparator,
+//   DropdownMenuTrigger,
+// } from "@/components/ui/dropdown-menu";
 
-import { ArrowUpDown, MoreHorizontal } from "lucide-react"
-import MemoireConsultDialog from "@/components/MemoireConsultDialog"
+import { Edit, Trash2 } from "lucide-react";
+import { Cycle } from "@/types/cycle";
+import CycleForm from "./CycleForm";
+import { deleteCycle } from "@/lib/data/cycle";
+import { useCycle } from "@/services/queries";
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
-export type Cycle = {
-  id: string
-  name: string
-  code: string
-}
 
 export const columns: ColumnDef<Cycle>[] = [
   {
@@ -58,27 +56,26 @@ export const columns: ColumnDef<Cycle>[] = [
     id: "actions",
     header: "Actions",
     cell: ({ row }) => {
-      const cycle = row.original
- 
+      const cycle = row.original;
+
+      const { mutate } = useCycle();
+
       return (
         <div className="flex gap-2">
-          {/* <MemoireConsultDialog memory_data={cycle}/> */}
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" className="h-8 w-8 p-0">
-                <span className="sr-only">Open menu</span>
-                <MoreHorizontal className="h-4 w-4" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuLabel>Actions</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem className="text-primary hover:bg-primary/20 hover:text-primary">Modifier</DropdownMenuItem>
-              <DropdownMenuItem className="text-destructive hover:bg-primary/20 hover:text-destructive">Supprimer</DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+          <CycleForm cycle={cycle} />
+          <Button
+            variant="ghost"
+            className="h-8 w-8 p-0 text-destructive/70 hover:bg-destructive/20 hover:text-destructive rounded-md"
+            onClick={async () => {
+              await deleteCycle({ cycle: cycle.id });
+              mutate();
+            }}
+          >
+            <span className="sr-only">Valider le mémoire</span>
+            <Trash2 className="text-destructive h-4 w-4" />
+          </Button>
         </div>
-      )
+      );
     },
   },
-]
+];

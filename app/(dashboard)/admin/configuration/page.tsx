@@ -35,6 +35,7 @@ import { columns } from "./(cycle)/columns";
 import CycleForm from "./(cycle)/CycleForm";
 import { getAllCycle } from "@/lib/data/cycle";
 import { getLastConfig } from "@/lib/data/configuration";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const ConfigurationPage = () => {
   const cycles = getAllCycle();
@@ -80,11 +81,45 @@ const ConfigurationPage = () => {
                   </TableRow>
                 </TableHeader>
                 {lastConfig.error ? (
-                  <div>Erreur de chargement des données</div>
+                  <TableBody>Erreur de chargement des données</TableBody>
                 ) : lastConfig.isLoading || !lastConfig.lastConfig ? (
-                  <div>Chargement...</div>
+                  <TableBody>
+                    <TableRow>
+                      <TableCell className="font-bold text-nowrap w-full">
+                        <Skeleton className="h-6 w-[250px]" />
+                      </TableCell>
+                      <TableCell>
+                        <Skeleton className="h-6 w-[50px]" />
+                      </TableCell>
+                      <TableCell>
+                        <Skeleton className="h-8 w-8" />
+                      </TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell className="font-bold text-nowrap w-full">
+                        <Skeleton className="h-6 w-[250px]" />
+                      </TableCell>
+                      <TableCell>
+                        <Skeleton className="h-6 w-[50px]" />
+                      </TableCell>
+                      <TableCell>
+                        <Skeleton className="h-8 w-8" />
+                      </TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell className="font-bold text-nowrap w-full">
+                        <Skeleton className="h-6 w-[250px]" />
+                      </TableCell>
+                      <TableCell>
+                        <Skeleton className="h-6 w-[50px]" />
+                      </TableCell>
+                      <TableCell>
+                        <Skeleton className="h-8 w-8" />
+                      </TableCell>
+                    </TableRow>
+                  </TableBody>
                 ) : (
-                  <TableBody className="text-xs"> 
+                  <TableBody className="text-xs">
                     <TableRow>
                       <TableCell className="font-bold text-nowrap w-full">
                         Frais bibliothèque Eneamien
@@ -94,7 +129,9 @@ const ConfigurationPage = () => {
                       </TableCell>
                       <TableCell>
                         <EneamianSubscribeForm
-                          amount={lastConfig.lastConfig.eneamien_subscribe_amount}
+                          amount={
+                            lastConfig.lastConfig.eneamien_subscribe_amount
+                          }
                         />
                       </TableCell>
                     </TableRow>
@@ -106,7 +143,9 @@ const ConfigurationPage = () => {
                         {lastConfig.lastConfig?.extern_subscribe_amount}
                       </TableCell>
                       <TableCell>
-                        <ExterneSubscribeForm amount={lastConfig.lastConfig.extern_subscribe_amount}/>
+                        <ExterneSubscribeForm
+                          amount={lastConfig.lastConfig.extern_subscribe_amount}
+                        />
                       </TableCell>
                     </TableRow>
                     <TableRow>

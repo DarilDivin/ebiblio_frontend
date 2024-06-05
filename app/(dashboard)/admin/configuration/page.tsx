@@ -29,8 +29,52 @@ import StudentMaxRenewals from "./StudentMaxRenewals";
 import TeacherMaxRenewals from "./TeacherMaxRenewals";
 import TeacherMaxBooksLoan from "./TeacherMaxBooksLoan";
 import StudentMaxBooksLoan from "./StudentMaxBooksLoan";
+import { CycleDataTable } from "./(cycle)/CycleDatatable";
+import { Cycle, columns } from "./(cycle)/columns";
+import CreateCycleForm from "./(cycle)/CreateCycleForm";
 
-const ConfigurationPage = () => {
+async function getCycleData(): Promise<Cycle[]> {
+  // Fetch data from your API here.
+  return [
+    {
+      id: '1001',
+      name: 'Licence',
+      code: "L",
+      // created_at: "2017-09-25",
+      // updated_at: "2017-09-25",
+      // deleted_at: "2017-09-25",
+      // created_by: "admin",
+      // updated_by: "admin",
+      // deleted_by: "admin"
+    },
+    {
+      id: '1001',
+      name: 'Master',
+      code: "M",
+      // created_at: "2017-09-25",
+      // updated_at: "2017-09-25",
+      // deleted_at: "2017-09-25",
+      // created_by: "admin",
+      // updated_by: "admin",
+      // deleted_by: "admin"
+    },
+    {
+      id: '1001',
+      name: 'Doctorat',
+      code: "D",
+      // created_at: "2017-09-25",
+      // updated_at: "2017-09-25",
+      // deleted_at: "2017-09-25",
+      // created_by: "admin",
+      // updated_by: "admin",
+      // deleted_by: "admin"
+    },
+    // ...
+  ]
+}
+
+const ConfigurationPage = async () => {
+  const data = await getCycleData()
   return (
     <div className="container">
       <div className="flex w-full justify-between py-4 ">
@@ -55,9 +99,9 @@ const ConfigurationPage = () => {
 
       <Card className="overflow-scroll max-h-[89vh]">
         <CardContent className="grid grid-cols-3 gap-4 pt-6">
-          <Card className="col-span-2 h-[400px] overflow-scroll">
+          <Card className="col-span-2 h-[400px] overflow-y-scroll bg-card card">
             <CardHeader>
-              <CardTitle>Configuration rapide</CardTitle>
+              <CardTitle className="text-card-foreground">Configuration rapide</CardTitle>
               <CardDescription>Quelques configuration rapide</CardDescription>
             </CardHeader>
             <CardContent className="">
@@ -166,43 +210,14 @@ const ConfigurationPage = () => {
               </Table>
             </CardContent>
           </Card>
-          <Card className="col-span-1">
+          <Card className="col-span-1 h-[400px] overflow-y-scroll card bg-card">
             <CardHeader>
-              <CardTitle>Configuration rapide</CardTitle>
-              <CardDescription>Quelques configuration rapide</CardDescription>
+              <CardTitle className="text-card-foreground">Cycles</CardTitle>
+              <CardDescription>Retrouvez ici les cycles de l'Eneam</CardDescription>
             </CardHeader>
             <CardContent className="">
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead className="w-[100px]">Element</TableHead>
-                    <TableHead>Valeur</TableHead>
-                    <TableHead>Action</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody className="text-xs">
-
-                  <TableRow>
-                    <TableCell className="font-bold text-nowrap w-full">
-                      Frais bibliothèque Eneamien
-                    </TableCell>
-                    <TableCell>500</TableCell>
-                    <TableCell>
-                      <EneamianSubscribeForm />
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell className="font-bold text-nowrap w-full">
-                      Frais bibliothèque Externes
-                    </TableCell>
-                    <TableCell>500</TableCell>
-                    <TableCell>
-                      <ExterneSubscribeForm />
-                    </TableCell>
-                  </TableRow>
-
-                </TableBody>
-              </Table>
+              <CreateCycleForm />
+              <CycleDataTable columns={columns} data={data}/>
             </CardContent>
           </Card>
           <Card className="col-span-1">

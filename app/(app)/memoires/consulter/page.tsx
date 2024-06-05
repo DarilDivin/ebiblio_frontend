@@ -1,9 +1,6 @@
-import DocumentListItem from "@/components/DocumentListItem"
 import MemoireSearchbar from "@/components/MemoireSearchbar"
-import { Button } from "@/components/ui/button"
-import { Separator } from "@/components/ui/separator"
-import { Star } from "lucide-react"
 import Image from "next/image"
+import MemoireList from "./MemoireList"
 
 const MemoireListingPage = () => {
   return (
@@ -18,14 +15,15 @@ const MemoireListingPage = () => {
         <MemoireSearchbar />
       </div>
       <div className="w-full px-12">
-        <div>
+        {/* <div>
           <div> Listing des mémoires </div>
           <div className="px-8 py-4  flex flex-col gap-2">
             <DocumentListItem />
             <DocumentListItem />
             <DocumentListItem />
           </div>
-        </div>
+        </div> */}
+        <MemoireList/>
       </div>
     </div>
   )

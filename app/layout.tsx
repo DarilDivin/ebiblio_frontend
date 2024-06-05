@@ -1,20 +1,22 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import localFont from 'next/font/local'
-import {Poppins} from 'next/font/google'
+import localFont from "next/font/local";
+import { Poppins } from "next/font/google";
+import { Toaster } from "@/components/ui/sonner";
+import Providers from "./Providers";
 
 const poppins = Poppins({
-    subsets: ['latin'],
-    display: 'swap',
-    variable: '--font-poppins',
-    weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900']
-})
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-poppins",
+  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+});
 
 const alexana = localFont({
-  src: '../Alexana.ttf',
-  display: 'swap',
-  variable: '--font-alexana',
-})
+  src: "../Alexana.ttf",
+  display: "swap",
+  variable: "--font-alexana",
+});
 
 export const metadata: Metadata = {
   title: "EBiblio",
@@ -28,7 +30,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${poppins.variable} ${alexana.variable}`}>{children}</body>
+      <body className={`${poppins.variable} ${alexana.variable}`}>
+        <Providers>{children}</Providers>
+        <Toaster />
+      </body>
     </html>
   );
 }

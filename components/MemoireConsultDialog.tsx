@@ -7,15 +7,17 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Eye } from "lucide-react";
+import Image from "next/image";
 
 const MemoireConsultDialog = ({ ...memory_data }) => {
 
-  console.log(memory_data.memory_data.theme);
+  // console.log(memory_data.memory_data);
 
   return (
     <Dialog>
-      <DialogTrigger className=" text-primary/70 hover:bg-primary/20 hover:text-primary h-8 w-fit p-1 rounded-md">
-        <Eye className="text-primary" />
+      <DialogTrigger className=" text-blue-400/70 hover:bg-blue-400/20 hover:text-blue-400 h-8 w-8 flex justify-center items-center p-1 rounded-md">
+        <span className="sr-only">Consulter le mémoire</span> 
+        <Eye className="text-blue-400 h-4 w-4" />
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
@@ -26,7 +28,7 @@ const MemoireConsultDialog = ({ ...memory_data }) => {
             </div>
             <div className="grid grid-cols-[200px_1fr]">
               <div className="w-full h-[250px] bg-slate-400 rounded-md overflow-hidden">
-
+                {/* <Image src={'http://localhost:8000/'+ memory_data.memory_data.cover_page_path} width={100} height={250} alt="cover" /> */}
               </div>
               <div className="p-2 flex flex-col gap-1">
                 <p>

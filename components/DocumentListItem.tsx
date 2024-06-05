@@ -2,8 +2,13 @@ import { Star } from "lucide-react"
 import { Button } from "./ui/button"
 import { Separator } from "./ui/separator"
 import Link from "next/link"
+import { Memoire } from "@/types"
 
-const DocumentListItem = () => {
+interface DocumentListItemProps {
+  theme: string
+}
+
+const DocumentListItem = ( {theme}: DocumentListItemProps) => {
   return (
     <div className="flex gap-4 justify-start bg-green-50 hover:bg-green-100 p-2 rounded-md">
               <div className="flex justify-center items-center size-32 bg-slate-50 rounded-md shadow-sm">
@@ -11,7 +16,7 @@ const DocumentListItem = () => {
               </div>
               <div className=" flex flex-col w-full">
                 <div className="w-full flex justify-start gap-2 items-center">
-                  <Link href='/memoires/consult' className="font-bold text-lg text-primary hover:text-primary/80 hover:underline">Thème du mémoire</Link>
+                  <Link href='/memoires/consult' className="font-bold text-lg text-primary hover:text-primary/80 hover:underline">{theme}</Link>
                   <Separator orientation="vertical" className='w-[3px] h-[15px] bg-green-500 rounded-md'/>
                   <span className=" font-bold text-black/80 text-base flex gap-2"> 
                     4.5 / 5

@@ -39,7 +39,7 @@ const Navbar = () => {
 
   const toggleTabs = (e: any) => {
     // console.log(e.target.firstChild.data);
-    if (e.target.firstChild.data === "Bibliothèque") {
+    if (e.target.firstChild.data === "Livres") {
       setShowBiblioPages(true)
     } else {
       setShowBiblioPages(false)
@@ -51,7 +51,7 @@ const Navbar = () => {
   return (
     <div className="w-full px-2 py-1 flex justify-center items-center ">
       <div className="w-full bg-slate-50 shadow-lg rounded-lg h-[50px] flex gap-4 items-center justify-between px-2 lg:px-20 py-2 relative">
-        <div className="font-semibold text-primary-foreground cursor-pointer flex items-center h-full p-1 max-sm:hidden">
+        <div className="font-semibold text-primary-foreground bg-primary/20 cursor-pointer flex items-center h-full p-1 rounded-md max-sm:hidden">
           <Link href='/home'>
             <span className="text-primary font-bold text-2xl font-alexana">E</span>
             <span>Biblio</span>
@@ -59,7 +59,7 @@ const Navbar = () => {
         </div>
         <div className="max-sm:hidden">
           <div className="w-[250px] sm:w-[300px] lg:w-fit bg-primary h-[40px] rounded-[6px] p-[3px] flex justify-between">
-              <button className={`${!showBiblioPages ? 'text-white' : 'bg-slate-50 text-primary cursor-default'} text-[10px] sm:text-xs lg:text-base h-full  w-[200px] px-8 rounded font-semibold`} onClick={toggleTabs}>Bibliothèque</button>
+              <button className={`${!showBiblioPages ? 'text-white' : 'bg-slate-50 text-primary cursor-default'} text-[10px] sm:text-xs lg:text-base h-full  w-[200px] px-8 rounded font-semibold`} onClick={toggleTabs}>Livres</button>
               <button className={`${!showBiblioPages ? 'bg-slate-50 text-primary cursor-default' : 'text-white '} text-[10px] sm:text-xs lg:text-base w-[150px] font-semibold h-full rounded `} onClick={toggleTabs}>Mémoires</button>
           </div>
         </div>
@@ -67,8 +67,9 @@ const Navbar = () => {
         {/* max-sm:absolute max-sm:bg-green-50/80 max-sm:p-4 max-sm:rounded max-sm:border max-sm:top-14 max-sm:w-[96%] max-sm:flex-wrap max-sm:grid max-sm:grid-cols-2 transition-all -translate-y-40 duration-500 */}
           {showBiblioPages ? 
             <>
-              <Link href='/home' className="hover:text-primary text-sm lg:text-sm">Liste des Livres</Link>
-              <Link href='/home' className="hover:text-primary text-sm lg:text-sm">---</Link>
+              <Link href='/livres/physiques' className="hover:text-primary text-sm lg:text-sm">Livres Physiques</Link>
+              <Link href='/livres/ebooks' className="hover:text-primary text-sm lg:text-sm">Ebooks</Link>
+              <Link href='/livres/podcasts' className="hover:text-primary text-sm lg:text-sm">Podcasts</Link>
             </>
           :   
             <>

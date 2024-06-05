@@ -3,7 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import {
@@ -23,18 +23,28 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+} from "@/components/ui/command";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 
 import { Input } from "@/components/ui/input";
 import InputError from "./InputError";
-import { DepotMemoireErrorType } from "@/types";
-import Link from "next/link";
-import { DatePicker } from "./ui/date-picker";
+import { ChevronsUpDown, LucideCheck } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { CommandList } from "cmdk";
+import AuthSessionStatus from "@/app/(auth)/AuthSessionStatus";
+import { supportedMemoireDeposit } from "@/lib/data/memories";
+import { getAllSoutenance } from "@/lib/data/soutenance";
+import { getAllFiliere } from "@/lib/data/sector";
+import { DepotMemoireErrorType } from "@/types/memory";
 
 const steps = [
   {
@@ -74,51 +84,69 @@ const steps = [
       "cover_page_path",
     ],
   },
-  { id: "4", name: "Terminé" }
+  { id: "4", name: "Terminé" },
 ];
-
-const filieres = [
-  {id: "1", name: 'Informatique de gestion 1'},
-  {id: "2", name: 'Informatique de gestion 2'},
-  {id: "3", name: 'Analyse Informatique et Programmation'},
-  {id: "4", name: 'Administration des Réseaux Informatique'},
-  {id: "5", name: 'Planification 1'},
-  {id: "6", name: 'Planification 2'},
-  {id: "7", name: 'Statistique 1'}
-]
 
 const FormSchema = z.object({
   first_author_matricule: z
     .string()
-    .length(8, "Matricule is required and has exactly 6 numbers"),
+    .min(1, "Matricule is required and has exactly 8 numbers"),
   first_author_firstname: z.string().min(1, "First name is required"),
   first_author_lastname: z.string().min(1, "Last name is required"),
   first_author_email: z
     .string()
     .min(1, "Email is required")
     .email("Invalid email address"),
-  first_author_phone: z.string().length(8, "Invalid cell phone number"),
+  first_author_phone: z.string().min(3, "Invalid cell phone number"),
 
   second_author_matricule: z
     .string()
-    .length(8, "Matricule is required and has exactly 6 numbers"),
+    .min(1, "Matricule is required and has exactly 8 numbers"),
   second_author_firstname: z.string().min(1, "First name is required"),
   second_author_lastname: z.string().min(1, "Last name is required"),
   second_author_email: z
     .string()
     .min(1, "Email is required")
     .email("Invalid email address"),
-  second_author_phone: z.string().length(8, "Invalid cell phone number"),
+  second_author_phone: z.string().min(3, "Invalid cell phone number"),
 
   theme: z.string().min(3, "Thème is required"),
-  filiere: z.string(),
-  soutenance_date: z.string().min(1, "Soutenance date is required"),
-  soutenance_hour: z.string().min(1, "Soutenance hour is required"),
-  jury_president: z.string().min(1, "Jury President is required is required"),
-  memory_master: z.string().min(1, "Memory master is required"),
-  memory_year: z.string().min(1, "Memory year is required"),
-  file_path: z.string().min(1, "Document is required"),
-  cover_page_path: z.string().min(1, "Cover page is required"),
+  sector_id: z.string(),
+  soutenance_id: z.string(),
+  start_at: z.string(),
+  ends_at: z.string(),
+  jury_president_name: z
+    .string()
+    .min(1, "Jury President is required is required"),
+  memory_master_name: z.string().min(1, "Memory master is required"),
+  memory_master_email: z
+    .string()
+    .min(1, "Email is required")
+    .email("Invalid email address"),
+  file_path:
+    typeof window === "undefined"
+      ? z.any()
+      : z
+          .instanceof(FileList)
+          .refine((file) => file?.length == 1, "File is required."),
+  // z.instanceof(File)
+  // .refine(files => files.length > 0, "Le document est requis")
+  // .refine(files => files.length === 1, "Un seul document peut être selectionné")
+  // .refine(files => files[0].size <= 200 * 1024 * 1024, "La taille maximum du fichier doit être 200MB")
+  // .refine(files => ["application/pdf"].includes(files[0].type), "Seul le pdfs sont autorisé")
+  // .optional(),
+  cover_page_path:
+    typeof window === "undefined"
+      ? z.any()
+      : z
+          .instanceof(FileList)
+          .refine((file) => file?.length == 1, "File is required."),
+  // z.instanceof(File)
+  // .refine(files => files.length > 0, "La couverture est requis")
+  // .refine(files => files.length === 1, "Un seul document peut être sélectionné")
+  // .refine(files => files[0].size <= 30 * 1024 * 1024, "La taille maximum du fichier doit être 30MB")
+  // .refine(files => ["application/pdf","image/jpeg", "image/png"].includes(files[0].type), "Les fichiers autorisés sont les pdfs ou les images en jpeg ou png")
+  // .optional(),
 });
 
 const DepotMemoireForm = () => {
@@ -126,15 +154,110 @@ const DepotMemoireForm = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const delta = currentStep - previousStep;
 
+  const soutenances = getAllSoutenance();
+  const {specialities} = getAllFiliere();
+
   const [errors, setErrors] = useState<DepotMemoireErrorType>({});
+  const [status, setStatus] = useState<string | null>(null);
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
+    defaultValues: {
+      theme: "Le thème",
+      start_at: "12:00",
+      ends_at: "15:00",
+      first_author_matricule: "14141414",
+      first_author_firstname: "Divin",
+      first_author_lastname: "Djk",
+      first_author_email: "divindjk@gmail.com",
+      first_author_phone: "12345678",
+      second_author_matricule: "12121212",
+      second_author_firstname: "Daril",
+      second_author_lastname: "Djk",
+      second_author_email: "divindjk@gmail.com",
+      second_author_phone: "123456789",
+      jury_president_name: "Comlan",
+      memory_master_name: "Charbel",
+      memory_master_email: "charbel@gmail.com",
+      sector_id: "",
+      soutenance_id: "3",
+    },
   });
 
-  const onSubmit: SubmitHandler<z.infer<typeof FormSchema>> = (data) => {
-    console.log(data);
-    form.reset();
+  const SubmitMemoireForm = (
+    event: { preventDefault: () => void },
+    theme: string,
+    start_at: string,
+    ends_at: string,
+    first_author_matricule: string,
+    first_author_firstname: string,
+    first_author_lastname:string,
+    first_author_email: string,
+    first_author_phone: string,
+    second_author_matricule: string,
+    second_author_firstname: string,
+    second_author_lastname: string,
+    second_author_email: string,
+    second_author_phone: string,
+    jury_president_name: string,
+    memory_master_name: string,
+    memory_master_email: string,
+    file_path: File,
+    cover_page_path: File,
+    sector_id: number,
+    soutenance_id: number
+  ) => {
+    event.preventDefault();
+    supportedMemoireDeposit({
+      theme,
+      start_at,
+      ends_at,
+      first_author_matricule,
+      first_author_firstname,
+      first_author_lastname,
+      first_author_email,
+      first_author_phone,
+      second_author_matricule,
+      second_author_firstname,
+      second_author_lastname,
+      second_author_email,
+      second_author_phone,
+      jury_president_name,
+      memory_master_name,
+      memory_master_email,
+      file_path,
+      cover_page_path,
+      sector_id,
+      soutenance_id,
+      setErrors,
+      setStatus,
+    });
+  };
+
+  const onSubmit = (values: z.infer<typeof FormSchema>, event: any) => {
+    SubmitMemoireForm(
+      event,
+      values.theme,
+      values.start_at,
+      values.ends_at,
+      values.first_author_matricule,
+      values.first_author_firstname,
+      values.first_author_lastname,
+      values.first_author_email,
+      values.first_author_phone,
+      values.second_author_matricule,
+      values.second_author_firstname,
+      values.second_author_lastname,
+      values.second_author_email,
+      values.second_author_phone,
+      values.jury_president_name,
+      values.memory_master_name,
+      values.memory_master_email,
+      values.file_path[0],
+      values.cover_page_path[0],
+      parseInt(values.sector_id),
+      parseInt(values.soutenance_id)
+    );
   };
 
   type FieldName = keyof z.infer<typeof FormSchema>;
@@ -163,15 +286,23 @@ const DepotMemoireForm = () => {
     }
   };
 
+  const filePathRef = form.register("file_path");
+  const coverPathRef = form.register("cover_page_path");
+
   return (
     <section className="w-full flex flex-col px-28 max-md:px-10">
+      <AuthSessionStatus className={"mb-4"} status={status} />
+
       {/* steps */}
       <ol className="flex items-center w-full text-sm font-medium text-center text-gray-500 dark:text-gray-400 sm:text-base mb-8">
         {steps.map((step, index) => (
           <>
-            {console.log(step, index)}
+            {/* {console.log(step, index)} */}
             {currentStep > index ? (
-              <li className="flex md:w-full items-center text-primary dark:text-primary/90 sm:after:content-[''] after:w-full after:h-1 after:border-b after:border-gray-200 after:border-1 after:hidden sm:after:inline-block after:mx-6 xl:after:mx-10 dark:after:border-gray-700">
+              <li
+                key={step.id}
+                className="flex md:w-full items-center text-primary dark:text-primary/90 sm:after:content-[''] after:w-full after:h-1 after:border-b after:border-gray-200 after:border-1 after:hidden sm:after:inline-block after:mx-6 xl:after:mx-10 dark:after:border-gray-700"
+              >
                 <span className="flex items-center after:content-['/'] sm:after:hidden after:mx-2 after:text-gray-200 dark:after:text-gray-500">
                   <svg
                     className="w-3.5 h-3.5 sm:w-4 sm:h-4 me-2.5"
@@ -187,7 +318,10 @@ const DepotMemoireForm = () => {
                 </span>
               </li>
             ) : currentStep < index && index < steps.length - 1 ? (
-              <li className="flex md:w-full items-center sm:after:content-[''] after:w-full after:h-1 after:border-b after:border-gray-200 after:border-1 after:hidden sm:after:inline-block after:mx-6 xl:after:mx-10 dark:after:border-gray-700">
+              <li
+                key={step.id}
+                className="flex md:w-full items-center sm:after:content-[''] after:w-full after:h-1 after:border-b after:border-gray-200 after:border-1 after:hidden sm:after:inline-block after:mx-6 xl:after:mx-10 dark:after:border-gray-700"
+              >
                 <span className="flex items-center after:content-['/'] sm:after:hidden after:mx-2 after:text-gray-200 dark:after:text-gray-500">
                   <span className="me-2">{step.id}</span>
                   {step.name}{" "}
@@ -195,12 +329,18 @@ const DepotMemoireForm = () => {
                 </span>
               </li>
             ) : currentStep === index && index === steps.length - 1 ? (
-              <li className="flex md:w-full items-center text-primary dark:text-primary/90">
+              <li
+                key={step.id}
+                className="flex md:w-full items-center text-primary dark:text-primary/90"
+              >
                 <span className="me-2">{step.id}</span>
                 {step.name}
               </li>
             ) : currentStep === index ? (
-              <li className="flex md:w-full items-center text-primary dark:text-primary/90 sm:after:content-[''] after:w-full after:h-1 after:border-b after:border-gray-200 after:border-1 after:hidden sm:after:inline-block after:mx-6 xl:after:mx-10 dark:after:border-gray-700">
+              <li
+                key={step.id}
+                className="flex md:w-full items-center text-primary dark:text-primary/90 sm:after:content-[''] after:w-full after:h-1 after:border-b after:border-gray-200 after:border-1 after:hidden sm:after:inline-block after:mx-6 xl:after:mx-10 dark:after:border-gray-700"
+              >
                 <span className="flex items-center after:content-['/'] sm:after:hidden after:mx-2 after:text-gray-200 dark:after:text-gray-500">
                   <span className="me-2">{step.id}</span>
                   {step.name}{" "}
@@ -208,7 +348,7 @@ const DepotMemoireForm = () => {
                 </span>
               </li>
             ) : (
-              <li className="flex md:w-full items-center ">
+              <li key={step.id} className="flex md:w-full items-center ">
                 <span className="me-2">{step.id}</span>
                 {step.name}
               </li>
@@ -226,7 +366,7 @@ const DepotMemoireForm = () => {
               animate={{ x: 0, opacity: 1 }}
               transition={{ duration: 0.3, ease: "easeInOut" }}
             >
-              <Card>
+              <Card className="border-primary">
                 <CardHeader>
                   <CardTitle>First Author Personal Information</CardTitle>
                   <CardDescription>
@@ -333,8 +473,8 @@ const DepotMemoireForm = () => {
                           <FormControl>
                             <Input
                               className="text-primary-foreground border-border focus-visible:ring-ring"
-                              type="number"
-                              placeholder="90909090"
+                              type="text"
+                              placeholder="+22990909090"
                               {...field}
                             />
                           </FormControl>
@@ -465,8 +605,8 @@ const DepotMemoireForm = () => {
                           <FormControl>
                             <Input
                               className="text-primary-foreground border-border focus-visible:ring-ring"
-                              type="number"
-                              placeholder="90909090"
+                              type="text"
+                              placeholder="+22990909090"
                               {...field}
                             />
                           </FormControl>
@@ -520,26 +660,88 @@ const DepotMemoireForm = () => {
                     />
                     <FormField
                       control={form.control}
-                      name="filiere"
+                      name="sector_id"
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel className=" text-primary-foreground">
                             Filière
                           </FormLabel>
-                          <FormControl>
+                          {/* <FormControl>
                             <Select>
-                            <SelectTrigger className="w-full">
-                              <SelectValue placeholder="Filière" />
-                            </SelectTrigger>
-                            <SelectContent>
-                              {filieres.map((filiere, index) =>(
-                                <SelectItem value={filiere.id}>{filiere.name}</SelectItem>
-                              ))}
-                            </SelectContent>
-                          </Select>
-                          </FormControl>
+                              <SelectTrigger className="w-full">
+                                <SelectValue placeholder="Filière" />
+                              </SelectTrigger>
+                              <SelectContent>
+                                {filieres?.map((filiere, index) => (
+                                  <SelectItem value={filiere.id.toString()} key={filiere.id}>
+                                    {filiere.name}
+                                  </SelectItem>
+                                ))}
+                              </SelectContent>
+                            </Select>
+                          </FormControl> */}
+                          <Popover>
+                            <PopoverTrigger asChild>
+                              <FormControl>
+                                <Button
+                                  variant="outline"
+                                  role="combobox"
+                                  className={cn(
+                                    "w-full justify-between",
+                                    !field.value && "text-muted-foreground"
+                                  )}
+                                >
+                                  {field.value
+                                    ? specialities?.find(
+                                        (specialitie) =>
+                                          specialitie.id.toString() === field.value
+                                      )?.name
+                                    : "Selectionner votre filiere"}
+                                  <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                                </Button>
+                              </FormControl>
+                            </PopoverTrigger>
+                            <PopoverContent className="w-full lg:w-[500px] p-0">
+                              <Command>
+                                <CommandInput
+                                  placeholder="Rechercher la filiere"
+                                  className="h-9"
+                                />
+                                <CommandEmpty>
+                                  Aucune filiere trouvé.
+                                </CommandEmpty>
+                                <CommandGroup className="max-h-[300px] overflow-scroll">
+                                  {specialities?.map((specialitie) => (
+                                    <CommandList>
+                                      <CommandItem
+                                        value={specialitie.name}
+                                        key={specialitie.id}
+                                        onSelect={() => {
+                                          form.setValue(
+                                            "sector_id",
+                                            specialitie.id.toString()
+                                          );
+                                        }}
+                                      >
+                                        {specialitie.name}
+                                        <LucideCheck
+                                          className={cn(
+                                            "ml-auto h-4 w-4",
+                                            specialitie.id.toString() ===
+                                              field.value
+                                              ? "opacity-100"
+                                              : "opacity-0"
+                                          )}
+                                        />
+                                      </CommandItem>
+                                    </CommandList>
+                                  ))}
+                                </CommandGroup>
+                              </Command>
+                            </PopoverContent>
+                          </Popover>
                           <FormMessage />
-                          <InputError messages={errors.filiere} />
+                          <InputError messages={errors.sector_id} />
                         </FormItem>
                       )}
                     />
@@ -547,51 +749,119 @@ const DepotMemoireForm = () => {
                   <div className="grid grid-cols-3 max-sm:grid-cols-1 gap-4 mb-8">
                     <FormField
                       control={form.control}
-                      name="memory_year"
+                      name="soutenance_id"
+                      render={({ field }) => (
+                        <FormItem className="flex flex-col justify-center space-y-2">
+                          <FormLabel className=" text-primary-foreground">
+                            Soutenance
+                          </FormLabel>
+                          {/* <FormControl>
+                            <Select>
+                              <SelectTrigger className="w-full">
+                                <SelectValue placeholder="Sélection votre soutenance" />
+                              </SelectTrigger>
+                              <SelectContent>
+                                {soutenances?.map((soutenance, index) => (
+                                  <SelectItem value={soutenance.id.toString()}>
+                                    {soutenance.name}
+                                  </SelectItem>
+                                ))}
+                              </SelectContent>
+                            </Select>
+                          </FormControl> */}
+                          <Popover>
+                            <PopoverTrigger asChild>
+                              <FormControl>
+                                <Button
+                                  variant="outline"
+                                  role="combobox"
+                                  className={cn(
+                                    "w-full justify-between",
+                                    !field.value && "text-muted-foreground"
+                                  )}
+                                >
+                                  {field.value
+                                    ? soutenances?.find(
+                                        (soutenance) =>
+                                          soutenance.id.toString() ===
+                                          field.value
+                                      )?.name
+                                    : "Selectionner votre soutenance"}
+                                  <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                                </Button>
+                              </FormControl>
+                            </PopoverTrigger>
+                            <PopoverContent className="w-full lg:w-[500px] p-0">
+                              <Command>
+                                <CommandInput
+                                  placeholder="Rechercher la soutenance"
+                                  className="h-9"
+                                />
+                                <CommandEmpty>
+                                  Aucune soutenance trouvé.
+                                </CommandEmpty>
+                                <CommandGroup className="max-h-[300px] overflow-scroll">
+                                  {soutenances?.map((soutenance) => (
+                                    <CommandList>
+                                      <CommandItem
+                                        value={soutenance.name}
+                                        key={soutenance.id}
+                                        onSelect={() => {
+                                          form.setValue(
+                                            "soutenance_id",
+                                            soutenance.id.toString()
+                                          );
+                                        }}
+                                      >
+                                        {soutenance.name}
+                                        <LucideCheck
+                                          className={cn(
+                                            "ml-auto h-4 w-4",
+                                            soutenance.id.toString() ===
+                                              field.value
+                                              ? "opacity-100"
+                                              : "opacity-0"
+                                          )}
+                                        />
+                                      </CommandItem>
+                                    </CommandList>
+                                  ))}
+                                </CommandGroup>
+                              </Command>
+                            </PopoverContent>
+                          </Popover>
+                          <FormMessage />
+                          <InputError messages={errors.soutenance_id} />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="start_at"
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel className=" text-primary-foreground">
-                            Année de soutenance
+                            Heure de début
                           </FormLabel>
                           <FormControl>
                             <Input
+                              type="time"
                               className="text-primary-foreground border-border focus-visible:ring-ring"
                               {...field}
                             />
                           </FormControl>
                           <FormMessage />
-                          <InputError messages={errors.memory_year} />
+                          <InputError messages={errors.start_at} />
                         </FormItem>
                       )}
                     />
                     <FormField
                       control={form.control}
-                      name="soutenance_date"
+                      name="ends_at"
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel className=" text-primary-foreground">
-                            Date de soutenance
-                          </FormLabel>
-                          <FormControl>
-                            {/* <Input
-                              className="text-primary-foreground border-border focus-visible:ring-ring"
-                              type="date"
-                              {...field}
-                            /> */}
-                            <DatePicker />
-                          </FormControl>
-                          <FormMessage />
-                          <InputError messages={errors.soutenance_date} />
-                        </FormItem>
-                      )}
-                    />
-                    <FormField
-                      control={form.control}
-                      name="soutenance_hour"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel className=" text-primary-foreground">
-                            Heure de soutenance
+                            Heure de fin
                           </FormLabel>
                           <FormControl>
                             <Input
@@ -601,16 +871,16 @@ const DepotMemoireForm = () => {
                             />
                           </FormControl>
                           <FormMessage />
-                          <InputError messages={errors.soutenance_hour} />
+                          <InputError messages={errors.ends_at} />
                         </FormItem>
                       )}
                     />
                   </div>
 
-                  <div className="grid grid-cols-2 max-sm:grid-cols-1 gap-4 mb-8">
+                  <div className="grid grid-cols-3 max-sm:grid-cols-1 gap-4 mb-8">
                     <FormField
                       control={form.control}
-                      name="jury_president"
+                      name="jury_president_name"
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel className=" text-primary-foreground">
@@ -625,13 +895,13 @@ const DepotMemoireForm = () => {
                             />
                           </FormControl>
                           <FormMessage />
-                          <InputError messages={errors.jury_president} />
+                          <InputError messages={errors.jury_president_name} />
                         </FormItem>
                       )}
                     />
                     <FormField
                       control={form.control}
-                      name="memory_master"
+                      name="memory_master_name"
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel className=" text-primary-foreground">
@@ -646,7 +916,28 @@ const DepotMemoireForm = () => {
                             />
                           </FormControl>
                           <FormMessage />
-                          <InputError messages={errors.memory_master} />
+                          <InputError messages={errors.memory_master_name} />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="memory_master_email"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className=" text-primary-foreground">
+                            Maitre mémoire
+                          </FormLabel>
+                          <FormControl>
+                            <Input
+                              className="text-primary-foreground border-border focus-visible:ring-ring"
+                              type="email"
+                              placeholder="Maurice Comlan"
+                              {...field}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                          <InputError messages={errors.memory_master_email} />
                         </FormItem>
                       )}
                     />
@@ -664,7 +955,8 @@ const DepotMemoireForm = () => {
                             <Input
                               className="text-primary-foreground border-border focus-visible:ring-ring"
                               type="file"
-                              {...field}
+                              // {...register('file_path')}
+                              {...filePathRef}
                             />
                           </FormControl>
                           <FormMessage />
@@ -672,9 +964,50 @@ const DepotMemoireForm = () => {
                         </FormItem>
                       )}
                     />
+                    <FormField
+                      control={form.control}
+                      name="cover_page_path"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className=" text-primary-foreground">
+                            Page de garde
+                          </FormLabel>
+                          <FormControl>
+                            <Input
+                              className="text-primary-foreground border-border focus-visible:ring-ring"
+                              type="file"
+                              // {...register('cover_page_path')}
+                              {...coverPathRef}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                          <InputError messages={errors.cover_page_path} />
+                        </FormItem>
+                      )}
+                    />
                   </div>
                 </CardContent>
                 <CardFooter></CardFooter>
+              </Card>
+            </motion.div>
+          )}
+
+          {currentStep === 3 && (
+            <motion.div
+              initial={{ x: delta >= 0 ? "50%" : "-50%", opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              transition={{ duration: 0.3, ease: "easeInOut" }}
+            >
+              <Card>
+                <CardHeader>
+                  <CardTitle>Nous sommes à la fin</CardTitle>
+                  <CardDescription>
+                    Cliquez sur le bouton suivant pour soummettre votre mémoire.
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <Button type="submit">Soummettre</Button>
+                </CardContent>
               </Card>
             </motion.div>
           )}

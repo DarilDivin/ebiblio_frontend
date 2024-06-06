@@ -129,24 +129,12 @@ const FormSchema = z.object({
       : z
           .instanceof(FileList)
           .refine((file) => file?.length == 1, "File is required."),
-  // z.instanceof(File)
-  // .refine(files => files.length > 0, "Le document est requis")
-  // .refine(files => files.length === 1, "Un seul document peut être selectionné")
-  // .refine(files => files[0].size <= 200 * 1024 * 1024, "La taille maximum du fichier doit être 200MB")
-  // .refine(files => ["application/pdf"].includes(files[0].type), "Seul le pdfs sont autorisé")
-  // .optional(),
   cover_page_path:
     typeof window === "undefined"
       ? z.any()
       : z
           .instanceof(FileList)
           .refine((file) => file?.length == 1, "File is required."),
-  // z.instanceof(File)
-  // .refine(files => files.length > 0, "La couverture est requis")
-  // .refine(files => files.length === 1, "Un seul document peut être sélectionné")
-  // .refine(files => files[0].size <= 30 * 1024 * 1024, "La taille maximum du fichier doit être 30MB")
-  // .refine(files => ["application/pdf","image/jpeg", "image/png"].includes(files[0].type), "Les fichiers autorisés sont les pdfs ou les images en jpeg ou png")
-  // .optional(),
 });
 
 const DepotMemoireForm = () => {
@@ -154,7 +142,7 @@ const DepotMemoireForm = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const delta = currentStep - previousStep;
 
-  const soutenances = getAllSoutenance();
+  const {soutenances} = getAllSoutenance();
   const {specialities} = getAllFiliere();
 
   const [errors, setErrors] = useState<DepotMemoireErrorType>({});

@@ -1,3 +1,4 @@
+import { Dispatch, SetStateAction } from "react";
 import { Cycle } from "./cycle";
 import { Memoire } from "./memory";
 
@@ -40,4 +41,30 @@ export interface GetAllSoutenanceResponse {
     to: number;
     total: number;
   };
+}
+
+export interface CreateSoutenanceErrorType {
+  start_date?: string[],
+  end_date?: string[],
+  number_memories_expected?: string[],
+  cycle_id?: string[],
+}
+
+export interface CreateSoutenanceProps {
+  start_date: string,
+  end_date: string,
+  number_memories_expected: number,
+  cycle_id: number,
+
+  setErrors: Dispatch<SetStateAction<CreateSoutenanceErrorType>>;
+}
+
+export interface EditSoutenanceProps {
+  start_date: string,
+  end_date: string,
+  number_memories_expected: number,
+  cycle_id: number,
+  soutenance: number
+
+  setErrors: Dispatch<SetStateAction<CreateSoutenanceErrorType>>;
 }

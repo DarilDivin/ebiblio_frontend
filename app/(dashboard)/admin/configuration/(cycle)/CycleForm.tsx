@@ -38,7 +38,7 @@ const FormSchema = z.object({
 
 const CycleForm = ({ cycle }: { cycle?: Cycle }) => {
   // console.log(cycle);
-  
+
   const { mutate } = useCycle();
 
   const form = useForm<z.infer<typeof FormSchema>>({
@@ -82,8 +82,11 @@ const CycleForm = ({ cycle }: { cycle?: Cycle }) => {
   return (
     <Dialog>
       {cycle ? (
-        <DialogTrigger onClick={() => console.log(cycle)} className="h-8 w-8 p-0 flex justify-center items-center text-orange-400/70 hover:bg-orange-400/20 hover:text-orange-400 rounded-md">
-          <span className="sr-only">Valider le mémoire</span>
+        <DialogTrigger
+          onClick={() => console.log(cycle)}
+          className="h-8 w-8 p-0 flex justify-center items-center text-orange-400/70 hover:bg-orange-400/20 hover:text-orange-400 rounded-md"
+        >
+          <span className="sr-only">Modifier un cycle</span>
           <Edit className="text-orange-400 h-4 w-4" />
         </DialogTrigger>
       ) : (
@@ -138,7 +141,7 @@ const CycleForm = ({ cycle }: { cycle?: Cycle }) => {
                 )}
               />
               <Button type="submit" className="mt-8">
-                {cycle ? 'Modifier' : 'Créer'}
+                {cycle ? "Modifier" : "Créer"}
               </Button>
             </form>
           </Form>

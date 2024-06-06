@@ -13,15 +13,15 @@ import { Checkbox } from "@/components/ui/checkbox";
 // } from "@/components/ui/dropdown-menu";
 
 import { Edit, Trash2 } from "lucide-react";
-import { Cycle } from "@/types/cycle";
-import CycleForm from "./CycleForm";
-import { deleteCycle } from "@/lib/data/cycle";
-import { useCycle } from "@/services/queries";
+import { Soutenance } from "@/types/soutenance";
+import SoutenanceForm from "./SoutenanceForm";
+import { deleteSoutenance } from "@/lib/data/soutenance";
+import { useSoutenance } from "@/services/queries";
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
 
-export const cycleColumns: ColumnDef<Cycle>[] = [
+export const soutenanceColumns: ColumnDef<Soutenance>[] = [
   {
     id: "select",
     header: ({ table }) => (
@@ -46,32 +46,36 @@ export const cycleColumns: ColumnDef<Cycle>[] = [
   },
   {
     accessorKey: "name",
-    header: "Cycle",
+    header: "Soutenance",
   },
   {
-    accessorKey: "code",
-    header: "Code",
+    accessorKey: "start_date",
+    header: "Date de début",
+  },
+  {
+    accessorKey: "end_date",
+    header: "Date de fin",
   },
   {
     id: "actions",
     header: "Actions",
     cell: ({ row }) => {
-      const cycle = row.original;
+      const soutenance = row.original;
 
-      const { mutate } = useCycle();
+      const { mutate } = useSoutenance();
 
       return (
         <div className="flex gap-2">
-          <CycleForm cycle={cycle} />
+          <SoutenanceForm soutenance={soutenance} />
           <Button
             variant="ghost"
             className="h-8 w-8 p-0 text-destructive/70 hover:bg-destructive/20 hover:text-destructive rounded-md"
             onClick={async () => {
-              await deleteCycle({ cycle: cycle.id });
+              await deleteSoutenance({ soutenance: soutenance.id });
               mutate();
             }}
           >
-            <span className="sr-only">Valider le mémoire</span>
+            <span className="sr-only">Supprimer la soutenance</span>
             <Trash2 className="text-destructive h-4 w-4" />
           </Button>
         </div>

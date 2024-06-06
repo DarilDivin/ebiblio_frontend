@@ -30,18 +30,23 @@ import StudentMaxRenewals from "./StudentMaxRenewals";
 import TeacherMaxRenewals from "./TeacherMaxRenewals";
 import TeacherMaxBooksLoan from "./TeacherMaxBooksLoan";
 import StudentMaxBooksLoan from "./StudentMaxBooksLoan";
-import { CycleDataTable } from "./(cycle)/CycleDatatable";
-import { columns } from "./(cycle)/columns";
-import CycleForm from "./(cycle)/CycleForm";
-import { getAllCycle } from "@/lib/data/cycle";
+import { soutenanceColumns } from "./(soutenance)/columns";
+import { cycleColumns } from "./(cycle)/columns";
 import { getLastConfig } from "@/lib/data/configuration";
 import { Skeleton } from "@/components/ui/skeleton";
 import SchoolNameForm from "./SchoolNameForm";
 import SchoolAcronymForm from "./SchoolAcronymForm";
 import SchoolCityForm from "./SchoolCityForm";
+import { SoutenanceDataTable } from "./(soutenance)/SoutenanceDatatable";
+import { getAllSoutenance } from "@/lib/data/soutenance";
+import { getAllCycle } from "@/lib/data/cycle";
+import { CycleDataTable } from "./(cycle)/CycleDatatable";
+import CycleForm from "./(cycle)/CycleForm";
+import SoutenanceForm from "./(soutenance)/SoutenanceForm";
 
 const ConfigurationPage = () => {
   const cycles = getAllCycle();
+  const soutenances = getAllSoutenance();
   const lastConfig = getLastConfig();
   return (
     <div className="container">
@@ -66,245 +71,317 @@ const ConfigurationPage = () => {
       </div>
 
       <Card className="overflow-scroll max-h-[89vh]">
-        <CardContent className="grid grid-cols-3 gap-4 pt-6">
-          <Card className="col-span-2 h-[400px] overflow-y-scroll bg-card card">
-            <CardHeader>
-              <CardTitle className="text-card-foreground">
-                Configuration rapide
-              </CardTitle>
-              <CardDescription>Quelques configuration rapide</CardDescription>
-            </CardHeader>
-            <CardContent className="">
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead className="w-[100px]">Element</TableHead>
-                    <TableHead>Valeur</TableHead>
-                    <TableHead>Action</TableHead>
-                  </TableRow>
-                </TableHeader>
-                {lastConfig.error ? (
-                  <TableBody>Erreur de chargement des données</TableBody>
-                ) : lastConfig.isLoading || !lastConfig.lastConfig ? (
-                  <TableBody>
-                    <TableRow>
-                      <TableCell className="font-bold text-nowrap w-full">
-                        <Skeleton className="h-6 w-[250px]" />
-                      </TableCell>
-                      <TableCell>
-                        <Skeleton className="h-6 w-[50px]" />
-                      </TableCell>
-                      <TableCell>
-                        <Skeleton className="h-8 w-8" />
-                      </TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell className="font-bold text-nowrap w-full">
-                        <Skeleton className="h-6 w-[250px]" />
-                      </TableCell>
-                      <TableCell>
-                        <Skeleton className="h-6 w-[50px]" />
-                      </TableCell>
-                      <TableCell>
-                        <Skeleton className="h-8 w-8" />
-                      </TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell className="font-bold text-nowrap w-full">
-                        <Skeleton className="h-6 w-[250px]" />
-                      </TableCell>
-                      <TableCell>
-                        <Skeleton className="h-6 w-[50px]" />
-                      </TableCell>
-                      <TableCell>
-                        <Skeleton className="h-8 w-8" />
-                      </TableCell>
-                    </TableRow>
-                  </TableBody>
-                ) : (
-                  <TableBody className="text-xs">
-                    <TableRow>
-                      <TableCell className="font-bold text-nowrap w-full">
-                        Nom de L'université
-                      </TableCell>
-                      <TableCell>
-                        {lastConfig.lastConfig.school_name}
-                      </TableCell>
-                      <TableCell>
-                        <SchoolNameForm
-                          name={lastConfig.lastConfig.school_name}
-                        />
-                      </TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell className="font-bold text-nowrap w-full">
-                        Acronym de l'Université
-                      </TableCell>
-                      <TableCell>
-                        {lastConfig.lastConfig.school_acronym}
-                      </TableCell>
-                      <TableCell>
-                        <SchoolAcronymForm
-                          name={
-                            lastConfig.lastConfig.school_acronym
-                          }
-                        />
-                      </TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell className="font-bold text-nowrap w-full">
-                        Ville de l'Université
-                      </TableCell>
-                      <TableCell>
-                        {lastConfig.lastConfig.school_city}
-                      </TableCell>
-                      <TableCell>
-                        <SchoolCityForm
-                          name={
-                            lastConfig.lastConfig.school_city
-                          }
-                        />
-                      </TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell className="font-bold text-nowrap w-full">
-                        Frais bibliothèque Eneamien
-                      </TableCell>
-                      <TableCell>
-                        {lastConfig.lastConfig.eneamien_subscribe_amount}
-                      </TableCell>
-                      <TableCell>
-                        <EneamianSubscribeForm
-                          amount={
-                            lastConfig.lastConfig.eneamien_subscribe_amount
-                          }
-                        />
-                      </TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell className="font-bold text-nowrap w-full">
-                        Frais bibliothèque Externes
-                      </TableCell>
-                      <TableCell>
-                        {lastConfig.lastConfig?.extern_subscribe_amount}
-                      </TableCell>
-                      <TableCell>
-                        <ExterneSubscribeForm
-                          amount={lastConfig.lastConfig.extern_subscribe_amount}
-                        />
-                      </TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell className="font-bold text-nowrap w-full">
-                        Montant minimale de la dette étudiante
-                      </TableCell>
-                      <TableCell>
-                        {lastConfig.lastConfig?.student_debt_amount}
-                      </TableCell>
-                      <TableCell>
-                        <StudentDebtPrice amount={lastConfig.lastConfig.student_debt_amount} />
-                      </TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell className="font-bold text-nowrap w-full">
-                        Montant minimale de la dette enseignante
-                      </TableCell>
-                      <TableCell>
-                        {lastConfig.lastConfig?.teacher_debt_amount}
-                      </TableCell>
-                      <TableCell>
-                        <TeacherDebtPrice amount={lastConfig.lastConfig.teacher_debt_amount} />
-                      </TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell className="font-bold text-nowrap w-full">
-                        Durée maximale du prêt pour les Etudiants
-                      </TableCell>
-                      <TableCell>
-                        {lastConfig.lastConfig?.student_loan_delay}
-                      </TableCell>
-                      <TableCell>
-                        <StudentLoanDelay delay={lastConfig.lastConfig.student_loan_delay} />
-                      </TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell className="font-bold text-nowrap w-full">
-                        Durée maximale du prêt pour les enseignants
-                      </TableCell>
-                      <TableCell>
-                        {lastConfig.lastConfig?.teacher_loan_delay}
-                      </TableCell>
-                      <TableCell>
-                        <TeacherLoanDelay delay={lastConfig.lastConfig.teacher_loan_delay} />
-                      </TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell className="font-bold text-nowrap w-full">
-                        Nombre de renouvellement possible pour Etudiant
-                      </TableCell>
-                      <TableCell>
-                        {lastConfig.lastConfig?.student_renewals_number}
-                      </TableCell>
-                      <TableCell>
-                        <StudentMaxRenewals max={lastConfig.lastConfig.student_renewals_number} />
-                      </TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell className="font-bold text-nowrap w-full">
-                        Nombre de renouvellement possible pour Enseignant
-                      </TableCell>
-                      <TableCell>
-                        {lastConfig.lastConfig?.teacher_renewals_number}
-                      </TableCell>
-                      <TableCell>
-                        <TeacherMaxRenewals max={lastConfig.lastConfig.teacher_renewals_number} />
-                      </TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell className="font-bold text-nowrap w-full">
-                        Nombre maximale de livre prêté par un Etudiant
-                      </TableCell>
-                      <TableCell>
-                        {lastConfig.lastConfig?.max_books_per_student}
-                      </TableCell>
-                      <TableCell>
-                        <StudentMaxBooksLoan max={lastConfig.lastConfig.max_books_per_student} />
-                      </TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell className="font-bold text-nowrap w-full">
-                        Nombre maximale de livre prêté par un enseignant
-                      </TableCell>
-                      <TableCell>
-                        {lastConfig.lastConfig?.max_books_per_teacher}
-                      </TableCell>
-                      <TableCell>
-                        <TeacherMaxBooksLoan max={lastConfig.lastConfig.max_books_per_teacher} />
-                      </TableCell>
-                    </TableRow>
-                  </TableBody>
-                )}
-              </Table>
-            </CardContent>
-          </Card>
-          {cycles.error ? (
-            <div>Erreur de chargement des données</div>
-          ) : cycles.isLoading || !cycles.cycles ? (
-            <div>Chargement...</div>
-          ) : (
-            <Card className="col-span-1 h-[400px] overflow-y-scroll card bg-card">
+        <CardContent className="flex flex-col gap-4 pt-6">
+          <div className="grid grid-cols-3 gap-4 pt-6">
+            <Card className="col-span-2 h-[400px] overflow-y-scroll bg-card card">
               <CardHeader>
-                <CardTitle className="text-card-foreground">Cycles</CardTitle>
-                <CardDescription>
-                  Retrouvez ici les cycles de l'Eneam
-                </CardDescription>
+                <CardTitle className="text-card-foreground">
+                  Configuration rapide
+                </CardTitle>
+                <CardDescription>Quelques configuration rapide</CardDescription>
               </CardHeader>
               <CardContent className="">
-                <CycleForm />
-                <CycleDataTable columns={columns} data={cycles.cycles} />
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead className="w-[100px]">Element</TableHead>
+                      <TableHead>Valeur</TableHead>
+                      <TableHead>Action</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  {lastConfig.error ? (
+                    <TableBody>Erreur de chargement des données</TableBody>
+                  ) : lastConfig.isLoading || !lastConfig.lastConfig ? (
+                    <TableBody>
+                      <TableRow>
+                        <TableCell className="font-bold text-nowrap w-full">
+                          <Skeleton className="h-6 w-[250px]" />
+                        </TableCell>
+                        <TableCell>
+                          <Skeleton className="h-6 w-[50px]" />
+                        </TableCell>
+                        <TableCell>
+                          <Skeleton className="h-8 w-8" />
+                        </TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell className="font-bold text-nowrap w-full">
+                          <Skeleton className="h-6 w-[250px]" />
+                        </TableCell>
+                        <TableCell>
+                          <Skeleton className="h-6 w-[50px]" />
+                        </TableCell>
+                        <TableCell>
+                          <Skeleton className="h-8 w-8" />
+                        </TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell className="font-bold text-nowrap w-full">
+                          <Skeleton className="h-6 w-[250px]" />
+                        </TableCell>
+                        <TableCell>
+                          <Skeleton className="h-6 w-[50px]" />
+                        </TableCell>
+                        <TableCell>
+                          <Skeleton className="h-8 w-8" />
+                        </TableCell>
+                      </TableRow>
+                    </TableBody>
+                  ) : (
+                    <TableBody className="text-xs">
+                      <TableRow>
+                        <TableCell className="font-bold text-nowrap w-full">
+                          Nom de L'université
+                        </TableCell>
+                        <TableCell>
+                          {lastConfig.lastConfig.school_name}
+                        </TableCell>
+                        <TableCell>
+                          <SchoolNameForm
+                            name={lastConfig.lastConfig.school_name}
+                          />
+                        </TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell className="font-bold text-nowrap w-full">
+                          Acronym de l'Université
+                        </TableCell>
+                        <TableCell>
+                          {lastConfig.lastConfig.school_acronym}
+                        </TableCell>
+                        <TableCell>
+                          <SchoolAcronymForm
+                            name={lastConfig.lastConfig.school_acronym}
+                          />
+                        </TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell className="font-bold text-nowrap w-full">
+                          Ville de l'Université
+                        </TableCell>
+                        <TableCell>
+                          {lastConfig.lastConfig.school_city}
+                        </TableCell>
+                        <TableCell>
+                          <SchoolCityForm
+                            name={lastConfig.lastConfig.school_city}
+                          />
+                        </TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell className="font-bold text-nowrap w-full">
+                          Frais bibliothèque Eneamien
+                        </TableCell>
+                        <TableCell>
+                          {lastConfig.lastConfig.eneamien_subscribe_amount}
+                        </TableCell>
+                        <TableCell>
+                          <EneamianSubscribeForm
+                            amount={
+                              lastConfig.lastConfig.eneamien_subscribe_amount
+                            }
+                          />
+                        </TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell className="font-bold text-nowrap w-full">
+                          Frais bibliothèque Externes
+                        </TableCell>
+                        <TableCell>
+                          {lastConfig.lastConfig?.extern_subscribe_amount}
+                        </TableCell>
+                        <TableCell>
+                          <ExterneSubscribeForm
+                            amount={
+                              lastConfig.lastConfig.extern_subscribe_amount
+                            }
+                          />
+                        </TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell className="font-bold text-nowrap w-full">
+                          Montant minimale de la dette étudiante
+                        </TableCell>
+                        <TableCell>
+                          {lastConfig.lastConfig?.student_debt_amount}
+                        </TableCell>
+                        <TableCell>
+                          <StudentDebtPrice
+                            amount={lastConfig.lastConfig.student_debt_amount}
+                          />
+                        </TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell className="font-bold text-nowrap w-full">
+                          Montant minimale de la dette enseignante
+                        </TableCell>
+                        <TableCell>
+                          {lastConfig.lastConfig?.teacher_debt_amount}
+                        </TableCell>
+                        <TableCell>
+                          <TeacherDebtPrice
+                            amount={lastConfig.lastConfig.teacher_debt_amount}
+                          />
+                        </TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell className="font-bold text-nowrap w-full">
+                          Durée maximale du prêt pour les Etudiants
+                        </TableCell>
+                        <TableCell>
+                          {lastConfig.lastConfig?.student_loan_delay}
+                        </TableCell>
+                        <TableCell>
+                          <StudentLoanDelay
+                            delay={lastConfig.lastConfig.student_loan_delay}
+                          />
+                        </TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell className="font-bold text-nowrap w-full">
+                          Durée maximale du prêt pour les enseignants
+                        </TableCell>
+                        <TableCell>
+                          {lastConfig.lastConfig?.teacher_loan_delay}
+                        </TableCell>
+                        <TableCell>
+                          <TeacherLoanDelay
+                            delay={lastConfig.lastConfig.teacher_loan_delay}
+                          />
+                        </TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell className="font-bold text-nowrap w-full">
+                          Nombre de renouvellement possible pour Etudiant
+                        </TableCell>
+                        <TableCell>
+                          {lastConfig.lastConfig?.student_renewals_number}
+                        </TableCell>
+                        <TableCell>
+                          <StudentMaxRenewals
+                            max={lastConfig.lastConfig.student_renewals_number}
+                          />
+                        </TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell className="font-bold text-nowrap w-full">
+                          Nombre de renouvellement possible pour Enseignant
+                        </TableCell>
+                        <TableCell>
+                          {lastConfig.lastConfig?.teacher_renewals_number}
+                        </TableCell>
+                        <TableCell>
+                          <TeacherMaxRenewals
+                            max={lastConfig.lastConfig.teacher_renewals_number}
+                          />
+                        </TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell className="font-bold text-nowrap w-full">
+                          Nombre maximale de livre prêté par un Etudiant
+                        </TableCell>
+                        <TableCell>
+                          {lastConfig.lastConfig?.max_books_per_student}
+                        </TableCell>
+                        <TableCell>
+                          <StudentMaxBooksLoan
+                            max={lastConfig.lastConfig.max_books_per_student}
+                          />
+                        </TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell className="font-bold text-nowrap w-full">
+                          Nombre maximale de livre prêté par un enseignant
+                        </TableCell>
+                        <TableCell>
+                          {lastConfig.lastConfig?.max_books_per_teacher}
+                        </TableCell>
+                        <TableCell>
+                          <TeacherMaxBooksLoan
+                            max={lastConfig.lastConfig.max_books_per_teacher}
+                          />
+                        </TableCell>
+                      </TableRow>
+                    </TableBody>
+                  )}
+                </Table>
               </CardContent>
             </Card>
-          )}
+            {cycles.error ? (
+              <div>Erreur de chargement des données</div>
+            ) : cycles.isLoading || !cycles.cycles ? (
+              <Card className="col-span-1 h-[400px] overflow-y-scroll card bg-card">
+                <CardHeader>
+                  <Skeleton className="h-8 w-16" />
+                  <Skeleton className="h-4 w-40" />
+                </CardHeader>
+                <CardContent>
+                  <Skeleton className="h-8 w-16 mb-4" />
+                  <div className="grid grid-cols-4 gap-4 mb-6">
+                    <Skeleton className="h-8 col-span-3" />
+                    <Skeleton className="h-8 w-full" />
+                  </div>
+
+                  <Skeleton className="w-full h-[200px]" />
+                </CardContent>
+              </Card>
+            ) : (
+              <Card className="col-span-1 h-[400px] overflow-y-scroll card bg-card">
+                <CardHeader>
+                  <CardTitle className="text-card-foreground">Cycles</CardTitle>
+                  <CardDescription>
+                    Retrouvez ici les cycles de l'Eneam
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="">
+                  <CycleForm />
+                  <CycleDataTable columns={cycleColumns} data={cycles.cycles} />
+                </CardContent>
+              </Card>
+            )}
+          </div>
+
+          {/* <Card> */}
+          <div className=" grid grid-cols-2 gap-4">
+            {soutenances.error ? (
+              <div>Erreur de chargement des données</div>
+            ) : soutenances.isLoading || !soutenances.soutenances ? (
+              <Card className="col-span-1 h-[400px] overflow-y-scroll card bg-card">
+                <CardHeader>
+                  <Skeleton className="h-8 w-16" />
+                  <Skeleton className="h-4 w-40" />
+                </CardHeader>
+                <CardContent>
+                  <Skeleton className="h-8 w-16 mb-4" />
+                  <div className="grid grid-cols-4 gap-4 mb-6">
+                    <Skeleton className="h-8 col-span-3" />
+                    <Skeleton className="h-8 w-full" />
+                  </div>
+
+                  <Skeleton className="w-full h-[200px]" />
+                </CardContent>
+              </Card>
+            ) : (
+              <Card className="col-span-1 h-[400px] overflow-y-scroll card bg-card">
+                <CardHeader>
+                  <CardTitle className="text-card-foreground">
+                    Soutenances
+                  </CardTitle>
+                  <CardDescription>
+                    Retrouvez ici les soutenances par année de l'Eneam
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="">
+                  <SoutenanceForm />
+                  <SoutenanceDataTable
+                    columns={soutenanceColumns}
+                    data={soutenances?.soutenances}
+                  />
+                </CardContent>
+              </Card>
+            )}
+          </div>
+          {/* </Card> */}
         </CardContent>
       </Card>
     </div>

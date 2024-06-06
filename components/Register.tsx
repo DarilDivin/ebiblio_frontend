@@ -103,8 +103,8 @@ const Register = () => {
       <div className="w-full">
         <Card className='bg-card'>
           <CardHeader>
-            <CardTitle className='text-primary'>Register</CardTitle>
-            <CardDescription>Enter your credentials below to create your account</CardDescription>
+            <CardTitle className='text-primary'>Créer un compte</CardTitle>
+            <CardDescription>Entrez vos informations pour créer votre compte</CardDescription>
           </CardHeader>
           <CardContent>
             <Form {...form}>

@@ -28,6 +28,7 @@ import { Cycle } from "@/types/cycle";
 import { useState } from "react";
 import { createCycle, editCycle } from "@/lib/data/cycle";
 import { useCycle } from "@/services/queries";
+import InputError from "@/components/InputError";
 
 const FormSchema = z.object({
   name: z
@@ -119,6 +120,7 @@ const CycleForm = ({ cycle }: { cycle?: Cycle }) => {
                       />
                     </FormControl>
                     <FormMessage />
+                    {/* <InputError messages={errors.name} /> */}
                   </FormItem>
                 )}
               />
@@ -137,6 +139,7 @@ const CycleForm = ({ cycle }: { cycle?: Cycle }) => {
                       />
                     </FormControl>
                     <FormMessage />
+                    {/* <InputError messages={errors.code} /> */}
                   </FormItem>
                 )}
               />

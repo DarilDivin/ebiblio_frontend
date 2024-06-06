@@ -75,7 +75,6 @@ const UpdateProfile = ({ user }: {user: any}) => {
       lastname: "",
       email: "",  
     },
-    values
   });
 
   // 2. Define a submit handler.

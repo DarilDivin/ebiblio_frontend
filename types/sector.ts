@@ -1,3 +1,5 @@
+import { Dispatch, SetStateAction } from "react";
+
 export interface Sector {
   id: number;
   type: string;
@@ -35,4 +37,31 @@ export interface GetAllSectorResponse {
     to: number;
     total: number;
   };
+}
+
+export interface SectorSpecialityErrorType {
+  name?: string[];
+  type?: string[];
+  acronym?: string[];
+  sector?: string[];
+  sector_id?: string[];
+}
+
+export interface CreateSectorSpecialityProps {
+  name: string;
+  type: string;
+  acronym: string;
+  sector_id?: number;
+
+  setErrors: Dispatch<SetStateAction<SectorSpecialityErrorType>>
+}
+
+export interface UpdateSectorSpecialityProps {
+  name: string;
+  type: string;
+  acronym: string;
+  sector_id?: number;
+  sector: number;
+
+  setErrors: Dispatch<SetStateAction<SectorSpecialityErrorType>>
 }

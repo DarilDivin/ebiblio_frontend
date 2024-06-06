@@ -45,7 +45,7 @@ export const updateSoutenance = async ({setErrors, soutenance, ...props}: EditSo
     .then(() => toast.success('Soutencance Modifié avec succès 👍🏾'))
     .catch((error) => {
       if (error.response.status === 422) {
-        setErrors(error.response.datd.errors);
+        setErrors(error.response.data.errors);
         toast.error('Erreur de validation')
       } else {
         toast.error('Une erreur inattendue est survenue 🧐')

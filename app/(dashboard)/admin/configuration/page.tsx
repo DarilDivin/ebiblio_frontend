@@ -43,10 +43,14 @@ import { getAllCycle } from "@/lib/data/cycle";
 import { CycleDataTable } from "./(cycle)/CycleDatatable";
 import CycleForm from "./(cycle)/CycleForm";
 import SoutenanceForm from "./(soutenance)/SoutenanceForm";
+import { getAllFiliere } from "@/lib/data/sector";
+import { sectorColumns } from "./(sector&specialities)/columns";
+import SectorSpecialityForm from "./(sector&specialities)/Sector&SpecialityForm";
 
 const ConfigurationPage = () => {
   const cycles = getAllCycle();
   const soutenances = getAllSoutenance();
+  const sectors = getAllFiliere()
   const lastConfig = getLastConfig();
   return (
     <div className="container">
@@ -376,6 +380,43 @@ const ConfigurationPage = () => {
                   <SoutenanceDataTable
                     columns={soutenanceColumns}
                     data={soutenances?.soutenances}
+                  />
+                </CardContent>
+              </Card>
+            )}
+            {sectors.error ? (
+              <div>Erreur de chargement des données</div>
+            ) : sectors.isLoading || !sectors.sectorsAndSpecialities ? (
+              <Card className="col-span-1 h-[400px] overflow-y-scroll card bg-card">
+                <CardHeader>
+                  <Skeleton className="h-8 w-16" />
+                  <Skeleton className="h-4 w-40" />
+                </CardHeader>
+                <CardContent>
+                  <Skeleton className="h-8 w-16 mb-4" />
+                  <div className="grid grid-cols-4 gap-4 mb-6">
+                    <Skeleton className="h-8 col-span-3" />
+                    <Skeleton className="h-8 w-full" />
+                  </div>
+
+                  <Skeleton className="w-full h-[200px]" />
+                </CardContent>
+              </Card>
+            ) : (
+              <Card className="col-span-1 h-[400px] overflow-y-scroll card bg-card">
+                <CardHeader>
+                  <CardTitle className="text-card-foreground">
+                    Filières
+                  </CardTitle>
+                  <CardDescription>
+                    Retrouvez ici les filières de l'Eneam
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="">
+                  <SectorSpecialityForm />
+                  <SoutenanceDataTable
+                    columns={sectorColumns}
+                    data={sectors?.sectorsAndSpecialities}
                   />
                 </CardContent>
               </Card>

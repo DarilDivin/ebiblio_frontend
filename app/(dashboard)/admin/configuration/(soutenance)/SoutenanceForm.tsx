@@ -42,6 +42,7 @@ import { format } from "date-fns";
 import { fr } from "date-fns/locale";
 import { cn } from "@/lib/utils";
 import { getAllCycle } from "@/lib/data/cycle";
+import InputError from "@/components/InputError";
 
 const FormSchema = z.object({
   start_date: z.date(),
@@ -191,6 +192,7 @@ const SoutenanceForm = ({ soutenance }: { soutenance?: Soutenance }) => {
                       </PopoverContent>
                     </Popover>
                     <FormMessage />
+                    <InputError messages={errors.start_date} />
                   </FormItem>
                 )}
               />
@@ -227,6 +229,7 @@ const SoutenanceForm = ({ soutenance }: { soutenance?: Soutenance }) => {
                       </PopoverContent>
                     </Popover>
                     <FormMessage />
+                    <InputError messages={errors.end_date} />
                   </FormItem>
                 )}
               />
@@ -246,6 +249,7 @@ const SoutenanceForm = ({ soutenance }: { soutenance?: Soutenance }) => {
                       />
                     </FormControl>
                     <FormMessage />
+                    <InputError messages={errors.number_memories_expected} />
                   </FormItem>
                 )}
               />
@@ -273,6 +277,7 @@ const SoutenanceForm = ({ soutenance }: { soutenance?: Soutenance }) => {
                       </SelectContent>
                     </Select>
                     <FormMessage />
+                    <InputError messages={errors.cycle_id} />
                   </FormItem>
                 )}
               />

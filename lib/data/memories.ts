@@ -108,3 +108,19 @@ export const rejectMemory = async ({
       console.log(error.response.data.errors);
     });
 };
+
+export const deleteMemory = async ({ memory }: { memory: number }) => {
+  await csrf();
+  await axios
+    .delete(`/api/supportedMemory/${memory}`)
+    .then(() => {
+      toast.success('Mémoire supprimé avec succès 👍🏾')
+    })
+    .catch((error) => {
+      if (error.response && error.response.status === 422) {
+        toast.error('Erreur de validation')
+      } else {
+        toast.error('Erruer inattendu 🧐')
+      }
+    })
+}

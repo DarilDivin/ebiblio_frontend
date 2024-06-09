@@ -9,6 +9,11 @@ export function useMemory() {
   return useSWR<GetAllMemoryResponse>('/api/supportedMemory');
 }
 
+export function useMemoryByLink(url: string) {
+  console.log(url)
+  return useSWR<GetAllMemoryResponse>(url);
+}
+
 export function useSoutenance() {
   return useSWR<GetAllSoutenanceResponse>('/api/soutenance');
 }
@@ -23,4 +28,8 @@ export function useCycle() {
 
 export function useLastConfig() {
   return useSWR<LastConfigResponse>('api/config/last');
+}
+
+export function useRole() {
+  return useSWR('api/role');
 }

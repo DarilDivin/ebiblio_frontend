@@ -19,7 +19,7 @@ const DashboardLayout = ({
         <div className=' w-fit'>
           <Sidebar open={sidebarIsOpen} onOpen={setSidebarIsOpen} />
         </div>
-        <div className="bg-muted rounded-md overflow-y-scroll">
+        <div className="bg-background rounded-md overflow-y-scroll">
           {children}
         </div>
       </div>

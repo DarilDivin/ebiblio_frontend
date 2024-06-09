@@ -3,21 +3,16 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
 
 import { ArrowUpDown, Copy, FileCheck2, MoreHorizontal } from "lucide-react";
 import MemoireConsultDialog from "@/components/MemoireConsultDialog";
-import { validateMemory } from "@/lib/data/memories";
+import {  
+  validateMemory,
+} from "@/lib/data/memories";
 import RejectMemoryDialog from "@/components/RejectMemoryDialog";
 import { toast } from "sonner";
 import { Memoire } from "@/types/memory";
 import { useMemory } from "@/services/queries";
-import { Badge } from "@/components/ui/badge";
 
 export const columns: ColumnDef<Memoire>[] = [
   {
@@ -47,39 +42,21 @@ export const columns: ColumnDef<Memoire>[] = [
     header: "Theme",
   },
   {
-    id: "Auteurs",
-    header: "Auteurs",
-    cell: ({ row }) => {
-      const memory = row.original;
-
-      return (
-        <Badge variant={"secondary"}>
-          {memory.first_author_firstname + " " + memory.first_author_lastname}{" "}
-          {memory.first_author_firstname
-            ? " & " +
-              memory.second_author_firstname +
-              " " +
-              memory.second_author_lastname
-            : ""}
-        </Badge>
-      );
-    },
-  },
-  {
     accessorKey: "memory_master_name",
-    header: "Maitre de mémoire ",
+    header: "Maitre mémoire ",
   },
   {
-    accessorKey: "jury_president_name",
-    header: "Président du jury ",
-  },
-  {
-    id: "sector",
-    header: "Filière/Spécialité",
-    cell: ({ row }) => {
-      const memory = row.original;
-
-      return <Badge>{memory.sector.name}</Badge>;
+    accessorKey: "memory_year",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Année
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
     },
   },
   {
@@ -97,65 +74,28 @@ export const columns: ColumnDef<Memoire>[] = [
 
       return (
         <div className="flex gap-2">
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger>
-                <MemoireConsultDialog memory_data={memory} />
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>Voir plus d'informations</p>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger>
-                <RejectMemoryDialog idmemory={memory.id} />
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>Rejeter le mémoire</p>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger>
-                <Button
-                  variant="ghost"
-                  className="h-8 w-8 p-0 text-primary/70 hover:bg-primary/20 hover:text-primary rounded-md"
-                  memoryid={memory.id}
-                  onClick={() => handleValidatedMemory(memory.id)}
-                >
-                  <span className="sr-only">Valider le mémoire</span>
-                  <FileCheck2 className="text-primary h-4 w-4" />
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>Valider le mémoire</p>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
-          {/* <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger>
-                <Button
-                  variant="ghost"
-                  className="h-8 w-8 p-0"
-                  onClick={() => {
-                    navigator.clipboard.writeText(memory.cote),
-                      toast("Cote du mémoire copié");
-                  }}
-                >
-                  <span className="sr-only">Copier la cote du mémoire</span>
-                  <Copy className="h-4 w-4" />
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>Copier la cote du mémoire</p>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider> */}
-
+          <MemoireConsultDialog memory_data={memory} />
+          <RejectMemoryDialog idmemory={memory.id} />
+          <Button
+            variant="ghost"
+            className="h-8 w-8 p-0 text-primary/70 hover:bg-primary/20 hover:text-primary rounded-md"
+            memoryid={memory.id}
+            onClick={() => handleValidatedMemory(memory.id)}
+          >
+            <span className="sr-only">Valider le mémoire</span>
+            <FileCheck2 className="text-primary h-4 w-4" />
+          </Button>
+          <Button
+            variant="ghost"
+            className="h-8 w-8 p-0"
+            onClick={() => {
+              navigator.clipboard.writeText(memory.cote),
+                toast("Cote du mémoire copié");
+            }}
+          >
+            <span className="sr-only">Copier la cote du mémoire</span>
+            <Copy className="h-4 w-4" />
+          </Button>
           {/* <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" className="h-8 w-8 p-0">

@@ -17,7 +17,7 @@ export const updateSchoolName = async ({school_name}: {school_name: string}) => 
   await csrf();
   await axios
     .patch("/api/config/update/school-name", {school_name: school_name})
-    .then(() => toast("Nom de l'université modifié aves succès👍🏾"))
+    .then(() => toast.success("Nom de l'université modifié aves succès👍🏾"))
     .catch((error) => {
       if (error.response && error.response.status === 422) {
         const errors = error.response.data.errors;
@@ -39,7 +39,7 @@ export const updateSchoolAcronym = async ({school_acronym}: {school_acronym: str
   await csrf();
   await axios
     .patch("/api/config/update/school-acronym", {school_acronym: school_acronym})
-    .then(() => toast("Acronyme de l'université modifié aves succès👍🏾"))
+    .then(() => toast.success("Acronyme de l'université modifié aves succès👍🏾"))
     .catch((error) => {
       if (error.response && error.response.status === 422) {
         const errors = error.response.data.errors;
@@ -61,7 +61,7 @@ export const updateSchoolCity = async ({school_city}: {school_city: string}) => 
   await csrf();
   await axios
     .patch("/api/config/update/school-city", {school_city: school_city})
-    .then(() => toast("Ville de l'université modifié aves succès👍🏾"))
+    .then(() => toast.success("Ville de l'université modifié aves succès👍🏾"))
     .catch((error) => {
       if (error.response && error.response.status === 422) {
         const errors = error.response.data.errors;
@@ -89,7 +89,7 @@ export const updateEneaminanSubscribeAmount = async ({
   await axios
     .patch("/api/config/update/eneamien-subscribe-amount", {eneamien_subscribe_amount: eneamien_subscribe_amount})
     .then(() =>
-      toast("Frais de bibliothéque pour les étudiants modifié aves succès👍🏾")
+      toast.success("Frais de bibliothéque pour les étudiants modifié aves succès👍🏾")
     )
     .catch((error) => {
       if (error.response && error.response.status === 422) {
@@ -117,7 +117,7 @@ export const updateExterneSubscribeAmount = async ({
   await axios
     .patch("/api/config/update/extern-subscribe-amount", {extern_subscribe_amount: extern_subscribe_amount})
     .then(() =>
-      toast("Frais de bibliothéque pour les externes modifié aves succès👍🏾")
+      toast.success("Frais de bibliothéque pour les externes modifié aves succès👍🏾")
     )
     .catch((error) => {
       if (error.response && error.response.status === 422) {
@@ -141,7 +141,7 @@ export const updateSubscriptonExpirationDelay = async () => {
   await axios
     .patch("/api/config/update/subscription-expiration-delay")
     .then(() =>
-      toast("Durée de l'abonnement à la bibliothèque modifié aves succès👍🏾")
+      toast.success("Durée de l'abonnement à la bibliothèque modifié aves succès👍🏾")
     )
     .catch((error) => {
       if (error.response && error.response.status === 422) {
@@ -169,7 +169,7 @@ export const updateStudentDebtAmount = async ({
   await axios
     .patch("/api/config/update/student-debt-amount", {student_debt_amount: student_debt_amount})
     .then(() =>
-      toast("Montant minimale de la dette étudiante modifié aves succès👍🏾")
+      toast.success("Montant minimale de la dette étudiante modifié aves succès👍🏾")
     )
     .catch((error) => {
       if (error.response && error.response.status === 422) {
@@ -197,7 +197,7 @@ export const updateTeacherDebtAmount = async ({
   await axios
     .patch("/api/config/update/teacher-debt-amount", {teacher_debt_amount: teacher_debt_amount})
     .then(() =>
-      toast("Montant minimale de la dette Enseignante modifié aves succès👍🏾")
+      toast.success("Montant minimale de la dette Enseignante modifié aves succès👍🏾")
     )
     .catch((error) => {
       if (error.response && error.response.status === 422) {
@@ -221,7 +221,7 @@ export const updateStudentLoanDelay = async ({student_loan_delay}: {student_loan
   await axios
     .patch("/api/config/update/student-loan-delay", {student_loan_delay: student_loan_delay})
     .then(() =>
-      toast("Durée maximale du prêt pour les Etudiants modifié aves succès👍🏾")
+      toast.success("Durée maximale du prêt pour les Etudiants modifié aves succès👍🏾")
     )
     .catch((error) => {
       if (error.response && error.response.status === 422) {
@@ -245,7 +245,7 @@ export const updateTeacherLoanDelay = async ({teacher_loan_delay}: {teacher_loan
   await axios
     .patch("/api/config/update/teacher-loan-delay", {teacher_loan_delay: teacher_loan_delay})
     .then(() =>
-      toast("Durée maximale du prêt pour les Enseignats modifié aves succès👍🏾")
+      toast.success("Durée maximale du prêt pour les Enseignats modifié aves succès👍🏾")
     )
     .catch((error) => {
       if (error.response && error.response.status === 422) {
@@ -269,7 +269,7 @@ export const updateStudentRenewalsNumber = async ({student_renewals_number}: {st
   await axios
     .patch("/api/config/update/student-renewals-number", {student_renewals_number: student_renewals_number})
     .then(() =>
-      toast(
+      toast.success(
         "Nombre de renouvellement possible pour Etudiant modifié aves succès👍🏾"
       )
     )
@@ -295,7 +295,7 @@ export const updateTeacherRenewalsNumber = async ({teacher_renewals_number}: {te
   await axios
     .patch("/api/config/update/teacher-renewals-number", {teacher_renewals_number: teacher_renewals_number})
     .then(() =>
-      toast(
+      toast.success(
         "Nombre de renouvellement possible pour enseignant modifié aves succès👍🏾"
       )
     )
@@ -321,7 +321,7 @@ export const updateMaxBookPerStudent = async ({max_books_per_student}: {max_book
   await axios
     .patch("/api/config/update/max-books-per-student", {max_books_per_student: max_books_per_student})
     .then(() =>
-      toast(
+      toast.success(
         "Nombre maximale de livre prêté par un Etudiant modifié aves succès👍🏾"
       )
     )
@@ -347,7 +347,7 @@ export const updateMaxBookPerTeacher = async ({max_books_per_teacher}: {max_book
   await axios
     .patch("/api/config/update/max-books-per-teacher", {max_books_per_teacher: max_books_per_teacher})
     .then(() =>
-      toast(
+      toast.success(
         "Nombre maximale de livre prêté par un Enseignant modifié aves succès👍🏾"
       )
     )
@@ -373,7 +373,7 @@ export const updateMaxCopiesBookPerStudent = async () => {
   await axios
     .patch("/api/config/update/max-copies-books-per-student")
     .then(() =>
-      toast(
+      toast.success(
         "Nombre maximale d'une même copie de livre prêté par un Etudiant modifié aves succès👍🏾"
       )
     )
@@ -399,7 +399,7 @@ export const updateMaxCopiesBookPerTeacher = async () => {
   await axios
     .patch("/api/config/update/max-copies-books-per-teacher")
     .then(() =>
-      toast(
+      toast.success(
         "Nombre maximale d'une même copie de livre prêté par un Enseignant modifié aves succès👍🏾"
       )
     )

@@ -69,7 +69,7 @@ export function DemandeDepotMemoireDataTable<TData, TValue>({
   });
 
   return (
-    <div>
+    <div className="w-full">
       <div className="flex items-center py-4 gap-2">
         <Input
           placeholder="Filter thème..."

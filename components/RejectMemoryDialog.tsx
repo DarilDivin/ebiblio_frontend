@@ -14,7 +14,7 @@ import { z } from "zod";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "./ui/form";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
-import { Trash2 } from "lucide-react";
+import { FileX2 } from "lucide-react";
 import { useMemory } from "@/services/queries";
 
 const FormSchema = z.object({
@@ -51,7 +51,7 @@ const RejectMemoryDialog = ({ idmemory }: { idmemory: number }) => {
     <Dialog>
       <DialogTrigger className="text-destructive/70 hover:bg-destructive/20 hover:text-destructive h-8 w-8 flex justify-center items-center p-1 rounded-md">
         <span className="sr-only">Rejeter le mémoire</span> 
-        <Trash2 className="text-destructive h-4 w-4"/>
+        <FileX2 className="text-destructive h-4 w-4"/>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>

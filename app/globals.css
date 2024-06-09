@@ -70,7 +70,7 @@
 
 .card::-webkit-scrollbar {
   display: block;
-  width: 5px;
+  width: 1.5px;
 }
 
 .card::-webkit-scrollbar-thumb {

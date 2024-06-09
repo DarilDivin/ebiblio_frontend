@@ -37,7 +37,7 @@ interface DataTableProps<TData, TValue> {
   data: TData[];
 }
 
-export function MemoireListDataTable<TData, TValue>({
+export function DemandeDepotMemoireDataTable<TData, TValue>({
   columns,
   data,
 }: DataTableProps<TData, TValue>) {
@@ -79,14 +79,6 @@ export function MemoireListDataTable<TData, TValue>({
           }
           className="max-w-sm"
         />
-        {/* <Input
-          placeholder="Filter maitre mémoire"
-          value={(table.getColumn("memory_master")?.getFilterValue() as string) ?? ""}
-          onChange={(event) =>
-            table.getColumn("memory_master")?.setFilterValue(event.target.value)
-          }
-          className="max-w-sm"
-        /> */}
 
         <DropdownMenu>
           <DropdownMenuTrigger asChild>

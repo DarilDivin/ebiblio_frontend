@@ -1,21 +1,32 @@
-"use client"
+"use client";
 
-import { ColumnDef } from "@tanstack/react-table"
-import { Button } from "@/components/ui/button"
-import { Checkbox } from "@/components/ui/checkbox"
+import { ColumnDef } from "@tanstack/react-table";
+import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 
-import { ArrowUpDown, MoreHorizontal } from "lucide-react"
-import MemoireConsultDialog from "@/components/MemoireConsultDialog"
-import { Memoire } from "@/types/memory"
-
+import { ArrowUpDown, Copy, MoreHorizontal, Trash2 } from "lucide-react";
+import MemoireConsultDialog from "@/components/MemoireConsultDialog";
+import { Memoire } from "@/types/memory";
+import { Badge } from "@/components/ui/badge";
+import { toast } from "sonner";
+import { deleteMemory } from "@/lib/data/memories";
+import { useMemory } from "@/services/queries";
 
 export const columns: ColumnDef<Memoire>[] = [
   {
@@ -45,34 +56,154 @@ export const columns: ColumnDef<Memoire>[] = [
     header: "Theme",
   },
   {
-    accessorKey: "memory_master_name",
-    header: "Maitre mémoire ",
+    id: "Auteurs",
+    header: "Auteurs",
+    cell: ({ row }) => {
+      const memory = row.original;
+
+      return (
+        <Badge variant={"secondary"}>
+          {memory.first_author_firstname + " " + memory.first_author_lastname}{" "}
+          {memory.first_author_firstname
+            ? " & " +
+              memory.second_author_firstname +
+              " " +
+              memory.second_author_lastname
+            : ""}
+        </Badge>
+      );
+    },
   },
   {
-    accessorKey: "memory_year",
+    accessorKey: "memory_master_name",
+    header: "Maitre de mémoire ",
+  },
+  {
+    accessorKey: "jury_president_name",
+    header: "Président du jury ",
+  },
+  {
+    id: "sector",
+    accessorKey: "sector",
+
+    // header: "Filière/Spécialité",
     header: ({ column }) => {
+      console.log(column);
+
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Année
+          Filière/Spécialité
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
-      )
+      );
+    },
+    cell: ({ row }) => {
+      const memory = row.original;
+
+      return <Badge>{memory.sector.name}</Badge>;
     },
   },
+  // {
+  //   accessorKey: "memory_year",
+  //   header: ({ column }) => {
+  //     return (
+  //       <Button
+  //         variant="ghost"
+  //         onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+  //       >
+  //         Année
+  //         <ArrowUpDown className="ml-2 h-4 w-4" />
+  //       </Button>
+  //     )
+  //   },
+  // },
   {
     id: "actions",
     header: "Actions",
     cell: ({ row }) => {
-      const memory = row.original
- 
+      const memory = row.original;
+
+      const { mutate } = useMemory();
+
+      const handleDeleteMemory = async (memory: number) => {
+        await deleteMemory({ memory });
+        mutate()
+      }
+
       return (
         <div className="flex gap-2">
-          <MemoireConsultDialog memory_data={memory}/>
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger>
+                <MemoireConsultDialog memory_data={memory} />
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Voir plus d'informations</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger>
+                <Button
+                  variant="ghost"
+                  className="h-8 w-8 p-0"
+                  onClick={() => {
+                    navigator.clipboard.writeText(memory.cote),
+                      toast("Cote du mémoire copié");
+                  }}
+                >
+                  <span className="sr-only">Copier la cote du mémoire</span>
+                  <Copy className="h-4 w-4" />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Copier la cote du mémoire</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger>
+                <Dialog>
+                  <DialogTrigger className=" text-destructive/70 hover:bg-destructive/20 hover:text-destructive h-8 w-8 flex justify-center items-center p-1 rounded-md">
+                    <span className="sr-only">Consulter le mémoire</span>
+                    <Trash2 className="text-destructive h-4 w-4" />
+                  </DialogTrigger>
+                  <DialogContent>
+                    <DialogHeader>
+                      <DialogTitle>
+                        Voulez vraiment supprimer ce mémoire
+                      </DialogTitle>
+                      <DialogDescription className="">
+                        Lorem ipsum dolor sit, amet consectetur adipisicing
+                        elit. Beatae dolorum maiores cumque eius, quidem veniam?
+                      </DialogDescription>
+                    </DialogHeader>
+                    <DialogFooter className="sm:justify-end">
+                      <DialogClose asChild>
+                        <Button type="button" variant="secondary">
+                          Annuler
+                        </Button>
+                      </DialogClose>
+                      <Button variant={'destructive'} onClick={() => handleDeleteMemory(memory.id)}>
+                        Supprimer
+                      </Button>
+                    </DialogFooter>
+                  </DialogContent>
+                </Dialog>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Supprimer le mémoire</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+          {/* <MemoireConsultDialog memory_data={memory} /> */}
         </div>
-      )
+      );
     },
   },
-]
+];

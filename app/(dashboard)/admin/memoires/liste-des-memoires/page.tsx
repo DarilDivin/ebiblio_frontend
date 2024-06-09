@@ -28,7 +28,7 @@ const AdminListeMemoire = () => {
           <AvatarFallback>CN</AvatarFallback>
         </Avatar>
       </div>
-      <div className="container mx-auto py-4">
+      <div className="max-lg:container px-10 w-full py-4">
         <MemoireListDataTable columns={columns} data={data} />
       </div>
     </div>

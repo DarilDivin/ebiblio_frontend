@@ -7,8 +7,12 @@ export interface Memoire {
   theme: string;
   start_at: string;
   ends_at: string;
-  first_author_name: string;
-  second_author_name: string;
+  first_author_matricule: string;
+  first_author_firstname: string;
+  first_author_lastname: string;
+  second_author_matricule: string;
+  second_author_firstname: string;
+  second_author_lastname: string;
   first_author_email: string;
   second_author_email: string;
   first_author_phone: string;
@@ -30,13 +34,13 @@ export interface Memoire {
 
 export interface GetAllMemoryResponse {
   data: Memoire[];
-  links: {
+  links?: {
     first: string;
     last: string;
     prev: string | null;
     next: string | null;
   };
-  meta: {
+  meta?: {
     current_page: number;
     from: number;
     last_page: number;

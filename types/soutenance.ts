@@ -9,6 +9,7 @@ export interface Soutenance {
   start_date: string;
   end_date: string;
   number_memories_expected: number;
+  school_year: string;
   created_by: string | null;
   updated_by: string | null;
   deleted_by: string | null;

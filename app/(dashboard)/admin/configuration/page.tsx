@@ -46,11 +46,13 @@ import SoutenanceForm from "./(soutenance)/SoutenanceForm";
 import { getAllFiliere } from "@/lib/data/sector";
 import { sectorColumns } from "./(sector&specialities)/columns";
 import SectorSpecialityForm from "./(sector&specialities)/Sector&SpecialityForm";
+import { ScrollArea } from "@radix-ui/react-scroll-area";
+import { ScrollBar } from "@/components/ui/scroll-area";
 
 const ConfigurationPage = () => {
   const cycles = getAllCycle();
   const soutenances = getAllSoutenance();
-  const sectors = getAllFiliere()
+  const sectors = getAllFiliere();
   const lastConfig = getLastConfig();
   return (
     <div className="container">

@@ -82,3 +82,55 @@
 .card::-webkit-scrollbar-track {
   background-color: hsla(161, 25%, 23%, 0.05);
 }
+
+
+
+.ts-wrapper {
+  border: .5px solid var(--primary);
+  border-radius: 5px;
+  width: 100%;
+  height: 80px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+/* .ts-control {
+  height: 125px;
+  background: rgba(0, 128, 0);
+  border: none!important;
+  overflow-y: scroll;
+} */
+
+.ts-control::-webkit-scrollbar{
+  display: none;
+}
+
+.ts-control {
+  height: 100%;
+  background: #fff!important;
+  border: none!important;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-wrap: wrap!important;
+}
+
+.ts-control > input {
+  border: 1px!important;
+  border-color: black!important;
+  width: 250px!important;
+}
+
+.ts-wrapper.multi .ts-control > div {
+  cursor: pointer;
+  margin: 0 3px 3px 0;
+  padding: 2px 6px;
+  padding-right: 6px;
+  background: #0adb9620!important;
+  color: var(--text-color);
+  border: .5px solid #0adb96!important;
+  border-radius: 3px;
+  max-height: 35px;
+}

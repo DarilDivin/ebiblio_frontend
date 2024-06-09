@@ -114,13 +114,13 @@ export const deleteMemory = async ({ memory }: { memory: number }) => {
   await axios
     .delete(`/api/supportedMemory/${memory}`)
     .then(() => {
-      toast.success('Mémoire supprimé avec succès 👍🏾')
+      toast.success('Mémoire supprimé avec succès 👍🏾.')
     })
     .catch((error) => {
-      if (error.response && error.response.status === 422) {
-        toast.error('Erreur de validation')
+      if (error.response && error.response.status === 404) {
+        toast.error('Le mémoire ne peut être supprimé😔.')
       } else {
-        toast.error('Erruer inattendu 🧐')
+        toast.error('Erruer inattendu 🧐.  Vueillez réessayer plus tard.')
       }
     })
 }

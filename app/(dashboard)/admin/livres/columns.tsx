@@ -22,13 +22,14 @@ import {
 
 import { ArrowUpDown, Copy, Trash2 } from "lucide-react";
 import MemoireConsultDialog from "@/components/MemoireConsultDialog";
-import { Memoire } from "@/types/memory";
 import { Badge } from "@/components/ui/badge";
 import { toast } from "sonner";
 import { deleteMemory } from "@/lib/data/memories";
-import { useMemory } from "@/services/queries";
+import { useBook, useMemory } from "@/services/queries";
+import { Book } from "@/types/book";
+import { deleteBook } from "@/lib/data/book";
 
-export const columns: ColumnDef<Memoire>[] = [
+export const columns: ColumnDef<Book>[] = [
   {
     id: "select",
     header: ({ table }) => (
@@ -52,84 +53,68 @@ export const columns: ColumnDef<Memoire>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: "theme",
-    header: "Theme",
-  },
-  {
-    id: "Auteurs",
-    header: "Auteurs",
-    cell: ({ row }) => {
-      const memory = row.original;
-
-      return (
-        <Badge variant={"secondary"}>
-          {memory.first_author_firstname + " " + memory.first_author_lastname}{" "}
-          {memory.first_author_firstname
-            ? " & " +
-              memory.second_author_firstname +
-              " " +
-              memory.second_author_lastname
-            : ""}
-        </Badge>
-      );
-    },
-  },
-  {
-    accessorKey: "memory_master_name",
-    header: "Maitre de mémoire ",
-  },
-  {
-    accessorKey: "jury_president_name",
-    header: "Président du jury ",
-  },
-  {
-    id: "sector",
-    accessorKey: "sector",
-
-    // header: "Filière/Spécialité",
-    header: ({ column }) => {
-      console.log(column);
-
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Filière/Spécialité
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      );
-    },
-    cell: ({ row }) => {
-      const memory = row.original;
-
-      return <Badge>{memory.sector.name}</Badge>;
-    },
+    accessorKey: "title",
+    header: "Titre",
   },
   // {
-  //   accessorKey: "memory_year",
+  //   id: "Auteurs",
+  //   header: "Auteurs",
+  //   cell: ({ row }) => {
+  //     const memory = row.original;
+
+  //     return (
+  //       <Badge variant={"secondary"}>
+  //         {memory.first_author_firstname + " " + memory.first_author_lastname}{" "}
+  //         {memory.first_author_firstname
+  //           ? " & " +
+  //             memory.second_author_firstname +
+  //             " " +
+  //             memory.second_author_lastname
+  //           : ""}
+  //       </Badge>
+  //     );
+  //   },
+  // },
+  // {
+  //   accessorKey: "memory_master_name",
+  //   header: "Maitre de mémoire ",
+  // },
+  // {
+  //   accessorKey: "jury_president_name",
+  //   header: "Président du jury ",
+  // },
+  // {
+  //   id: "sector",
+  //   accessorKey: "sector",
   //   header: ({ column }) => {
+  //     console.log(column);
+
   //     return (
   //       <Button
   //         variant="ghost"
   //         onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
   //       >
-  //         Année
+  //         Filière/Spécialité
   //         <ArrowUpDown className="ml-2 h-4 w-4" />
   //       </Button>
-  //     )
+  //     );
+  //   },
+  //   cell: ({ row }) => {
+  //     const memory = row.original;
+
+  //     return <Badge>{memory.sector.name}</Badge>;
   //   },
   // },
   {
     id: "actions",
     header: "Actions",
     cell: ({ row }) => {
-      const memory = row.original;
+      const book = row.original;
 
-      const { mutate } = useMemory();
+      const { mutate } = useBook();
 
-      const handleDeleteMemory = async (memory: number) => {
-        await deleteMemory({ memory });
+      const handleDeleteBook = async (book: number) => {
+        await deleteBook({ article: book });
         mutate()
       }
 
@@ -138,7 +123,7 @@ export const columns: ColumnDef<Memoire>[] = [
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger>
-                <MemoireConsultDialog memory_data={memory} />
+                <MemoireConsultDialog memory_data={book} />
               </TooltipTrigger>
               <TooltipContent>
                 <p>Voir plus d'informations</p>
@@ -152,7 +137,7 @@ export const columns: ColumnDef<Memoire>[] = [
                   variant="ghost"
                   className="h-8 w-8 p-0"
                   onClick={() => {
-                    navigator.clipboard.writeText(memory.cote),
+                    navigator.clipboard.writeText(book.cote),
                       toast("Cote du mémoire copié");
                   }}
                 >
@@ -189,7 +174,7 @@ export const columns: ColumnDef<Memoire>[] = [
                           Annuler
                         </Button>
                       </DialogClose>
-                      <Button variant={'destructive'} onClick={() => handleDeleteMemory(memory.id)}>
+                      <Button variant={'destructive'} onClick={() => handleDeleteBook(book.id)}>
                         Supprimer
                       </Button>
                     </DialogFooter>

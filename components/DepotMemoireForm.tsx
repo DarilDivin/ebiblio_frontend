@@ -90,51 +90,51 @@ const steps = [
 const FormSchema = z.object({
   first_author_matricule: z
     .string()
-    .min(1, "Matricule is required and has exactly 8 numbers"),
-  first_author_firstname: z.string().min(1, "First name is required"),
-  first_author_lastname: z.string().min(1, "Last name is required"),
+    .min(1, "Le matricule est requis"),
+  first_author_firstname: z.string().min(1, "Le prenom est requis"),
+  first_author_lastname: z.string().min(1, "Le nom de famille est requis"),
   first_author_email: z
     .string()
-    .min(1, "Email is required")
-    .email("Invalid email address"),
-  first_author_phone: z.string().min(3, "Invalid cell phone number"),
+    .min(1, "L'adresse mail est obligatoire")
+    .email("L'adresse email est invalide"),
+  first_author_phone: z.string().min(3, "Le numéro de téléphone est invalide"),
 
   second_author_matricule: z
     .string()
-    .min(1, "Matricule is required and has exactly 8 numbers"),
-  second_author_firstname: z.string().min(1, "First name is required"),
-  second_author_lastname: z.string().min(1, "Last name is required"),
+    .min(1, "Le matricule est requis"),
+  second_author_firstname: z.string().min(1, "Le prenom est requis"),
+  second_author_lastname: z.string().min(1, "Le nom de famille est requis"),
   second_author_email: z
     .string()
-    .min(1, "Email is required")
-    .email("Invalid email address"),
-  second_author_phone: z.string().min(3, "Invalid cell phone number"),
+    .min(1, "L'adresse mail est obligatoire")
+    .email("L'adresse email est invalide"),
+  second_author_phone: z.string().min(3, "Le numéro de téléphone est invalide"),
 
-  theme: z.string().min(3, "Thème is required"),
+  theme: z.string().min(3, "Le thème est obligatoire"),
   sector_id: z.string(),
   soutenance_id: z.string(),
   start_at: z.string(),
   ends_at: z.string(),
   jury_president_name: z
     .string()
-    .min(1, "Jury President is required is required"),
-  memory_master_name: z.string().min(1, "Memory master is required"),
+    .min(1, "Le nom du président du jury est obligatoire"),
+  memory_master_name: z.string().min(1, "Le nom du maitre de mémoire est obligatoire"),
   memory_master_email: z
     .string()
-    .min(1, "Email is required")
-    .email("Invalid email address"),
+    .min(1, "l'addresse mail du maitre de mémoire est obligatoire")
+    .email("L'adresse email est invalide"),
   file_path:
     typeof window === "undefined"
       ? z.any()
       : z
           .instanceof(FileList)
-          .refine((file) => file?.length == 1, "File is required."),
+          .refine((file) => file?.length == 1, "Le document est obligatoire."),
   cover_page_path:
     typeof window === "undefined"
       ? z.any()
       : z
           .instanceof(FileList)
-          .refine((file) => file?.length == 1, "File is required."),
+          .refine((file) => file?.length == 1, "La couverture est obligatoire."),
 });
 
 const DepotMemoireForm = () => {

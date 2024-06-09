@@ -1,17 +1,31 @@
+import { GetAllBookResponse } from "@/types/book";
 import { LastConfigResponse } from "@/types/configuration";
 import { GetAllCycleResponse } from "@/types/cycle";
 import { GetAllMemoryResponse } from "@/types/memory";
+import { GetAllSchoolYearResponse } from "@/types/schoolyear";
 import { GetAllSectorResponse } from "@/types/sector";
 import { GetAllSoutenanceResponse } from "@/types/soutenance";
 import useSWR from "swr";
 
 export function useMemory() {
-  return useSWR<GetAllMemoryResponse>('/api/supportedMemory');
+  return useSWR<GetAllMemoryResponse>('/api/supportedMemory/no-pagination');
+}
+
+export function useBook() {
+  return useSWR<GetAllBookResponse>('/api/article/no-pagination')
+}
+
+export function useBookByLink(url: string) {
+  return useSWR<GetAllBookResponse>(url)
 }
 
 export function useMemoryByLink(url: string) {
   console.log(url)
   return useSWR<GetAllMemoryResponse>(url);
+}
+
+export function useSchoolYear() {
+  return useSWR<GetAllSchoolYearResponse>('/api/schoolYear')
 }
 
 export function useSoutenance() {

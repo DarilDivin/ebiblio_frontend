@@ -1,6 +1,7 @@
 import { GetAllBookResponse } from "@/types/book";
 import { LastConfigResponse } from "@/types/configuration";
 import { GetAllCycleResponse } from "@/types/cycle";
+import { GetAllKeywordResponse } from "@/types/keyword";
 import { GetAllMemoryResponse } from "@/types/memory";
 import { GetAllSchoolYearResponse } from "@/types/schoolyear";
 import { GetAllSectorResponse } from "@/types/sector";
@@ -46,4 +47,8 @@ export function useLastConfig() {
 
 export function useRole() {
   return useSWR('api/role');
+}
+
+export function useKeyword() {
+  return useSWR<GetAllKeywordResponse>('api/keywords');
 }

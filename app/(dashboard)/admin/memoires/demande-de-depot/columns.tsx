@@ -99,7 +99,7 @@ export const columns: ColumnDef<Memoire>[] = [
         <div className="flex gap-2">
           <TooltipProvider>
             <Tooltip>
-              <TooltipTrigger>
+              <TooltipTrigger asChild>
                 <MemoireConsultDialog memory_data={memory} />
               </TooltipTrigger>
               <TooltipContent>

@@ -46,6 +46,7 @@ export const createBook = async ({
           "Un ou plusieurs champs du formulaire sont invalide. Veillez corriger les éventuelles erreurs"
         );
       } else {
+        console.log(error.response.data.errors)
         toast.error("Une erreur inconnue est survenue 🧐. Vueillez réessayer plus tard.");
       }
     });
@@ -59,9 +60,11 @@ export const updateBook = async ({
 }: UpdateBookProps) => {
   await csrf();
   setErrors({});
+  console.log(props);
+  
 
   await axios
-    .put(`/api/article/${article}`, props, {
+    .post(`/api/article/${article}?_method=PUT`, props, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
@@ -72,6 +75,7 @@ export const updateBook = async ({
     })
     .catch((error) => {
       if (error.response && error.response.status === 422) {
+        console.log(error.response.data.errors)
         toast.error(
           "Un ou plusieurs champs du formulaire sont invalide. Veillez corriger les éventuelles erreurs"
         );

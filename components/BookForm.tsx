@@ -29,87 +29,139 @@ import {
   CommandInput,
   CommandItem,
 } from "@/components/ui/command";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { ChevronsUpDown, LucideCheck } from "lucide-react";
 import { CommandList } from "cmdk";
-import { createBook } from "@/lib/data/book";
+import { createBook, updateBook } from "@/lib/data/book";
 import { getAllSchoolYear } from "@/lib/data/schoolyear";
 import { useBook } from "@/services/queries";
 import { Book, CreateBookErrorType } from "@/types/book";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Edit, PlusCircle } from "lucide-react";
-import { useState } from "react";
-import { useForm, useWatch } from "react-hook-form";
+import {  useState } from "react";
+import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import InputError from "./InputError";
 import { Checkbox } from "./ui/checkbox";
 import { cn } from "@/lib/utils";
-import TomSelectComponent from "./TomSelect";
+import CreatableSelect from "react-select/creatable";
+import { getAllKeywords } from "@/lib/data/keyword";
+import { MultiValue } from "react-select";
 
-const FormSchema = z.object({
-  title: z.string().min(1, "Le titre du livre est obligatoire"),
-  author: z.string().min(1, "L'auteur du livre est obligatoire"),
-  number_pages: z.string().min(1, "Le nombre de pages est obligatoire"),
-  summary: z.string().min(1, "Un résumé est requis"),
-  editor: z.string().min(1, "Léditeur du livre est obligatoire"),
-  editing_year: z.string().min(1, "Lannée d'édition est obligatoire"),
-  ISBN: z.string().min(1, "IBSN requis"),
-  cote: z.string().min(1, "La cote est obligatoire"),
-  school_year_id: z.string(),
-  is_physical: z.boolean(),
-  has_ebooks: z.boolean(),
-  keywords: z.array(z.string()),
-  available_stock: z.string().min(1, "Le stock est requis"),
-  file_path:
-    typeof window === "undefined"
-      ? z.any()
-      : z
-          .instanceof(FileList)
-          .refine((file) => file?.length == 1, "Le document est obligatoire."),
-});
+const FormSchema = z
+  .object({
+    title: z.string().min(1, "Le titre du livre est obligatoire"),
+    author: z.string().min(1, "L'auteur du livre est obligatoire"),
+    number_pages: z.string().min(1, "Le nombre de pages est obligatoire"),
+    summary: z.string().min(1, "Un résumé est requis"),
+    editor: z.string().min(1, "Léditeur du livre est obligatoire"),
+    editing_year: z.string().min(1, "Lannée d'édition est obligatoire"),
+    ISBN: z.string().min(1, "IBSN requis"),
+    cote: z.string().min(1, "La cote est obligatoire"),
+    school_year_id: z.string(),
+    is_physical: z.boolean().optional(),
+    has_ebooks: z.boolean().optional(),
+    keywords: z.array(z.string()).optional(),
+    available_stock: z.string().min(1, "Le stock est requis").optional(),
+    file_path:
+      typeof window === "undefined"
+        ? z.any()
+        : z
+            .instanceof(FileList)
+            .refine((file) => file?.length == 1, "Le document est obligatoire.")
+            .optional(),
+  })
+  .superRefine((data, ctx) => {
+    // Validation conditionnelle: `file_path` est requis si `has_ebooks` est `true`
+    if (data.has_ebooks === true && !data.file_path) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: "Le fichier numérique du livre est requis",
+        path: ["file_path"],
+      });
+    }
+    // Validation conditionnelle: `available_stock` est requis si `is_physical` est `true`
+    if (data.is_physical === true && !data.available_stock) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: "Details is required when status is active",
+        path: ["available_stock"],
+      });
+    }
+  });
+
+interface Option {
+  value: string;
+  label: string;
+  __isNew__?: boolean;
+}
+
 const BookForm = ({ book }: { book?: Book }) => {
+
+  // console.log(book);
   const schoolyears = getAllSchoolYear();
   const [errors, setErrors] = useState<CreateBookErrorType>({});
   const [status, setStatus] = useState<string | null>(null);
-  const { mutate } = useBook();
 
+  const oldSelectedValues = book
+    ? book?.keywords?.map(keyword => ({ label: keyword.keyword, value: keyword.keyword }))
+    : [{ value: "Eneam", label: "Eneam" }];
+
+  const [selectedOption, setSelectedOption] = useState(oldSelectedValues);
+
+  // console.log(`Old Option selected:`, oldSelectedValues);
+  // console.log(`Option selected:`, selectedOption);
+
+  const { mutate } = useBook();
+  const { keywordValues } = getAllKeywords();
+
+  const options = keywordValues?.map((keyword) => ({
+    label: keyword,
+    value: keyword,
+  }));
+
+  // const handleChange = (selectedOption: MultiValue<Option>) => {
+  //   console.log(`Option selected:`, selectedOption);
+  // };
+
+  // Tom Select --------------------------------------------------------------------
+  // const selectRef = useRef<HTMLSelectElement>(null);
+
+  // useEffect(() => {
+  //   if (keywordsRef) {
+  //     const selectInstance = new TomSelect(Select, {
+  //       create: true,
+  //       plugins: {
+  //         remove_button:{
+  //             title:'Remove this item',
+  //         }
+  //     },
+  //     });
+
+  //     return () => {
+  //       selectInstance.destroy();
+  //     };
+  //   }
+  // }, []);
+
+  // ------------------------------------------------------------------------------------
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      title: "Livre de Daril",
-      author: "Daril Djk",
-      number_pages: "150",
-      summary: "Le long résumé",
-      editor: "Divin's Edition",
-      editing_year: "2017",
-      ISBN: "OU845IRC394705059708928",
-      cote: "125/15/489",
-      keywords: ["livre", "Daril", "Djk"],
-      available_stock: "2",
+      title: book ? book.title : "Livre de Daril",
+      author: book ? book.author : "Daril Djk",
+      number_pages: book ? book.number_pages.toString() : "150",
+      summary: book ? book.summary : "Le long résumé",
+      editor: book ? book.editor : "Divin's Edition",
+      editing_year: book ? book.editing_year : "2017",
+      ISBN: book ? book.ISBN : "OU845IRC394705059708928",
+      cote: book ? book.cote : "125/15/489",
+      school_year_id: book ? book.school_year.id.toString() : "",
+
+      available_stock: book ? book.available_stock !== null ? book.available_stock : '0' : '0',
     },
   });
-
-  const options = [
-    { value: "chocolate", label: "Chocolate" },
-    { value: "strawberry", label: "Strawberry" },
-    { value: "vanilla", label: "Vanilla" },
-  ];
-
-  const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
-
-  const handleSelectChange = (values: string[]) => {
-    setSelectedOptions(values);
-  };
 
   const hasEbooks = form.watch("has_ebooks");
   const isPhysical = form.watch("is_physical");
@@ -127,9 +179,9 @@ const BookForm = ({ book }: { book?: Book }) => {
     keywords: string[],
     is_physical: number,
     has_ebooks: number,
-    available_stock: number,
-    file_path: File,
-    school_year_id: number
+    school_year_id: number,
+    available_stock?: number,
+    file_path?: File
   ) => {
     event.preventDefault();
     await createBook({
@@ -154,14 +206,69 @@ const BookForm = ({ book }: { book?: Book }) => {
     mutate();
   };
 
-  const submitUpdateBookForm = async () => {
+  const submitUpdateBookForm = async (
+    event: { preventDefault: () => void },
+    title: string,
+    author: string,
+    number_pages: number,
+    summary: string,
+    editor: string,
+    editing_year: string,
+    ISBN: string,
+    cote: string,
+    keywords: string[],
+    is_physical: number,
+    has_ebooks: number,
+    school_year_id: number,
+    article: number,
+    available_stock?: number,
+    file_path?: File
+  ) => {
+    event.preventDefault();
+    await updateBook({
+      article,
+      title,
+      author,
+      number_pages,
+      summary,
+      editor,
+      editing_year,
+      ISBN,
+      cote,
+      keywords,
+      is_physical,
+      has_ebooks,
+      available_stock,
+      file_path,
+      school_year_id,
+      setStatus,
+      setErrors,
+    });
+
     mutate();
   };
 
   const onSubmit = (values: z.infer<typeof FormSchema>, event: any) => {
-    console.log(values);
+    const selectedValues = selectedOption?.map((option) => option.value);
     book
-      ? submitUpdateBookForm()
+      ? submitUpdateBookForm(
+          event,
+          values.title,
+          values.author,
+          parseInt(values.number_pages),
+          values.summary,
+          values.editor,
+          values.editing_year,
+          values.ISBN,
+          values.cote,
+          selectedValues,
+          values.is_physical ? 1 : 0,
+          values.has_ebooks ? 1 : 0,
+          parseInt(values.school_year_id),
+          book.id,
+          values.available_stock ? parseInt(values.available_stock) : undefined,
+          values.file_path ? values.file_path[0] : undefined
+        )
       : submitCreateBookForm(
           event,
           values.title,
@@ -172,16 +279,17 @@ const BookForm = ({ book }: { book?: Book }) => {
           values.editing_year,
           values.ISBN,
           values.cote,
-          values.keywords,
+          selectedValues,
           values.is_physical ? 1 : 0,
           values.has_ebooks ? 1 : 0,
-          parseInt(values.available_stock),
-          values.file_path[0],
-          parseInt(values.school_year_id)
+          parseInt(values.school_year_id),
+          values.available_stock ? parseInt(values.available_stock) : undefined,
+          values.file_path ? values.file_path[0] : undefined
         );
   };
 
   const filePathRef = form.register("file_path");
+  const keywordsRef = form.register("keywords");
 
   return (
     <Dialog>
@@ -538,23 +646,23 @@ const BookForm = ({ book }: { book?: Book }) => {
             <div className="w-full">
               <FormField
                 control={form.control}
-                name="is_physical"
+                name="keywords"
                 render={({ field }) => (
-                  <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4 shadow">
+                  <FormItem>
+                    <FormLabel className=" text-primary-foreground">
+                      Mots clés
+                    </FormLabel>
                     <FormControl>
-                      {/* <select ref={selectRef} defaultValue={value}>
-                        {options.map((option) => (
-                          <option key={option.value} value={option.value}>
-                            {option.label}
-                          </option>
-                        ))}
-                      </select> */}
-                      <div className="">
-                        <TomSelectComponent
-                          options={options}
-                        />
-                      </div>
+                      <CreatableSelect
+                        className="w-full "
+                        defaultValue={selectedOption}
+                        onChange={setSelectedOption}
+                        options={options}
+                        isMulti
+                      />
                     </FormControl>
+                    <FormMessage />
+                    <InputError messages={errors.keywords} />
                   </FormItem>
                 )}
               />

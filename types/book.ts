@@ -1,5 +1,6 @@
 import { Dispatch, SetStateAction } from "react";
 import { SchoolYear } from "./schoolyear"
+import { Keyword } from "./keyword";
 
 export interface GetAllBookResponse {
   data: Book[]
@@ -37,6 +38,7 @@ export interface Book {
   number_pages: number
   ISBN: string
   available_stock: string
+  keywords: Keyword[]
   available: number
   loaned: number
   has_ebooks: number
@@ -87,7 +89,7 @@ export interface CreateBookProps {
   cote: string
   number_pages: number
   ISBN: string
-  available_stock: number
+  available_stock?: number
   available?: number
   loaned?: number
   has_ebooks?: number
@@ -97,7 +99,7 @@ export interface CreateBookProps {
   views_number?: number | null
   stars_number?: number
   keywords: string[]
-  file_path: File
+  file_path?: File
   school_year_id: number
 
   setErrors: Dispatch<SetStateAction<CreateBookErrorType>>
@@ -114,7 +116,7 @@ export interface UpdateBookProps {
   cote: string
   number_pages: number
   ISBN: string
-  available_stock: number
+  available_stock?: number
   available?: number
   loaned?: number
   has_ebooks?: number
@@ -124,7 +126,7 @@ export interface UpdateBookProps {
   views_number?: number | null
   stars_number?: number
   keywords: string[]
-  file_path: File | null
+  file_path?: File | null
   school_year_id: number
 
   article: number

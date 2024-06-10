@@ -28,6 +28,7 @@ import { deleteMemory } from "@/lib/data/memories";
 import { useBook, useMemory } from "@/services/queries";
 import { Book } from "@/types/book";
 import { deleteBook } from "@/lib/data/book";
+import BookForm from "@/components/BookForm";
 
 export const columns: ColumnDef<Book>[] = [
   {
@@ -122,7 +123,7 @@ export const columns: ColumnDef<Book>[] = [
         <div className="flex gap-2">
           <TooltipProvider>
             <Tooltip>
-              <TooltipTrigger>
+              <TooltipTrigger asChild>
                 <MemoireConsultDialog memory_data={book} />
               </TooltipTrigger>
               <TooltipContent>
@@ -132,7 +133,7 @@ export const columns: ColumnDef<Book>[] = [
           </TooltipProvider>
           <TooltipProvider>
             <Tooltip>
-              <TooltipTrigger>
+              <TooltipTrigger asChild>
                 <Button
                   variant="ghost"
                   className="h-8 w-8 p-0"
@@ -150,9 +151,19 @@ export const columns: ColumnDef<Book>[] = [
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>
+          {/* <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild> */}
+                  <BookForm book={book} />
+              {/* </TooltipTrigger>
+              <TooltipContent>
+                <p>Modifier le mémoire</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider> */}
           <TooltipProvider>
             <Tooltip>
-              <TooltipTrigger>
+              <TooltipTrigger asChild>
                 <Dialog>
                   <DialogTrigger className=" text-destructive/70 hover:bg-destructive/20 hover:text-destructive h-8 w-8 flex justify-center items-center p-1 rounded-md">
                     <span className="sr-only">Consulter le mémoire</span>
@@ -186,7 +197,6 @@ export const columns: ColumnDef<Book>[] = [
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>
-          {/* <MemoireConsultDialog memory_data={memory} /> */}
         </div>
       );
     },

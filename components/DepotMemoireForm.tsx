@@ -354,11 +354,11 @@ const DepotMemoireForm = () => {
               animate={{ x: 0, opacity: 1 }}
               transition={{ duration: 0.3, ease: "easeInOut" }}
             >
-              <Card className="border-primary">
+              <Card className="">
                 <CardHeader>
-                  <CardTitle>First Author Personal Information</CardTitle>
+                  <CardTitle>Informations sur le premier Etudiant</CardTitle>
                   <CardDescription>
-                    Provide your personal details.
+                    Remplissez les champs pour renseigner sur votre identité
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
@@ -373,7 +373,7 @@ const DepotMemoireForm = () => {
                           </FormLabel>
                           <FormControl>
                             <Input
-                              className="text-primary-foreground border-border focus-visible:ring-ring"
+                              className={`text-primary-foreground border-primary focus-visible:ring-ring ${errors.first_author_matricule ? "border-destructive" : ""}`}
                               type="number"
                               placeholder="1756389"
                               {...field}
@@ -392,11 +392,11 @@ const DepotMemoireForm = () => {
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel className=" text-primary-foreground">
-                            Firstname
+                            Prénoms
                           </FormLabel>
                           <FormControl>
                             <Input
-                              className="text-primary-foreground border-border focus-visible:ring-ring"
+                              className={`text-primary-foreground border-primary focus-visible:ring-ring ${errors.first_author_firstname ? "border-destructive" : ""}`}
                               placeholder="John Doe"
                               {...field}
                             />
@@ -414,11 +414,11 @@ const DepotMemoireForm = () => {
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel className=" text-primary-foreground">
-                            Lastname
+                            Nom de famille
                           </FormLabel>
                           <FormControl>
                             <Input
-                              className="text-primary-foreground border-border focus-visible:ring-ring"
+                              className={`text-primary-foreground border-primary focus-visible:ring-ring ${errors.first_author_lastname ? "border-destructive" : ""}`}
                               placeholder="John Doe"
                               {...field}
                             />
@@ -440,7 +440,7 @@ const DepotMemoireForm = () => {
                           </FormLabel>
                           <FormControl>
                             <Input
-                              className="text-primary-foreground border-border focus-visible:ring-ring"
+                              className={`text-primary-foreground border-primary focus-visible:ring-ring ${errors.first_author_email ? "border-destructive" : ""}`}
                               placeholder="John@doe.fr"
                               {...field}
                             />
@@ -456,11 +456,11 @@ const DepotMemoireForm = () => {
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel className=" text-primary-foreground">
-                            Phone Number
+                            Numéro de téléphone
                           </FormLabel>
                           <FormControl>
                             <Input
-                              className="text-primary-foreground border-border focus-visible:ring-ring"
+                              className={`text-primary-foreground border-primary focus-visible:ring-ring ${errors.first_author_phone ? "border-destructive" : ""}`}
                               type="text"
                               placeholder="+22990909090"
                               {...field}
@@ -486,9 +486,9 @@ const DepotMemoireForm = () => {
             >
               <Card>
                 <CardHeader>
-                  <CardTitle>Second Author Personal Information</CardTitle>
+                  <CardTitle>Information du second Etudiant (S'il y en a)</CardTitle>
                   <CardDescription>
-                    Provide your personal details.
+                    Renseignez les informations du second étudiant si vous avez soutenu en binôme.
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
@@ -503,7 +503,7 @@ const DepotMemoireForm = () => {
                           </FormLabel>
                           <FormControl>
                             <Input
-                              className="text-primary-foreground border-border focus-visible:ring-ring"
+                              className={`text-primary-foreground border-primary focus-visible:ring-ring ${errors.second_author_matricule ? "border-destructive" : ""}`}
                               type="number"
                               placeholder="1756389"
                               {...field}
@@ -522,11 +522,11 @@ const DepotMemoireForm = () => {
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel className=" text-primary-foreground">
-                            Firstname
+                            Prénoms
                           </FormLabel>
                           <FormControl>
                             <Input
-                              className="text-primary-foreground border-border focus-visible:ring-ring"
+                              className={`text-primary-foreground border-primary focus-visible:ring-ring ${errors.second_author_firstname? "border-destructive" : ""}`}
                               placeholder="John Doe"
                               {...field}
                             />
@@ -544,11 +544,11 @@ const DepotMemoireForm = () => {
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel className=" text-primary-foreground">
-                            Lastname
+                            Nom de Famille
                           </FormLabel>
                           <FormControl>
                             <Input
-                              className="text-primary-foreground border-border focus-visible:ring-ring"
+                              className={`text-primary-foreground border-primary focus-visible:ring-ring ${errors.second_author_lastname ? "border-destructive" : ""}`}
                               placeholder="John Doe"
                               {...field}
                             />
@@ -572,7 +572,7 @@ const DepotMemoireForm = () => {
                           </FormLabel>
                           <FormControl>
                             <Input
-                              className="text-primary-foreground border-border focus-visible:ring-ring"
+                              className={`text-primary-foreground border-primary focus-visible:ring-ring ${errors.second_author_email ? "border-destructive" : ""}`}
                               placeholder="John@doe.fr"
                               {...field}
                             />
@@ -588,11 +588,11 @@ const DepotMemoireForm = () => {
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel className=" text-primary-foreground">
-                            Phone Number
+                            Numéro de téléphone
                           </FormLabel>
                           <FormControl>
                             <Input
-                              className="text-primary-foreground border-border focus-visible:ring-ring"
+                              className={`text-primary-foreground border-primary focus-visible:ring-ring ${errors.second_author_phone? "border-destructive" : ""}`}
                               type="text"
                               placeholder="+22990909090"
                               {...field}
@@ -618,9 +618,9 @@ const DepotMemoireForm = () => {
             >
               <Card>
                 <CardHeader>
-                  <CardTitle>Second Author Personal Information</CardTitle>
+                  <CardTitle>Informations sur le mémoire</CardTitle>
                   <CardDescription>
-                    Provide your personal details.
+                    Renseignez les informations suivantes concernant votre mémoire.
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
@@ -635,9 +635,9 @@ const DepotMemoireForm = () => {
                           </FormLabel>
                           <FormControl>
                             <Input
-                              className="text-primary-foreground border-border focus-visible:ring-ring"
+                              className={`text-primary-foreground border-primary focus-visible:ring-ring ${errors.theme ? "border-destructive" : ""}`}
                               type="text"
-                              placeholder="Reéalisation de ..."
+                              placeholder="Réalisation de ..."
                               {...field}
                             />
                           </FormControl>
@@ -675,7 +675,7 @@ const DepotMemoireForm = () => {
                                   variant="outline"
                                   role="combobox"
                                   className={cn(
-                                    "w-full justify-between",
+                                    "w-full justify-between border-primary",
                                     !field.value && "text-muted-foreground"
                                   )}
                                 >
@@ -764,7 +764,7 @@ const DepotMemoireForm = () => {
                                   variant="outline"
                                   role="combobox"
                                   className={cn(
-                                    "w-full justify-between",
+                                    "w-full justify-between border-primary",
                                     !field.value && "text-muted-foreground"
                                   )}
                                 >
@@ -834,7 +834,7 @@ const DepotMemoireForm = () => {
                           <FormControl>
                             <Input
                               type="time"
-                              className="text-primary-foreground border-border focus-visible:ring-ring"
+                              className={`text-primary-foreground border-primary focus-visible:ring-ring ${errors.start_at ? "border-destructive" : ""}`}
                               {...field}
                             />
                           </FormControl>
@@ -853,7 +853,7 @@ const DepotMemoireForm = () => {
                           </FormLabel>
                           <FormControl>
                             <Input
-                              className="text-primary-foreground border-border focus-visible:ring-ring"
+                              className={`text-primary-foreground border-primary focus-visible:ring-ring ${errors.ends_at ? "border-destructive" : ""}`}
                               type="time"
                               {...field}
                             />
@@ -876,7 +876,7 @@ const DepotMemoireForm = () => {
                           </FormLabel>
                           <FormControl>
                             <Input
-                              className="text-primary-foreground border-border focus-visible:ring-ring"
+                              className={`text-primary-foreground border-primary focus-visible:ring-ring ${errors.jury_president_name ? "border-destructive" : ""}`}
                               type="text"
                               placeholder="Maurice Comlan"
                               {...field}
@@ -893,11 +893,11 @@ const DepotMemoireForm = () => {
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel className=" text-primary-foreground">
-                            Maitre mémoire
+                            Nom du Maitre mémoire
                           </FormLabel>
                           <FormControl>
                             <Input
-                              className="text-primary-foreground border-border focus-visible:ring-ring"
+                              className={`text-primary-foreground border-primary focus-visible:ring-ring ${errors.memory_master_name ? "border-destructive" : ""}`}
                               type="text"
                               placeholder="Maurice Comlan"
                               {...field}
@@ -914,11 +914,11 @@ const DepotMemoireForm = () => {
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel className=" text-primary-foreground">
-                            Maitre mémoire
+                            Email du Maitre mémoire
                           </FormLabel>
                           <FormControl>
                             <Input
-                              className="text-primary-foreground border-border focus-visible:ring-ring"
+                              className={`text-primary-foreground border-primary focus-visible:ring-ring ${errors.memory_master_email ? "border-destructive" : ""}`}
                               type="email"
                               placeholder="Maurice Comlan"
                               {...field}
@@ -937,11 +937,11 @@ const DepotMemoireForm = () => {
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel className=" text-primary-foreground">
-                            Mémoire
+                            Mémoire (Document PDF non Copiable)
                           </FormLabel>
                           <FormControl>
                             <Input
-                              className="text-primary-foreground border-border focus-visible:ring-ring"
+                              className={`text-primary-foreground border-primary focus-visible:ring-ring ${errors.file_path ? "border-destructive" : ""}`}
                               type="file"
                               // {...register('file_path')}
                               {...filePathRef}
@@ -962,7 +962,7 @@ const DepotMemoireForm = () => {
                           </FormLabel>
                           <FormControl>
                             <Input
-                              className="text-primary-foreground border-border focus-visible:ring-ring"
+                              className={`text-primary-foreground border-primary focus-visible:ring-ring ${errors.cover_page_path ? "border-destructive" : ""}`}
                               type="file"
                               // {...register('cover_page_path')}
                               {...coverPathRef}

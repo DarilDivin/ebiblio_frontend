@@ -1,6 +1,7 @@
 import { Dispatch, SetStateAction } from "react";
 import { Cycle } from "./cycle";
 import { Memoire } from "./memory";
+import { SchoolYear } from "./schoolyear";
 
 export interface Soutenance {
   id: number;
@@ -9,7 +10,7 @@ export interface Soutenance {
   start_date: string;
   end_date: string;
   number_memories_expected: number;
-  school_year: string;
+  school_year: SchoolYear;
   created_by: string | null;
   updated_by: string | null;
   deleted_by: string | null;

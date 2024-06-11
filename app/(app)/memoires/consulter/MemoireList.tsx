@@ -79,7 +79,7 @@ console.log(url)
             (
               <DocumentListItem
                 key={memory.id}
-                theme={memory.theme}
+                memoire={memory}
               />
             )
           )

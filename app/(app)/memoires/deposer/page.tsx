@@ -14,7 +14,7 @@ const DeposerMemoire = () => {
         </div>
       </div>
 
-      <div className="flex flex-col items-center p-8">
+      <div className="flex flex-col items-center p-8 h-screen" id="depotForm">
         <h1 className=" text-2xl font-semibold text-primary mb-8">Formulaire de Dépôt de mémoire</h1>
         <div className="w-full flex justify-center">
           <DepotMemoireForm />

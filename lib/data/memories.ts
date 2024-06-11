@@ -51,6 +51,8 @@ export const supportedMemoireDeposit = async ({
     .catch((error) => {
       if (error.response && error.response.status === 422) {
         const errors = error.response.data.errors;
+        console.log(errors);
+        setErrors(errors);
         toast.error(
           "Un ou plusieurs champs du formulaire sont invalide. Veillez corriger les éventuelles erreurs"
         );

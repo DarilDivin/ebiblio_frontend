@@ -20,7 +20,7 @@ const MemoireSearchbar = () => {
         <div className="flex max-sm:flex-col flex-1 gap-2 items-center max-sm:w-full">
           <div className="flex flex-1 h-14 justify-evenly items-center gap-2 relative max-sm:w-full">
             <Search className="absolute left-1 font-bold text-foreground/80"/>
-            <Input className="border-none pl-10 outline-none focus-visible:ring-ring" placeholder="Document title"/>
+            <Input className="border-none pl-10 outline-none focus-visible:ring-ring" placeholder="Titre du document "/>
           </div>
 
           <Separator orientation='vertical' className='w-[2px] h-[35px] max-sm:hidden'/>
@@ -28,7 +28,7 @@ const MemoireSearchbar = () => {
 
           <div className="flex flex-1 h-14 justify-evenly items-center gap-2 relative max-sm:w-full">
             <Calendar className="absolute left-1 font-bold text-foreground/80" />
-            <Input className="border-none pl-10 outline-none focus-visible:ring-ring" placeholder="Date"/>
+            <Input className="border-none pl-10 outline-none focus-visible:ring-ring" placeholder="Année"/>
           </div>
 
           <Separator orientation='vertical' className='w-[2px] h-[35px] max-sm:hidden'/>

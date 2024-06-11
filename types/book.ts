@@ -133,3 +133,80 @@ export interface UpdateBookProps {
   setErrors: Dispatch<SetStateAction<CreateBookErrorType>>
   setStatus: Dispatch<SetStateAction<string | null>>
 }
+
+export interface GetOneBookResponse {
+  message: string
+  data: SingleBook
+}
+
+export interface SingleBook {
+  id: number
+  title: string
+  slug: string
+  summary: string
+  author: string
+  editor: string
+  editing_year: string
+  cote: string
+  number_pages: number
+  IBSN: any
+  available_stock: any
+  available: number
+  loaned: number
+  has_ebooks: number
+  is_physical: number
+  has_audios: number
+  likes_number: number
+  views_number: number
+  stars_number: number
+  file_path: any
+  created_at: string
+  updated_at: string
+  created_by: any
+  updated_by: any
+  school_year_id: number
+  comments: Comment[]
+}
+
+export interface Comment {
+  id: number
+  content: string
+  likes_number: number
+  created_by: any
+  updated_by: any
+  deleted_by: any
+  created_at: string
+  updated_at: string
+  deleted_at: any
+  article_id: number
+  user_id: number
+  user: User
+}
+
+export interface User {
+  id: number
+  name: any
+  matricule: string
+  firstname: string
+  lastname: string
+  slug: string
+  email: string
+  email_verified_at: string
+  two_factor_secret: any
+  two_factor_recovery_codes: any
+  two_factor_confirmed_at: any
+  phone_number: string
+  birth_date: string
+  sex: string
+  profile_picture_path: any
+  has_paid: number
+  has_access: number
+  debt_amount: number
+  created_by: any
+  updated_by: any
+  deleted_by: any
+  created_at: string
+  updated_at: string
+  deleted_at: any
+}
+

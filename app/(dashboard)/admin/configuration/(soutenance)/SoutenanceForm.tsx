@@ -27,6 +27,15 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+} from "@/components/ui/command";
+import { ChevronsUpDown, LucideCheck } from "lucide-react";
+import { CommandList } from "cmdk";
 import { Input } from "@/components/ui/input";
 
 import { createSoutenance, updateSoutenance } from "@/lib/data/soutenance";
@@ -43,6 +52,7 @@ import { fr } from "date-fns/locale";
 import { cn } from "@/lib/utils";
 import { getAllCycle } from "@/lib/data/cycle";
 import InputError from "@/components/InputError";
+import { getAllSchoolYear } from "@/lib/data/schoolyear";
 
 const FormSchema = z.object({
   start_date: z.date(),
@@ -51,10 +61,12 @@ const FormSchema = z.object({
     .string()
     .min(1, { message: "Le nombre de mémoire espéré est indispensable" }),
   cycle_id: z.string(),
+  school_year_id: z.string(),
 });
 const SoutenanceForm = ({ soutenance }: { soutenance?: Soutenance }) => {
   const [errors, setErrors] = useState<CreateSoutenanceErrorType>({});
   const { mutate } = useSoutenance();
+  const schoolyears = getAllSchoolYear();
   const { cycles } = getAllCycle();
 
   const form = useForm<z.infer<typeof FormSchema>>({
@@ -66,6 +78,7 @@ const SoutenanceForm = ({ soutenance }: { soutenance?: Soutenance }) => {
         ? soutenance.number_memories_expected.toString()
         : "",
       cycle_id: soutenance ? soutenance.cycle.id.toString() : "",
+      school_year_id: soutenance ? soutenance.school_year.id.toString() : "",
     },
   });
 
@@ -74,7 +87,8 @@ const SoutenanceForm = ({ soutenance }: { soutenance?: Soutenance }) => {
     start_date: string,
     end_date: string,
     number_memories_expected: number,
-    cycle_id: number
+    cycle_id: number,
+    school_year_id: number,
   ) => {
     event.preventDefault();
 
@@ -83,6 +97,7 @@ const SoutenanceForm = ({ soutenance }: { soutenance?: Soutenance }) => {
       end_date,
       number_memories_expected,
       cycle_id,
+      school_year_id,
       setErrors,
     });
     mutate();
@@ -94,6 +109,7 @@ const SoutenanceForm = ({ soutenance }: { soutenance?: Soutenance }) => {
     end_date: string,
     number_memories_expected: number,
     cycle_id: number,
+    school_year_id: number,
     soutenance: number
   ) => {
     event.preventDefault();
@@ -104,6 +120,7 @@ const SoutenanceForm = ({ soutenance }: { soutenance?: Soutenance }) => {
       end_date,
       number_memories_expected,
       cycle_id,
+      school_year_id,
 
       setErrors,
     });
@@ -124,6 +141,7 @@ const SoutenanceForm = ({ soutenance }: { soutenance?: Soutenance }) => {
           format(values.end_date, "yyyy-MM-dd"),
           parseInt(values.number_memories_expected),
           parseInt(values.cycle_id),
+          parseInt(values.school_year_id),
           soutenance.id
         )
       : submitCreateSoutenanceForm(
@@ -131,7 +149,8 @@ const SoutenanceForm = ({ soutenance }: { soutenance?: Soutenance }) => {
           format(values.start_date, "yyyy-MM-dd"),
           format(values.end_date, "yyyy-MM-dd"),
           parseInt(values.number_memories_expected),
-          parseInt(values.cycle_id)
+          parseInt(values.cycle_id),
+          parseInt(values.school_year_id),
         );
   }
   return (
@@ -278,6 +297,78 @@ const SoutenanceForm = ({ soutenance }: { soutenance?: Soutenance }) => {
                     </Select>
                     <FormMessage />
                     <InputError messages={errors.cycle_id} />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="school_year_id"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className=" text-primary-foreground">
+                      Année scolaire
+                    </FormLabel>
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <FormControl>
+                          <Button
+                            variant="outline"
+                            role="combobox"
+                            className={cn(
+                              "w-full justify-between",
+                              !field.value && "text-muted-foreground"
+                            )}
+                          >
+                            {field.value
+                              ? schoolyears?.find(
+                                  (schoolyear) =>
+                                    schoolyear.id.toString() === field.value
+                                )?.school_year
+                              : "Selectionner l'année scolaire"}
+                            <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                          </Button>
+                        </FormControl>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-full lg:w-[200px] p-0">
+                        <Command>
+                          <CommandInput
+                            placeholder="Rechercher l'année scolaire"
+                            className="h-9"
+                          />
+                          <CommandEmpty>
+                            Aucune année scolaire trouvée.
+                          </CommandEmpty>
+                          <CommandGroup className="max-h-[300px] overflow-scroll">
+                            {schoolyears?.map((schoolyear) => (
+                              <CommandList>
+                                <CommandItem
+                                  value={schoolyear.school_year}
+                                  key={schoolyear.id}
+                                  onSelect={() => {
+                                    form.setValue(
+                                      "school_year_id",
+                                      schoolyear.id.toString()
+                                    );
+                                  }}
+                                >
+                                  {schoolyear.school_year}
+                                  <LucideCheck
+                                    className={cn(
+                                      "ml-auto h-4 w-4",
+                                      schoolyear.id.toString() === field.value
+                                        ? "opacity-100"
+                                        : "opacity-0"
+                                    )}
+                                  />
+                                </CommandItem>
+                              </CommandList>
+                            ))}
+                          </CommandGroup>
+                        </Command>
+                      </PopoverContent>
+                    </Popover>
+                    <FormMessage />
+                    <InputError messages={errors.school_year_id} />
                   </FormItem>
                 )}
               />

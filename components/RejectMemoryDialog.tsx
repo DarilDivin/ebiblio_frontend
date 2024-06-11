@@ -73,12 +73,12 @@ const RejectMemoryDialog = ({ idmemory }: { idmemory: number }) => {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel className=" text-primary-foreground">
-                    Email
+                    Raison
                   </FormLabel>
                   <FormControl>
                     <Input
-                      className="text-primary-foreground mb-8"
-                      placeholder="email@email.com"
+                      className="text-primary-foreground mb-8 focus-visible:ring-ring"
+                      placeholder=""
                       {...field}
                     />
                   </FormControl>

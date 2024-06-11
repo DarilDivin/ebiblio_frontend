@@ -1,8 +1,9 @@
-import { useBook } from "@/services/queries";
+import { useBook, useSpecificBook } from "@/services/queries";
 import { CreateBookProps, UpdateBookProps } from "@/types/book";
 import { csrf } from ".";
 import axios from "../axios";
 import { toast } from "sonner";
+import { string } from "zod";
 
 export const getAllBooks = () => {
   const { data: bookResponse, isLoading, error } = useBook();
@@ -16,6 +17,12 @@ export const getAllBooks = () => {
     error,
   };
 };
+
+export const getSpecificBook = (id: string) => {
+  const {data: bookResponse, isLoading, error } = useSpecificBook(id);
+
+  return { book: bookResponse?.data, isLoading, error }
+}
 
 export const createBook = async ({
   setStatus,
@@ -99,3 +106,15 @@ export const deleteBook = async ({ article }: { article: number }) => {
       }
     });
 };
+
+export const createComment = async ({ id, content }: {id: string, content: string}) => {
+  await csrf();
+  console.log(content)
+  
+  await axios
+    .post(`/api/article/${id}/comment`, content)
+    .then(() => toast.success('Commentaire ajouté 👍🏾'))
+    .catch((error) => {
+      console.log(error.response.data.errors)
+    })
+}

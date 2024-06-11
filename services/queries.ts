@@ -1,4 +1,4 @@
-import { GetAllBookResponse } from "@/types/book";
+import { GetAllBookResponse, GetOneBookResponse } from "@/types/book";
 import { LastConfigResponse } from "@/types/configuration";
 import { GetAllCycleResponse } from "@/types/cycle";
 import { GetAllKeywordResponse } from "@/types/keyword";
@@ -14,6 +14,10 @@ export function useMemory() {
 
 export function useBook() {
   return useSWR<GetAllBookResponse>('/api/article/no-pagination')
+}
+
+export function useSpecificBook(id: string) {
+  return useSWR<GetOneBookResponse>(`/api/article/${id}`)
 }
 
 export function useBookByLink(url: string) {

@@ -50,6 +50,7 @@ export interface CreateSoutenanceErrorType {
   end_date?: string[],
   number_memories_expected?: string[],
   cycle_id?: string[],
+  school_year_id?: string[],
 }
 
 export interface CreateSoutenanceProps {
@@ -57,6 +58,7 @@ export interface CreateSoutenanceProps {
   end_date: string,
   number_memories_expected: number,
   cycle_id: number,
+  school_year_id: number,
 
   setErrors: Dispatch<SetStateAction<CreateSoutenanceErrorType>>;
 }
@@ -66,6 +68,7 @@ export interface EditSoutenanceProps {
   end_date: string,
   number_memories_expected: number,
   cycle_id: number,
+  school_year_id: number,
   soutenance: number
 
   setErrors: Dispatch<SetStateAction<CreateSoutenanceErrorType>>;

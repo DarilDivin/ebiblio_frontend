@@ -57,25 +57,46 @@ export const columns: ColumnDef<Book>[] = [
     accessorKey: "title",
     header: "Titre",
   },
-  // {
-  //   id: "Auteurs",
-  //   header: "Auteurs",
-  //   cell: ({ row }) => {
-  //     const memory = row.original;
+  {
+    id: "Auteur",
+    header: "Auteur",
+    cell: ({ row }) => {
+      const book = row.original;
 
-  //     return (
-  //       <Badge variant={"secondary"}>
-  //         {memory.first_author_firstname + " " + memory.first_author_lastname}{" "}
-  //         {memory.first_author_firstname
-  //           ? " & " +
-  //             memory.second_author_firstname +
-  //             " " +
-  //             memory.second_author_lastname
-  //           : ""}
-  //       </Badge>
-  //     );
-  //   },
-  // },
+      return (
+        <Badge variant={"secondary"}>
+          {book.author}
+        </Badge>
+      );
+    },
+  },
+  {
+    accessorKey: "editor",
+    header: "Editeur",
+  },
+  {
+    accessorKey: "editing_year",
+    header: "Année d'édition",
+  },
+  {
+    accessorKey: "cote",
+    header: "Cote",
+  },
+  {
+    id: "Mots clés",
+    header: "Mots Clés",
+    cell: ({ row }) => {
+      const book = row.original;
+
+      const keywordsString = book.keywords?.map(keywordObj => keywordObj.keyword).join(', ');
+
+      return (
+        <Badge>
+          {keywordsString}
+        </Badge>
+      );
+    },
+  },
   // {
   //   accessorKey: "memory_master_name",
   //   header: "Maitre de mémoire ",

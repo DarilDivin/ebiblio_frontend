@@ -38,18 +38,19 @@ const BookCommentForm = ({id}: {id: string}) => {
 
   const submitComment = async (
     event: { preventDefault: () => void },
-    id: string,
+    id: number,
     content: string
   ) => {
     event.preventDefault();
 
     await createComment({ id, content})
     mutate()
+    form.reset()
   }
  
   function onSubmit(values: z.infer<typeof FormSchema>, event: any) {
     // alert('alert');
-    submitComment(event, id, values.content) 
+    submitComment(event, parseInt(id), values.content) 
   }
  
   return (

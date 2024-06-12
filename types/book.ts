@@ -166,6 +166,7 @@ export interface SingleBook {
   updated_by: any
   school_year_id: number
   comments: Comment[]
+  keywords: Keyword[]
 }
 
 export interface Comment {

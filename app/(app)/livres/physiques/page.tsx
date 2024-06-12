@@ -7,6 +7,7 @@ import MemoireSearchbar from "@/components/MemoireSearchbar";
 import BookSearchbar from "@/components/BookSearchbar";
 import { useState } from "react";
 import { Book } from "@/types/book";
+import Link from "next/link";
 
 const PhysicalBooksListPage = () => {
   const { physical, isLoading, error } = getAllBooks();
@@ -61,9 +62,9 @@ const PhysicalBooksListPage = () => {
                 />
               </div>
               <div className="flex flex-col justify-start mt-4">
-                <h4 className="font-poppins font-bold text-[13px]">
+                <Link href={`/livres/${book.slug}/${book.id}`} className="font-poppins font-bold text-[13px]">
                   {book.title}
-                </h4>
+                </Link>
                 <p className=" text-[11px] font-poppins font-medium text-foreground/80 flex items-center gap-2">
                   {book.author} 
                   <span className=" w-1 h-1 rounded-full bg-foreground inline-block"></span>

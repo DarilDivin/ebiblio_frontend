@@ -69,7 +69,7 @@ const Navbar = () => {
             <>
               <Link href='/livres/physiques' className="hover:text-primary text-sm lg:text-sm">Livres Physiques</Link>
               <Link href='/livres/ebooks' className="hover:text-primary text-sm lg:text-sm">Ebooks</Link>
-              <Link href='/livres/podcasts' className="hover:text-primary text-sm lg:text-sm">Podcasts</Link>
+              {/* <Link href='/livres/podcasts' className="hover:text-primary text-sm lg:text-sm">Podcasts</Link> */}
             </>
           :   
             <>

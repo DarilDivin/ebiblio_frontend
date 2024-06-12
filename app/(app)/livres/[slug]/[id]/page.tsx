@@ -12,7 +12,10 @@ import React from 'react'
 
 const ShowBook = ({ params }: {params: { slug: string, id: string }}) => {
 
-  const { book } = getSpecificBook(params.id)
+  const { book, isLoading, error } = getSpecificBook(params.id)
+
+  if(error) {return (<div>Erruer de chargement des données</div>)}
+  if(isLoading || !book) return(<div>Chargement...</div>)
 
   return (
     <div className='w-full h-auto pt-16 px-28 bg-primary/5'>
@@ -32,7 +35,8 @@ const ShowBook = ({ params }: {params: { slug: string, id: string }}) => {
           <h1 className='text-3xl font-poppins font-semibold mb-8'>{book?.title}</h1>
           <p className='font-medium font-poppins text-muted-foreground mb-8'>{book?.author}</p>
           <p className='text-xs max-w-[500px] font-poppins text-muted-foreground/80'>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus numquam in quod quam eligendi omnis doloribus consectetur sit eaque tempora.
+          {}
+            {/* Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus numquam in quod quam eligendi omnis doloribus consectetur sit eaque tempora. */}
           </p>
         </div>
       </div>
@@ -100,18 +104,18 @@ const ShowBook = ({ params }: {params: { slug: string, id: string }}) => {
 
               {book?.comments.map((comment) => (
                 <div className='flex gap-2'>
-                <Avatar>
-                  <AvatarImage src="https://github.com/shadcn.png" />
-                  <AvatarFallback>CN</AvatarFallback>
-                </Avatar>
-                <div className='border bg-card text-card-foreground rounded-md p-1 max-w-[300px] w-fit'>
-                  <p className='text-xs font-light'>
-                    {comment.content}
-                  </p>
-                </div>
-                <Button className='bg-muted text-muted-foreground rounded-full p-1 flex justify-center items-center self-end hover:bg-destructive hover:text-destructive-foreground transition-colors cursor-pointer size-5'>
-                  <Trash2 className='size-4'/>
-                </Button>
+                  <Avatar>
+                    <AvatarImage src="https://github.com/shadcn.png" />
+                    <AvatarFallback>CN</AvatarFallback>
+                  </Avatar>
+                  <div className='border bg-card text-card-foreground rounded-md p-1 max-w-[300px] w-fit'>
+                    <p className='text-xs font-light'>
+                      {comment.content}
+                    </p>
+                  </div>
+                  <Button className='bg-muted text-muted-foreground rounded-full p-1 flex justify-center items-center self-end hover:bg-destructive hover:text-destructive-foreground transition-colors cursor-pointer size-5'>
+                    <Trash2 className='size-4'/>
+                  </Button>
               </div>
               ))}
 
@@ -147,7 +151,7 @@ const ShowBook = ({ params }: {params: { slug: string, id: string }}) => {
               </div> */}
             </CardContent>
             <CardFooter>
-              <BookCommentForm id='3'/>
+              <BookCommentForm id={params.id}/>
             </CardFooter>
           </Card>
         </div>

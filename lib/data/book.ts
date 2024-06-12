@@ -107,14 +107,14 @@ export const deleteBook = async ({ article }: { article: number }) => {
     });
 };
 
-export const createComment = async ({ id, content }: {id: string, content: string}) => {
+export const createComment = async ({ id, content }: {id: number, content: string}) => {
   await csrf();
-  console.log(content)
   
   await axios
-    .post(`/api/article/${id}/comment`, content)
+    .post(`/api/article/${id}/comment`, {content: content})
     .then(() => toast.success('Commentaire ajouté 👍🏾'))
     .catch((error) => {
       console.log(error.response.data.errors)
+      toast.error('Erreur de validation')
     })
 }

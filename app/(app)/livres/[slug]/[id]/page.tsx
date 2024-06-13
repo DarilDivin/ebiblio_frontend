@@ -1,6 +1,7 @@
 "use client";
 
 import BookCommentForm from "@/components/BookCommentForm";
+import BookShowSkeleton from "@/components/Skeletons/BookShowSkeleton";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -40,7 +41,7 @@ const ShowBook = ({ params }: { params: { slug: string; id: string } }) => {
   if (error) {
     return <div>Erruer de chargement des données</div>;
   }
-  if (isLoading || !book) return <div>Chargement...</div>;
+  if (isLoading || !book) return <BookShowSkeleton />;
 
   return (
     <div className="w-full h-auto pt-16 px-28 max-sm:px-0 bg-primary/5">
@@ -163,12 +164,17 @@ const ShowBook = ({ params }: { params: { slug: string; id: string } }) => {
                   <div className="border bg-card text-card-foreground rounded-md p-1 max-w-[300px] w-fit">
                     <p className="text-xs font-light">{comment.content}</p>
                   </div>
-                  <Button
-                    onClick={() => handleDeleteComment(book.id, comment.id)}
-                    className="bg-muted text-muted-foreground rounded-full p-1 flex justify-center items-center self-end hover:bg-destructive hover:text-destructive-foreground transition-colors cursor-pointer size-5"
-                  >
-                    <Trash2 className="size-4" />
-                  </Button>
+
+                  {/* {user.id === comment.user_id ? ( */}
+                    <Button
+                      onClick={() => handleDeleteComment(book.id, comment.id)}
+                      className="bg-muted text-muted-foreground rounded-full p-1 flex justify-center items-center self-end hover:bg-destructive hover:text-destructive-foreground transition-colors cursor-pointer size-5"
+                    >
+                      <Trash2 className="size-4" />
+                    </Button>
+                  {/* ) : (
+                    ""
+                  )} */}
                 </div>
               ))}
             </CardContent>

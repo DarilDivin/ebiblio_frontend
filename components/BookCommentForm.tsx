@@ -32,6 +32,9 @@ const FormSchema = z.object({
 const BookCommentForm = ({id}: {id: string}) => {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
+    defaultValues: {
+      content: '',
+    }
   })
 
   const { mutate } = useSpecificBook(id)
@@ -42,14 +45,14 @@ const BookCommentForm = ({id}: {id: string}) => {
     content: string
   ) => {
     event.preventDefault();
-
     await createComment({ id, content})
     mutate()
-    form.reset()
+    form.resetField("content")
+    
   }
  
   function onSubmit(values: z.infer<typeof FormSchema>, event: any) {
-    submitComment(event, parseInt(id), values.content) 
+    submitComment(event, parseInt(id), values.content)
   }
  
   return (
@@ -63,7 +66,7 @@ const BookCommentForm = ({id}: {id: string}) => {
               <FormLabel>Commenter</FormLabel>
               <FormControl>
                 <Textarea
-                  placeholder="..."
+                  placeholder="Entrez votre commentaire ici"
                   className="resize-none"
                   {...field}
                 />

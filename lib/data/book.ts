@@ -118,3 +118,15 @@ export const createComment = async ({ id, content }: {id: number, content: strin
       toast.error('Erreur de validation')
     })
 }
+
+export const deleteComment = async ({article, comment}: {article: number, comment: number}) => {
+  await csrf();
+
+  await axios
+    .delete(`/api/article/${article}/comment/${comment}`)
+    .then((res) => toast.success('Comment supprimé avec succès 👍🏾'))
+    .catch((error) => {
+      console.log(error.response.data.errors);
+      toast.error('Le commentaire n\'a pas pu être supprimé')
+    })
+}

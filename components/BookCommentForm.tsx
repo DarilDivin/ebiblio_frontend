@@ -49,7 +49,6 @@ const BookCommentForm = ({id}: {id: string}) => {
   }
  
   function onSubmit(values: z.infer<typeof FormSchema>, event: any) {
-    // alert('alert');
     submitComment(event, parseInt(id), values.content) 
   }
  

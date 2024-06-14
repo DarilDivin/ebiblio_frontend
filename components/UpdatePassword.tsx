@@ -19,7 +19,7 @@ const FormSchema = z
       .string()
       .regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/, {
         message:
-          "Password must contain at least one lowercase letter, one uppercase letter, one digit, and be at least 8 characters long.",
+          "Votre mot de passe doit contenir au moins 8 caractères, dont une majuscule, une minuscule, un chiffre et un caractère spécial.",
       }),
     password_confirmation: z.string(),
   })
@@ -70,8 +70,8 @@ const UpdatePassword = () => {
     <div id="update_password">
       <Card className='bg-card'>
           <CardHeader>
-            <CardTitle className='text-primary'>Update Password</CardTitle>
-            <CardDescription>Ensure your account is using a long, random password to stay secure</CardDescription>
+            <CardTitle className='text-primary'>Modifier votre mot de passe</CardTitle>
+            <CardDescription>Assurez-vous que votre compte utilise un mot de passe long et aléatoire pour rester sécurisé.</CardDescription>
           </CardHeader>
           <CardContent>
             <Form {...form}>
@@ -81,7 +81,7 @@ const UpdatePassword = () => {
                   name="current_password"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-primary-foreground">Current Password</FormLabel>
+                      <FormLabel className="text-primary-foreground">Mot de passe actuelle</FormLabel>
                       <FormControl>
                         <Input
                           type='password'
@@ -100,7 +100,7 @@ const UpdatePassword = () => {
                   name="password"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-primary-foreground">Password</FormLabel>
+                      <FormLabel className="text-primary-foreground">Nouveau mot de passe</FormLabel>
                       <FormControl>
                         <Input
                           type='password'
@@ -119,7 +119,7 @@ const UpdatePassword = () => {
                   name="password_confirmation"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-primary-foreground">Confirm Password</FormLabel>
+                      <FormLabel className="text-primary-foreground">Confirmation du mot de passe</FormLabel>
                       <FormControl>
                         <Input
                           type='password'
@@ -132,7 +132,7 @@ const UpdatePassword = () => {
                     </FormItem>
                   )}
                 />
-                <Button type="submit" className='text-white mt-4' >Submit</Button>
+                <Button type="submit" className='text-white mt-4' >Enregistrer</Button>
               </form>
             </Form>
           </CardContent>

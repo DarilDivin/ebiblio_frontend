@@ -7,7 +7,8 @@ export interface InputErrorProps {
 
 export interface RegisterErrorType {
   email?: string[]; // Un tableau de messages d'erreur pour l'email
-  name?: string[];
+  firstname?: string[];
+  lastname?: string[];
   password?: string[];
 }
 
@@ -37,7 +38,7 @@ export interface UpdatePasswordErrorType {
 
 export interface RegisterProps {
   setErrors: Dispatch<SetStateAction<RegisterErrorType>>;
-  name: string;
+  firstname: string;
   lastname: string;
   email: string;
   password: string;
@@ -47,7 +48,7 @@ export interface RegisterProps {
 export interface UpdateProfileProps {
   setErrors: Dispatch<SetStateAction<RegisterErrorType>>;
   setStatus: Dispatch<SetStateAction<string | null>>;
-  name: string;
+  firstname: string;
   lastname: string;
   email: string;
 }

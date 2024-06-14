@@ -25,44 +25,44 @@ const FormSchema = z
   })
 
 const Settings = () => {
-  const { user, logout, twoFactorAuthenticationEnable, twoFactorAuthenticationDisable, twoFactorQrCode, twoFactorAuthenticationConfirmation } = useAuth({
+  const { user, isLoading, logout, twoFactorAuthenticationEnable, twoFactorAuthenticationDisable, twoFactorQrCode, twoFactorAuthenticationConfirmation } = useAuth({
     middleware: "auth"
   })
 
-  const [status, setStatus] = useState<string | null>(null);
-  const [svgQrCode, setSvgQrCode] = useState<string | TrustedHTML>('')
+  // const [status, setStatus] = useState<string | null>(null);
+  // const [svgQrCode, setSvgQrCode] = useState<string | TrustedHTML>('')
 
-
-  console.log(user)
   // console.log(status)
 
-  const submitForm = (
-    event: { preventDefault: () => void },
-    code: string
-  ) => {
-    event.preventDefault();
+  // const submitForm = (
+  //   event: { preventDefault: () => void },
+  //   code: string
+  // ) => {
+  //   event.preventDefault();
 
-    twoFactorAuthenticationConfirmation({
-      code,
-      setStatus
-    })
-  }
+  //   twoFactorAuthenticationConfirmation({
+  //     code,
+  //     setStatus
+  //   })
+  // }
 
-  const form = useForm<z.infer<typeof FormSchema>>({
-    resolver: zodResolver(FormSchema),
-    defaultValues: {
-      code: undefined,
-    },
-  });
+  // const form = useForm<z.infer<typeof FormSchema>>({
+  //   resolver: zodResolver(FormSchema),
+  //   defaultValues: {
+  //     code: undefined,
+  //   },
+  // });
 
-  function onSubmit(values: z.infer<typeof FormSchema>, event: any) {
-    console.log(parseInt(values.code));
+  // function onSubmit(values: z.infer<typeof FormSchema>, event: any) {
+  //   console.log(parseInt(values.code));
     
-    submitForm(
-      event,
-      values.code
-    )
-  }
+  //   submitForm(
+  //     event,
+  //     values.code
+  //   )
+  // }
+
+  if (isLoading || !user ) return <div>Chargement...</div>
 
   return (
     // <div>
@@ -178,9 +178,9 @@ const Settings = () => {
     <div className='w-full h-screen flex justify-center items-start gap-4 px-28 max-lg:px-6 max-sm:px-2'>
       <div className='w-1/4 h-full relative max-lg:hidden'>
         <div className='sticky flex flex-col gap-5 p-2 w-full top-8'>
-          <Link href='/settings#update_profile' className='p-2 rounded-lg text-xl w-3/4 font-semibold text-foreground/80 hover:text-primary'>Profile</Link>
-          <Link href='/settings#update_password' className='p-2 text-foreground/80 rounded-lg text-xl w-3/4 font-semibold hover:text-primary'>Update Password</Link>
-          <Link href='/settings#2fa' className='p-2 text-foreground/80 rounded-lg text-xl w-3/4 font-semibold hover:text-primary'>2 Factor Authentication</Link>
+          <Link href='/settings#update_profile' className='p-2 rounded-lg text-lg w-3/4 font-semibold text-foreground/80 hover:text-primary'>Information de Profile</Link>
+          <Link href='/settings#update_password' className='p-2 text-foreground/80 rounded-lg text-lg w-3/4 font-semibold hover:text-primary'>Modifier mot de passe</Link>
+          <Link href='/settings#2fa' className='p-2 text-foreground/80 rounded-lg text-lg w-3/4 font-semibold hover:text-primary'>Authentification à double facteur</Link>
         </div>
       </div>
       <div className='w-3/4 max-sm:w-full h-full p-2 flex flex-col gap-4'>

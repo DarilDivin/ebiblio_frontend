@@ -55,16 +55,15 @@ const Register = () => {
 
   const submitForm = (
     event: { preventDefault: () => void },
-    name: string,
+    firstname: string,
     lastname: string,
     email: string,
     password: string,
     password_confirmation: string
   ) => {
     event.preventDefault();
-
     register({
-      name,
+      firstname,
       lastname,
       email,
       password,
@@ -123,7 +122,7 @@ const Register = () => {
                         />
                       </FormControl>
                       <FormMessage/>
-                      <InputError messages={errors.email} />
+                      <InputError messages={errors.firstname} />
                     </FormItem>
                   )}
                 />
@@ -141,7 +140,7 @@ const Register = () => {
                         />
                       </FormControl>
                       <FormMessage/>
-                      <InputError messages={errors.email} />
+                      <InputError messages={errors.lastname} />
                     </FormItem>
                   )}
                 />
@@ -205,14 +204,14 @@ const Register = () => {
             </Form>
           </CardContent>
           <CardFooter>
-            <div>
+            {/* <div>
               <span className="text-sm text-primary-foreground">Already have an account ? </span>
               <Link
                   href="/registration"
                   className="underline text-sm text-primary-foreground hover:text-primary">
                   Log in
               </Link>
-            </div>
+            </div> */}
           </CardFooter>
         </Card>
       </div>

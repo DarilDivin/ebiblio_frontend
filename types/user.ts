@@ -24,22 +24,28 @@ export interface GetAllUserResponse {
 
 export interface User {
   id: number
-  matricule: string
-  firstname: string
-  lastname: string
-  slug: string
+  matricule?: string
+  firstname?: string
+  lastname?: string
+  slug?: string
   email: string
-  phone_number: string
-  birth_date: string
-  sex: string
-  piture_profil_path: any
+  email_verified_at?: string
+  password: string
+  two_factor_secret?: string
+  two_factor_recovery_codes?: string
+  two_factor_confirmed_at?: string
+  phone_number?: string
+  birth_date?: string
+  sex?: string
+  profile_picture_path?: any
   has_paid: number
   has_access: number
   debt_amount: number
-  created_at: string
-  updated_at: string
-  created_by: any
-  updated_by: any
+  remember_token?: string
+  created_at?: string
+  updated_at?: string
+  created_by?: any
+  updated_by?: any
   roles?: Role[]
   permissions?: Permission[]
 }

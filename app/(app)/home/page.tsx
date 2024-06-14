@@ -4,9 +4,11 @@ import { useAuth } from '@/hooks/auth'
 import React from 'react'
 
 const Home = () => {
-  const { user, logout } = useAuth({
+  const { user, isLoading, logout } = useAuth({
     middleware: "auth"
   })
+
+  if (isLoading || !user) return <div>Chargement...</div>
 
   console.log(user)
 

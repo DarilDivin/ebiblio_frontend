@@ -12,35 +12,36 @@ import InputError from "./InputError";
 import AuthSessionStatus from "@/app/(auth)/AuthSessionStatus";
 import { useAuth } from "@/hooks/auth";
 import { RegisterErrorType } from "@/types";
+import { User } from "@/types/user";
 
 const FormSchema = z
   .object({
     firstname: z
       .string()
-      .min(2, {
-        message: "Firstname must be at least 2 characters.",
+      .min(1, {
+        message: "Le prénom est requis.",
       })
       .max(50),
     lastname: z
       .string()
-      .min(2, {
-        message: "Lastname must be at least 2 characters.",
+      .min(1, {
+        message: "Le nom de famille est requis.",
       })
       .max(50),
-    email: z.string().email({ message: "Invalid email address" }),
+    email: z.string().email({ message: "Adresse email invalide" }),
   })
 
-const UpdateProfile = ({ user }: {user: any}) => {
+const UpdateProfile = ({ user }: {user: User}) => {
 
-  const values: { 
-    firstname: string | undefined, 
-    lastname: string | undefined, 
-    email: string | undefined 
-  } = {
-    firstname: user?.name,
-    lastname: "CAPO CHICHI",
-    email: user?.email
-  }
+  // const values: { 
+  //   firstname: string | undefined, 
+  //   lastname: string | undefined, 
+  //   email: string | undefined 
+  // } = {
+  //   firstname: user?.name,
+  //   lastname: "CAPO CHICHI",
+  //   email: user?.email
+  // }
 
   const {updateProfile} = useAuth({
     middleware: 'auth',
@@ -52,14 +53,14 @@ const UpdateProfile = ({ user }: {user: any}) => {
   
   const submitForm = (
     event: { preventDefault: () => void },
-    name: string,
+    firstname: string,
     lastname: string,
     email: string,
   ) => {
     event.preventDefault();
 
     updateProfile({
-      name,
+      firstname,
       lastname,
       email,
       setErrors,
@@ -71,9 +72,9 @@ const UpdateProfile = ({ user }: {user: any}) => {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      firstname: "",
-      lastname: "",
-      email: "",  
+      firstname: user ? user.firstname : '',
+      lastname: user ? user.lastname : '',
+      email: user ? user.email : '',  
     },
   });
 
@@ -92,8 +93,8 @@ const UpdateProfile = ({ user }: {user: any}) => {
     <div id="update_profile">
       <Card className='bg-card'>
           <CardHeader>
-            <CardTitle className='text-primary'>Profile Information</CardTitle>
-            <CardDescription>Update your account's profile information and email address.</CardDescription>
+            <CardTitle className='text-primary'>Profile</CardTitle>
+            <CardDescription>Vous pouvez modifier les informations de profile de votre compte.</CardDescription>
           </CardHeader>
           <CardContent>
             <AuthSessionStatus className={'mb-4'} status={status} />
@@ -105,7 +106,7 @@ const UpdateProfile = ({ user }: {user: any}) => {
                     name="firstname"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel className=" text-primary-foreground">Firstname</FormLabel>
+                        <FormLabel className=" text-primary-foreground">Prénoms</FormLabel>
                         <FormControl>
                           <Input 
                             className="text-primary-foreground border-border focus-visible:ring-ring"
@@ -114,7 +115,7 @@ const UpdateProfile = ({ user }: {user: any}) => {
                           />
                         </FormControl>
                         <FormMessage/>
-                        <InputError messages={errors.email} />
+                        <InputError messages={errors.firstname} />
                       </FormItem>
                     )}
                   />
@@ -123,7 +124,7 @@ const UpdateProfile = ({ user }: {user: any}) => {
                     name="lastname"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel className=" text-primary-foreground">Lastname</FormLabel>
+                        <FormLabel className=" text-primary-foreground">Nom de Famille</FormLabel>
                         <FormControl>
                           <Input 
                             className="text-primary-foreground border-border focus-visible:ring-ring"
@@ -132,7 +133,7 @@ const UpdateProfile = ({ user }: {user: any}) => {
                           />
                         </FormControl>
                         <FormMessage/>
-                        <InputError messages={errors.email} />
+                        <InputError messages={errors.lastname} />
                       </FormItem>
                     )}
                   />
@@ -155,7 +156,7 @@ const UpdateProfile = ({ user }: {user: any}) => {
                     </FormItem>
                   )}
                 />
-                <Button type="submit" className='text-white mt-4' >Submit</Button>
+                <Button type="submit" className='text-white mt-4' >Sauvegarder</Button>
               </form>
             </Form>
           </CardContent>

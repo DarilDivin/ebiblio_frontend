@@ -91,11 +91,11 @@ const TwoFactorAuthentication = () => {
       <Card className="bg-card">
         <CardHeader>
           <CardTitle className="text-primary">
-            Two Factor Authentication
+            Authentification à deux facteurs
           </CardTitle>
           <CardDescription>
-            Add additional security to your account using two factor
-            authentication
+            Ajoutez une sécurité supplémentaire à votre compte en utilisant 
+            l'authentification à deux facteurs.
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -197,11 +197,12 @@ const TwoFactorAuthentication = () => {
         </CardContent>
         <CardFooter className="flex flex-col items-start gap-4">
           <p className="text-sm text-slate-500 dark:text-slate-400">
-            Two-factor authentication (2FA) adds an extra layer of security to
-            your online accounts by requiring two forms of verification:
-            something you know (like a password) and something you have (like a
-            mobile device or security token). This ensures that even if your
-            password is compromised, unauthorized access is still prevented.
+            L'authentification à deux facteurs (2FA) ajoute une couche supplémentaire 
+            de sécurité à vos comptes en ligne en exigeant deux formes de vérification : 
+            quelque chose que vous connaissez (comme un mot de passe) et quelque chose que 
+            vous avez (comme un appareil mobile ou un jeton de sécurité). Cela garantit 
+            que même si votre mot de passe est compromis, l'accès non autorisé est 
+            toujours empêché.
           </p>
           {twofactorIsEnabled ? (
             <Button

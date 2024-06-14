@@ -2,17 +2,19 @@ import axios from '@/lib/axios'
 import { ConfirmPasswordProps, ForgotPasswordProps, LoginProps, RegisterProps, ResetPasswordProps, UpdatePasswordProps, UpdateProfileProps, UseAuthProps } from '@/types'
 import { useParams, useRouter } from "next/navigation"
 import { Dispatch, SetStateAction, useEffect } from "react"
+import { toast } from 'sonner'
 import useSWR from "swr"
 
 export const useAuth = ({ middleware, redirectIfAuthenticated }: UseAuthProps = {}) => {
     const router = useRouter()
     const params = useParams()
 
-    const { data: user, error, mutate } = useSWR('api/user', () => 
+    const { data: user, error, isLoading, mutate } = useSWR('api/user', () => 
         axios
             .get('api/user')
             .then(res => res.data)
             .catch(error => { 
+                console.log(error);
                 if (error.response.status !== 409) throw error
                 router.push('/verify-email')
             }),
@@ -23,9 +25,11 @@ export const useAuth = ({ middleware, redirectIfAuthenticated }: UseAuthProps = 
     const register = async ({ setErrors, ...props }: RegisterProps) => {
         await csrf()
         setErrors({})
+        console.log(props);
+        
 
         axios
-            .post('/register', props)
+            .post('/api/register', props)
             .then(() => mutate())
             .catch(error => {
                 if (error.response.status !== 422) throw error
@@ -40,17 +44,21 @@ export const useAuth = ({ middleware, redirectIfAuthenticated }: UseAuthProps = 
         setErrors({})
         setStatus(null)
 
+        console.log(props)
+
         axios
-            .put('/user/profile-information', props)
+            .put('/api/user/profile-information', props)
             .then(response => {
                 mutate();
                 console.log(response);
                 setStatus('Informations modifiées avec succès')
+                toast.success('Informations modifiées avec succès')
             })
             .catch(error => {
                 if (error.response.status !== 422) throw error
                 console.log(error.response.data.errors);
                 setErrors(error.response.data.errors)
+                toast.error('Erreur de validation')
             })
 
     }
@@ -61,7 +69,7 @@ export const useAuth = ({ middleware, redirectIfAuthenticated }: UseAuthProps = 
         setStatus(null)
 
         axios
-            .put('user/password', props)
+            .put('/api/user/password', props)
             .then(response => {
                 console.log(response)
                 mutate()
@@ -81,7 +89,7 @@ export const useAuth = ({ middleware, redirectIfAuthenticated }: UseAuthProps = 
         setStatus(null)
 
         axios
-            .post('/login', props)
+            .post('/api/login', props)
             .then(() => mutate()) // Mets à jour les données de l'utilisateur en cache
             .catch(error => {
                 if (error.response.status !== 422) throw error
@@ -97,7 +105,7 @@ export const useAuth = ({ middleware, redirectIfAuthenticated }: UseAuthProps = 
         setStatus(null)
 
         axios
-            .post('/user/confirm-password', { password })
+            .post('/api/user/confirm-password', { password })
             .then(response => { 
                 setStatus(response.data.status);
                 router.back(); 
@@ -116,7 +124,7 @@ export const useAuth = ({ middleware, redirectIfAuthenticated }: UseAuthProps = 
         setStatus(null)
 
         axios
-            .post('/forgot-password', { email })
+            .post('/api/forgot-password', { email })
             .then(response => setStatus(response.status.toString()))
             .catch(error => {
                 if (error.response.status !== 422) throw error
@@ -132,7 +140,7 @@ export const useAuth = ({ middleware, redirectIfAuthenticated }: UseAuthProps = 
         setStatus(null)
 
         axios
-            .post('/reset-password', { token: params.token, ...props })
+            .post('/api/reset-password', { token: params.token, ...props })
             .then(response =>
                 router.push('/login?reset=' + btoa(response.status.toString())),
             )
@@ -145,7 +153,7 @@ export const useAuth = ({ middleware, redirectIfAuthenticated }: UseAuthProps = 
 
     const resendEmailVerification = ({ setStatus }: {setStatus: Dispatch<SetStateAction<string | null>>}) => {
         axios
-            .post('/email/verification-notification')
+            .post('/api/email/verification-notification')
             .then(response => setStatus(response.status.toString()))
     }
 
@@ -153,7 +161,7 @@ export const useAuth = ({ middleware, redirectIfAuthenticated }: UseAuthProps = 
         await csrf()
 
         axios
-            .post('/user/two-factor-authentication')
+            .post('/api/user/two-factor-authentication')
             .then(response => {
                 console.log(response) 
                 router.refresh() 
@@ -168,7 +176,7 @@ export const useAuth = ({ middleware, redirectIfAuthenticated }: UseAuthProps = 
         await csrf()
 
         axios
-            .delete('/user/two-factor-authentication')
+            .delete('/api/user/two-factor-authentication')
             .then(response => {
                 console.log(response) 
                 setStatus(response.status.toString() + 'disabled');
@@ -180,10 +188,14 @@ export const useAuth = ({ middleware, redirectIfAuthenticated }: UseAuthProps = 
 
         await(
             axios
-                .get('/user/two-factor-qr-code')
+                .get('/api/user/two-factor-qr-code')
                 .then(response => {
                     console.log(response)
                     setSvgQrCode(response.data.svg)
+                })
+                .catch((error) => {
+                    console.log(error);
+                    
                 })
         )
 
@@ -192,7 +204,7 @@ export const useAuth = ({ middleware, redirectIfAuthenticated }: UseAuthProps = 
     const twoFactorRecoveryCode = async ({ setRecoveryCode }: {setRecoveryCode: Dispatch<React.SetStateAction<string[]>>}) => {
 
         axios
-            .get('/user/two-factor-recovery-codes')
+            .get('/api/user/two-factor-recovery-codes')
             .then(response => {
                 console.log(response)
                 // setRecoveryCode(response.data.svg)
@@ -203,7 +215,7 @@ export const useAuth = ({ middleware, redirectIfAuthenticated }: UseAuthProps = 
     const regenerateTwoFactorRecoveryCode = async () => {
 
         axios
-            .post('/user/two-factor-recovery-codes')
+            .post('/api/user/two-factor-recovery-codes')
             .then(response => {
                 console.log(response)
             })
@@ -214,7 +226,7 @@ export const useAuth = ({ middleware, redirectIfAuthenticated }: UseAuthProps = 
         await csrf()
 
         axios
-            .post('/user/confirmed-two-factor-authentication', code)
+            .post('/api/user/confirmed-two-factor-authentication', {code: code})
             .then(response => {
                 router.push('/settings')
                 setStatus(response.status.toString() + '-2FAConfirmed')
@@ -223,22 +235,22 @@ export const useAuth = ({ middleware, redirectIfAuthenticated }: UseAuthProps = 
 
     const logout = async () => {
         if (!error) {
-            await axios.post('/logout').then(() => mutate())
+            await axios.post('/api/logout').then(() => mutate())
         }
 
         window.location.pathname = '/registration'
     }
 
     useEffect(() => {
-        // if (middleware === 'guest' && redirectIfAuthenticated && user)
-        //     router.push(redirectIfAuthenticated)
-        // if (
-        //     window.location.pathname === '/verify-email' &&
-        //     user?.email_verified_at && 
-        //     redirectIfAuthenticated
-        // )
-        //     router.push(redirectIfAuthenticated)
-        // if (middleware === 'auth' && error) logout()
+        if (middleware === 'guest' && redirectIfAuthenticated && user)
+            router.push(redirectIfAuthenticated)
+        if (
+            window.location.pathname === '/verify-email' &&
+            user?.email_verified_at && 
+            redirectIfAuthenticated
+        )
+            router.push(redirectIfAuthenticated)
+        if (middleware === 'auth' && error) logout()
 
             console.log('user: '+ user, 'error: '+  error);
             
@@ -247,6 +259,7 @@ export const useAuth = ({ middleware, redirectIfAuthenticated }: UseAuthProps = 
 
     return {
         user,
+        isLoading,
         register,
         login,
         forgotPassword,

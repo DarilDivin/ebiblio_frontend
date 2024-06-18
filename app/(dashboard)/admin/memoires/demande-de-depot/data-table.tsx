@@ -12,7 +12,12 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import {
   Table,
   TableBody,
@@ -31,6 +36,8 @@ import {
 import { Button } from "@/components/ui/button";
 import * as React from "react";
 import { Input } from "@/components/ui/input";
+import { Printer } from "lucide-react";
+import { printFillingReports } from "@/lib/data/memories";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -68,6 +75,11 @@ export function DemandeDepotMemoireDataTable<TData, TValue>({
     },
   });
 
+  // const selectedIds = table
+  //   .getFilteredSelectedRowModel()
+  //   .rows.map((row) => row.original.id)
+
+
   return (
     <div className="w-full">
       <div className="flex items-center py-4 gap-2">
@@ -87,6 +99,8 @@ export function DemandeDepotMemoireDataTable<TData, TValue>({
           }
           className="max-w-sm"
         /> */}
+
+        
 
         <DropdownMenu>
           <DropdownMenuTrigger asChild>

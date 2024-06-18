@@ -13,6 +13,8 @@ const AdminListeMemoire = () => {
   if (isLoading || !supportedMemoriesValidated) return <div>Chargement...</div>;
 
   const data = supportedMemoriesValidated;
+
+  // console.log(data);
   
   return (
     <div className="">

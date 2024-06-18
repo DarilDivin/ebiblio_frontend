@@ -20,12 +20,12 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 
-import { ArrowUpDown, Copy, Trash2 } from "lucide-react";
+import { ArrowUpDown, Copy, Printer, Trash2 } from "lucide-react";
 import MemoireConsultDialog from "@/components/MemoireConsultDialog";
 import { Memoire } from "@/types/memory";
 import { Badge } from "@/components/ui/badge";
 import { toast } from "sonner";
-import { deleteMemory } from "@/lib/data/memories";
+import { deleteMemory, printFillingReport } from "@/lib/data/memories";
 import { useMemory } from "@/services/queries";
 
 export const columns: ColumnDef<Memoire>[] = [
@@ -64,7 +64,7 @@ export const columns: ColumnDef<Memoire>[] = [
       return (
         <Badge variant={"secondary"}>
           {memory.first_author_firstname + " " + memory.first_author_lastname}{" "}
-          {memory.first_author_firstname
+          {memory.second_author_firstname
             ? " & " +
               memory.second_author_firstname +
               " " +
@@ -88,8 +88,6 @@ export const columns: ColumnDef<Memoire>[] = [
 
     // header: "Filière/Spécialité",
     header: ({ column }) => {
-      console.log(column);
-
       return (
         <Button
           variant="ghost"
@@ -106,20 +104,6 @@ export const columns: ColumnDef<Memoire>[] = [
       return <Badge>{memory.sector.name}</Badge>;
     },
   },
-  // {
-  //   accessorKey: "memory_year",
-  //   header: ({ column }) => {
-  //     return (
-  //       <Button
-  //         variant="ghost"
-  //         onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-  //       >
-  //         Année
-  //         <ArrowUpDown className="ml-2 h-4 w-4" />
-  //       </Button>
-  //     )
-  //   },
-  // },
   {
     id: "actions",
     header: "Actions",
@@ -130,7 +114,11 @@ export const columns: ColumnDef<Memoire>[] = [
 
       const handleDeleteMemory = async (memory: number) => {
         await deleteMemory({ memory });
-        mutate()
+        mutate();
+      };
+
+      const handlePrintFillingReport = async (memory: Memoire) => {
+        await printFillingReport({ memory });
       }
 
       return (
@@ -169,7 +157,7 @@ export const columns: ColumnDef<Memoire>[] = [
             <Tooltip>
               <TooltipTrigger>
                 <Dialog>
-                  <DialogTrigger className=" text-destructive/70 hover:bg-destructive/20 hover:text-destructive h-8 w-8 flex justify-center items-center p-1 rounded-md">
+                  <DialogTrigger className="text-destructive/70 hover:bg-destructive/20 hover:text-destructive h-8 w-8 flex justify-center items-center p-1 rounded-md">
                     <span className="sr-only">Consulter le mémoire</span>
                     <Trash2 className="text-destructive h-4 w-4" />
                   </DialogTrigger>
@@ -189,7 +177,10 @@ export const columns: ColumnDef<Memoire>[] = [
                           Annuler
                         </Button>
                       </DialogClose>
-                      <Button variant={'destructive'} onClick={() => handleDeleteMemory(memory.id)}>
+                      <Button
+                        variant={"destructive"}
+                        onClick={() => handleDeleteMemory(memory.id)}
+                      >
                         Supprimer
                       </Button>
                     </DialogFooter>
@@ -201,7 +192,19 @@ export const columns: ColumnDef<Memoire>[] = [
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>
-          {/* <MemoireConsultDialog memory_data={memory} /> */}
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger>
+                <Button className="bg-transparent text-primary/70 hover:bg-primary/20 hover:text-primary h-8 w-8 flex justify-center items-center p-1 rounded-md" onClick={() => handlePrintFillingReport(memory)}>
+                  <span className="sr-only">Consulter le mémoire</span>
+                  <Printer className="text-primary h-4 w-4" />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Imprimer la fiche de retrait</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
         </div>
       );
     },

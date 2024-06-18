@@ -3,6 +3,7 @@ import { toast } from "sonner";
 import { csrf } from ".";
 import {
   DepotMemoireProps,
+  Memoire,
   RejectMemoryProps,
   ValidateMemoryProps,
 } from "@/types/memory";
@@ -116,13 +117,90 @@ export const deleteMemory = async ({ memory }: { memory: number }) => {
   await axios
     .delete(`/api/supportedMemory/${memory}`)
     .then(() => {
-      toast.success('Mémoire supprimé avec succès 👍🏾.')
+      toast.success("Mémoire supprimé avec succès 👍🏾.");
     })
     .catch((error) => {
       if (error.response && error.response.status === 404) {
-        toast.error('Le mémoire ne peut être supprimé😔.')
+        toast.error("Le mémoire ne peut être supprimé😔.");
       } else {
-        toast.error('Erruer inattendu 🧐.  Vueillez réessayer plus tard.')
+        toast.error("Erreur inattendu 🧐.  Vueillez réessayer plus tard.");
       }
+    });
+};
+
+export const printFillingReport = async ({ memory }: { memory: Memoire }) => {
+  await csrf();
+  console.log("Printing");
+
+  await axios
+    .post(`/api/print-filing-report/${memory.id}`, null, {
+      responseType: "blob", // Indique à Axios de traiter la réponse comme un blob
     })
-}
+    .then((response) => {
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute(
+        "download",
+        `${memory.first_author_lastname}${
+          memory.second_author_lastname
+            ? "-" + memory.second_author_lastname
+            : ""
+        }.pdf`
+      );
+      document.body.appendChild(link);
+      link.click();
+      link.parentNode?.removeChild(link);
+
+      toast.success("Fiche de retrait téléchargée avec succès 👍🏾.");
+    })
+    .catch((error) => {
+      console.log(error);
+
+      toast("Une erreur s'est produite 🧐");
+    });
+};
+
+export const printFillingReports = async ({
+  memories,
+}: {
+  memories: number[];
+}) => {
+  await csrf();
+
+  await axios
+    .post(`/api/print-reports`, { ids: memories })
+    .then((response) => {
+      // console.log(response);
+      
+      // const url = window.URL.createObjectURL(new Blob([response.data]));
+      // const link = document.createElement("a");
+      // link.href = url;
+      // link.setAttribute("download", `Fiches-de-dépot-mémoires.pdf`);
+      // document.body.appendChild(link);
+      // link.click();
+      // link.parentNode?.removeChild(link);
+
+      toast.success("Fiches de retrait téléchargées avec succès 👍🏾.");
+    })
+    .catch((error) => {
+      console.log(error);
+
+      toast("Une erreur s'est produite 🧐");
+    });
+};
+
+export const deleteMemories = async ({ memories }: { memories: number[] }) => {
+  await csrf();
+
+  await axios
+    .post(`/api/destroy-memories?_method=DELETE`, { ids: memories })
+    .then(() => {
+      toast.success("Mémoires suprimés avec succès 👍🏾.");
+    })
+    .catch((error) => {
+      console.log(error);
+
+      toast("Une erreur s'est produite 🧐");
+    });
+};

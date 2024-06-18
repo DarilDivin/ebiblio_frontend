@@ -39,11 +39,11 @@ const ConfirmPassword = () => {
   ) => {
     event.preventDefault();
 
-    confirmPassword({
-      password,
-      setErrors,
-      setStatus
-    })
+    // confirmPassword({
+    //   password,
+    //   setErrors,
+    //   setStatus
+    // })
   }
 
   const form = useForm<z.infer<typeof FormSchema>>({

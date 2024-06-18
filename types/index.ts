@@ -12,6 +12,15 @@ export interface RegisterErrorType {
   password?: string[];
 }
 
+export interface UpdateProfileErrorType {
+  email?: string[]; // Un tableau de messages d'erreur pour l'email
+  firstname?: string[];
+  lastname?: string[];
+  phone_number?: string[];
+  birth_date?: string[];
+  sex?: string[];
+}
+
 export interface LoginErrorType {
   email?: string[];
   password?: string[];
@@ -36,6 +45,11 @@ export interface UpdatePasswordErrorType {
   password_confirmation?: string[];
 }
 
+export interface TwoFactorChallengeErrorType {
+  code?: string[]
+  recovery_code?: string[]
+}
+
 export interface RegisterProps {
   setErrors: Dispatch<SetStateAction<RegisterErrorType>>;
   firstname: string;
@@ -51,6 +65,9 @@ export interface UpdateProfileProps {
   firstname: string;
   lastname: string;
   email: string;
+  phone_number: string;
+  birth_date: string;
+  sex: string;
 }
 
 export interface UpdatePasswordProps {
@@ -90,9 +107,34 @@ export interface ResetPasswordProps {
 
 export interface ConfirmPasswordProps {
   password: string;
-  setErrors: Dispatch<SetStateAction<ConfirmPasswordErrorType>>;
-  setStatus: Dispatch<SetStateAction<string | null>>;
+  setErrors?: Dispatch<SetStateAction<ConfirmPasswordErrorType>>;
+  setStatus?: Dispatch<SetStateAction<string | null>>;
+  onSuccess: () => void;
+  onFail: () => void;
 }
+
+
+
+export interface TwoFactorAuthenticationEnableProps {
+  setStatus: Dispatch<SetStateAction<string | null>>
+  setSvgQrCode: Dispatch<SetStateAction<string | TrustedHTML>>
+  setRecoveryCodes: Dispatch<SetStateAction<string[]>>
+  setTwofactorIsEnabled: Dispatch<SetStateAction<boolean>>
+  setConfirming: Dispatch<SetStateAction<boolean>>
+}
+
+export interface TwoFactorAuthenticationConfirmation {
+  code: string
+  setStatus: Dispatch<SetStateAction<string | null>>
+  setTwoFactorAuthenticationConfirmed: Dispatch<SetStateAction<boolean>>
+}
+
+export interface TwoFactorChallengeProps {
+  code?: string
+  recovery_code?: string
+  setErrors: Dispatch<SetStateAction<TwoFactorChallengeErrorType>>
+}
+
 
 export interface DepotMemoireErrorType {
   first_author_matricule?: string[];

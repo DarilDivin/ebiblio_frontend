@@ -120,32 +120,7 @@ const BookForm = ({ book }: { book?: Book }) => {
     label: keyword,
     value: keyword,
   }));
-
-  // const handleChange = (selectedOption: MultiValue<Option>) => {
-  //   console.log(`Option selected:`, selectedOption);
-  // };
-
-  // Tom Select --------------------------------------------------------------------
-  // const selectRef = useRef<HTMLSelectElement>(null);
-
-  // useEffect(() => {
-  //   if (keywordsRef) {
-  //     const selectInstance = new TomSelect(Select, {
-  //       create: true,
-  //       plugins: {
-  //         remove_button:{
-  //             title:'Remove this item',
-  //         }
-  //     },
-  //     });
-
-  //     return () => {
-  //       selectInstance.destroy();
-  //     };
-  //   }
-  // }, []);
-
-  // ------------------------------------------------------------------------------------
+  
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {

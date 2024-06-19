@@ -15,7 +15,7 @@ import {
 
 const MemoireSearchbar = () => {
   return (
-    <div className='bg-background rounded-lg shadow-lg w-3/4 py-1 px-1'>
+    <div className='bg-background rounded-lg shadow-lg shadow-accent/20 w-3/4 py-1 px-4'>
       <form action="" className="flex max-sm:flex-col w-full gap-4 items-center">
         <div className="flex max-sm:flex-col flex-1 gap-2 items-center max-sm:w-full">
           <div className="flex flex-1 h-14 justify-evenly items-center gap-2 relative max-sm:w-full">
@@ -49,7 +49,7 @@ const MemoireSearchbar = () => {
 
           </div>
         </div>
-        <Button className="h-14 max-sm:h-10 max-sm:w-full">Rechercher</Button>
+        {/* <Button className="h-14 max-sm:h-10 max-sm:w-full">Rechercher</Button> */}
       </form>
     </div>
   )

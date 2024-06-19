@@ -81,7 +81,7 @@ const ConfigurationPage = () => {
         </Avatar>
       </div>
 
-      <Card className="overflow-scroll max-h-[89vh]">
+      <Card className="overflow-scroll max-h-[89vh] bg-card">
         <CardContent className="flex flex-col gap-4 pt-6">
           <div className="grid grid-cols-3 gap-4 pt-6">
             <Card className="col-span-3 h-[700px] overflow-y-scroll bg-card card">

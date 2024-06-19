@@ -20,7 +20,7 @@ import {
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { Book } from "@/types/book";
 
-const BookSearchbar = ({book, setFilteredData}: {book: Book[], setFilteredData: Dispatch<SetStateAction<Book[]>>}) => {
+const BookSearchbar = ({book, setFilteredData}: {book: Book[], setFilteredData: Dispatch<SetStateAction<Book[] | undefined>>}) => {
   const [query, setQuery] = useState({
     title: "",
     author: "",
@@ -28,7 +28,7 @@ const BookSearchbar = ({book, setFilteredData}: {book: Book[], setFilteredData: 
   });
   const [data, setData] = useState(book);
   useEffect(() => {
-    console.log('Monter');
+    // console.log('Monter');
     setFilteredData(book)
   }, [])
   
@@ -58,7 +58,7 @@ const BookSearchbar = ({book, setFilteredData}: {book: Book[], setFilteredData: 
   // console.log(filteredData)
 
   return (
-    <div className="bg-white rounded-lg shadow-lg w-3/4 py-1 px-1">
+    <div className="bg-background shadow-muted/10 rounded-lg shadow-lg w-3/4 py-1 px-4">
       <form
         action=""
         className="flex max-sm:flex-col w-full gap-4 items-center"
@@ -128,7 +128,7 @@ const BookSearchbar = ({book, setFilteredData}: {book: Book[], setFilteredData: 
             />
           </div>
         </div>
-        <Button className="h-14 max-sm:h-10 max-sm:w-full">Rechercher</Button>
+        {/* <Button className="h-14 max-sm:h-10 max-sm:w-full">Rechercher</Button> */}
       </form>
     </div>
   );

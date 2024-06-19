@@ -127,9 +127,9 @@ export const columns: ColumnDef<User>[] = [
       const user = row.original;
       if (user.sex !== undefined) {
         if (user.sex === "Masculin") {
-          return <Badge className="bg-blue-400 hover:bg-blue-400/80">{user.sex}</Badge>;
+          return <Badge className="bg-blue-400 hover:bg-blue-400/80 dark:bg-blue-400 dark:hover:bg-blue-400/80">{user.sex}</Badge>;
         } else if (user.sex === "Féminin") {
-          return <Badge className="bg-orange-400 hover:bg-orange-400/80">{user.sex}</Badge>;
+          return <Badge className="bg-orange-400 hover:bg-orange-400/80 dark:bg-orange-400 dark:hover:bg-orange-400/80">{user.sex}</Badge>;
         } else {
           return <Badge variant={'secondary'}>Indéfini</Badge>;
         }
@@ -168,6 +168,7 @@ export const columns: ColumnDef<User>[] = [
   },
   {
     id: "actions",
+    header: 'Actions',
     cell: ({ row }) => {
       const user = row.original;
 

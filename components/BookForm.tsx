@@ -34,7 +34,7 @@ import { CommandList } from "cmdk";
 import { createBook, updateBook } from "@/lib/data/book";
 import { getAllSchoolYear } from "@/lib/data/schoolyear";
 import { useBook } from "@/services/queries";
-import { Book, CreateBookErrorType } from "@/types/book";
+import { Book, CreateBookErrorType, SingleBook } from "@/types/book";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Edit, PlusCircle } from "lucide-react";
 import {  useState } from "react";
@@ -57,7 +57,7 @@ const FormSchema = z
     summary: z.string().min(1, "Un résumé est requis"),
     editor: z.string().min(1, "Léditeur du livre est obligatoire"),
     editing_year: z.string().min(1, "Lannée d'édition est obligatoire"),
-    ISBN: z.string().min(1, "IBSN requis"),
+    ISBN: z.string().min(1, "ISBN requis"),
     cote: z.string().min(1, "La cote est obligatoire"),
     school_year_id: z.string(),
     is_physical: z.boolean().optional(),
@@ -298,12 +298,12 @@ const BookForm = ({ book }: { book?: Book }) => {
                 name="title"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className=" text-primary-foreground">
+                    <FormLabel className=" ">
                       Titre du Livre
                     </FormLabel>
                     <FormControl>
                       <Input
-                        className="text-primary-foreground border-border focus-visible:ring-ring"
+                        className="focus-visible:ring-ring"
                         placeholder=""
                         {...field}
                       />
@@ -318,12 +318,12 @@ const BookForm = ({ book }: { book?: Book }) => {
                 name="author"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className=" text-primary-foreground">
+                    <FormLabel className=" ">
                       Auteur
                     </FormLabel>
                     <FormControl>
                       <Input
-                        className="text-primary-foreground border-border focus-visible:ring-ring"
+                        className=" border-border focus-visible:ring-ring"
                         placeholder=""
                         {...field}
                       />
@@ -341,12 +341,12 @@ const BookForm = ({ book }: { book?: Book }) => {
                 name="number_pages"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className=" text-primary-foreground">
+                    <FormLabel className=" ">
                       Nombre de page
                     </FormLabel>
                     <FormControl>
                       <Input
-                        className="text-primary-foreground border-border focus-visible:ring-ring"
+                        className=" border-border focus-visible:ring-ring"
                         type="number"
                         placeholder=""
                         {...field}
@@ -362,12 +362,12 @@ const BookForm = ({ book }: { book?: Book }) => {
                 name="editor"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className=" text-primary-foreground">
+                    <FormLabel className=" ">
                       Editeur
                     </FormLabel>
                     <FormControl>
                       <Input
-                        className="text-primary-foreground border-border focus-visible:ring-ring"
+                        className=" border-border focus-visible:ring-ring"
                         placeholder=""
                         {...field}
                       />
@@ -382,12 +382,12 @@ const BookForm = ({ book }: { book?: Book }) => {
                 name="editing_year"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className=" text-primary-foreground">
+                    <FormLabel className=" ">
                       Année d'édition
                     </FormLabel>
                     <FormControl>
                       <Input
-                        className="text-primary-foreground border-border focus-visible:ring-ring"
+                        className=" border-border focus-visible:ring-ring"
                         placeholder=""
                         {...field}
                       />
@@ -404,12 +404,12 @@ const BookForm = ({ book }: { book?: Book }) => {
                 name="ISBN"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className=" text-primary-foreground">
+                    <FormLabel className=" ">
                       ISBN
                     </FormLabel>
                     <FormControl>
                       <Input
-                        className="text-primary-foreground border-border focus-visible:ring-ring"
+                        className=" border-border focus-visible:ring-ring"
                         placeholder=""
                         {...field}
                       />
@@ -424,12 +424,12 @@ const BookForm = ({ book }: { book?: Book }) => {
                 name="cote"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className=" text-primary-foreground">
+                    <FormLabel className=" ">
                       Cote du Livre
                     </FormLabel>
                     <FormControl>
                       <Input
-                        className="text-primary-foreground border-border focus-visible:ring-ring"
+                        className=" border-border focus-visible:ring-ring"
                         placeholder=""
                         {...field}
                       />
@@ -444,7 +444,7 @@ const BookForm = ({ book }: { book?: Book }) => {
                 name="school_year_id"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className=" text-primary-foreground">
+                    <FormLabel className=" ">
                       Année scolaire
                     </FormLabel>
                     <Popover>
@@ -518,7 +518,7 @@ const BookForm = ({ book }: { book?: Book }) => {
                 name="keywords"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className=" text-primary-foreground">
+                    <FormLabel className=" ">
                       Mots clés
                     </FormLabel>
                     <FormControl>
@@ -591,12 +591,12 @@ const BookForm = ({ book }: { book?: Book }) => {
                   name="file_path"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className=" text-primary-foreground">
+                      <FormLabel className=" ">
                         Document
                       </FormLabel>
                       <FormControl>
                         <Input
-                          className="text-primary-foreground border-border focus-visible:ring-ring"
+                          className=" border-border focus-visible:ring-ring"
                           type="file"
                           // {...field}
                           {...filePathRef}
@@ -615,12 +615,12 @@ const BookForm = ({ book }: { book?: Book }) => {
                   name="available_stock"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className=" text-primary-foreground">
+                      <FormLabel className=" ">
                         Stock
                       </FormLabel>
                       <FormControl>
                         <Input
-                          className="text-primary-foreground border-border focus-visible:ring-ring"
+                          className=" border-border focus-visible:ring-ring"
                           {...field}
                         />
                       </FormControl>

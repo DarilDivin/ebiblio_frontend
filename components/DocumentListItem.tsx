@@ -11,7 +11,7 @@ interface DocumentListItemProps {
 
 const DocumentListItem = ({ memoire }: { memoire: Memoire }) => {
   return (
-    <div className="flex gap-4 justify-start bg-green-50 hover:bg-green-100 p-2 rounded-md">
+    <div className="flex gap-4 justify-start bg-primary/5 hover:bg-primary/10 p-2 rounded-md">
       <div className="flex justify-center items-center size-32 bg-slate-50 rounded-md shadow-sm">
         Illustration Doc
       </div>
@@ -27,7 +27,7 @@ const DocumentListItem = ({ memoire }: { memoire: Memoire }) => {
             orientation="vertical"
             className="w-[3px] h-[15px] bg-green-500 rounded-md"
           />
-          <span className=" font-bold text-black/80 text-base flex gap-2">
+          {/* <span className=" font-bold text-foreground/80 text-base flex gap-2">
             4.5 / 5
             <span className="flex gap-1 items-center">
               <Star size={15} />
@@ -36,14 +36,14 @@ const DocumentListItem = ({ memoire }: { memoire: Memoire }) => {
               <Star size={15} />
               <Star size={15} />
             </span>
-          </span>
+          </span> */}
         </div>
 
         <div className="flex gap-4 items-start justify-between h-full pt-4">
           <div className="flex flex-col text-sm">
             <div className="flex gap-2">
-              <p className="font-semibold text-black/70">Produit par :</p>
-              <span className="font-semibold text-black/90">
+              <p className="font-semibold text-foreground/70">Produit par :</p>
+              <span className="font-semibold text-foreground/90">
                 {memoire.first_author_firstname +
                   " " +
                   memoire.first_author_lastname}{" "}
@@ -58,17 +58,17 @@ const DocumentListItem = ({ memoire }: { memoire: Memoire }) => {
               </span>
             </div>
             <div className="flex gap-2">
-              <p className="font-semibold text-black/70">
+              <p className="font-semibold text-foreground/70">
                 Sous la supervision de :
               </p>
-              <span className="font-semibold text-black/90">
+              <span className="font-semibold text-foreground/90">
                 {" "}
                 {memoire.memory_master_name}{" "}
               </span>
             </div>
             <div className="flex gap-2">
-              <p className="font-semibold text-black/70">Président du Jury :</p>
-              <span className="font-semibold text-black/90">
+              <p className="font-semibold text-foreground/70">Président du Jury :</p>
+              <span className="font-semibold text-foreground/90">
                 {" "}
                 {memoire.jury_president_name}
               </span>
@@ -77,14 +77,14 @@ const DocumentListItem = ({ memoire }: { memoire: Memoire }) => {
           {/* <Separator orientation='vertical' className="w-[2px] bg-green-700 h-[50px]"/> */}
           <div className="flex flex-col text-sm">
             <div className="flex gap-2">
-              <p className="font-semibold text-black/70">Année :</p>
-              <span className="font-semibold text-black/90">
+              <p className="font-semibold text-foreground/70">Année :</p>
+              <span className="font-semibold text-foreground/90">
                 {memoire.soutenance.school_year.school_year}
               </span>
             </div>
             <div className="flex gap-2">
-              <p className="font-semibold text-black/70">Filière :</p>
-              <span className="font-semibold text-black/90">
+              <p className="font-semibold text-foreground/70">Filière :</p>
+              <span className="font-semibold text-foreground/90">
                 {memoire.sector.name}
               </span>
             </div>

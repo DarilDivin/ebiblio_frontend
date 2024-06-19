@@ -19,7 +19,7 @@ const MemoireList = () => {
   const [page, setPage] = useState<string | null>(null)
   const [url, setUrl] = useState("api/supportedMemory?page=" + page)
 
-console.log(url)
+// console.log(url)
   const {data: memoryResponse, error} = useMemoryByLink(url);
   
   // Fonction pour aller à la page précédente

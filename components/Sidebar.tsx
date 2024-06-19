@@ -20,6 +20,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { ModeToggle } from "./ui/mode-toggle";
 
 const Sidebar = ({
   open,
@@ -60,7 +61,7 @@ const Sidebar = ({
             <span className="text-primary font-bold text-2xl font-alexana">
               E
             </span>
-            <span>Biblio</span>
+            <span className="text-foreground">Biblio</span>
           </Link>
         </div>
         <div className="p-1 rounded hover:bg-slate-50/20 cursor-pointer">
@@ -72,7 +73,7 @@ const Sidebar = ({
         <h3
           className={`${
             openSidebar
-              ? "ml-4 text-sm font-semibold text-black/50 mb-2"
+              ? "ml-4 text-sm font-semibold text-foreground mb-2"
               : " opacity-0 invisible"
           } transition-all`}
         >
@@ -269,6 +270,8 @@ const Sidebar = ({
           </Link>
         </div>
       </div>
+
+      <ModeToggle />
     </div>
   );
 };

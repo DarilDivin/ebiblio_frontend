@@ -15,17 +15,17 @@ const PhysicalBooksListPage = () => {
 
   if (error) return <div>Erreur de chargement des données</div>;
   if (isLoading || !physical) return <div>Chargement...</div>;
+  
 
-
-
+  console.log(physical)
   return (
     <div className="p-2">
-      <div className="h-[55vh] max-sm:h-[35vh] w-full bg-green-50 grid grid-cols-2 max-md:grid-cols-[400px_1fr] max-sm:grid-cols-1 justify-center items-center px-52 max-md:px-10 max-sm:px-12 pt-8 rounded-lg mb-4">
+      <div className="h-[55vh] max-sm:h-[35vh] w-full bg-primary/5 grid grid-cols-2 max-md:grid-cols-[400px_1fr] max-sm:grid-cols-1 justify-center items-center px-52 max-md:px-10 max-sm:px-12 pt-8 rounded-lg mb-4">
         <div>
           <p className="text-[2.5rem] max-sm:text-[1.5rem] max-sm:text-center font-bold font-poppins text-primary justify-self-end ">
             Vous chercher un livre en particulier ?
           </p>
-          <p className="text-base max-sm:text-base max-sm:text-center font-semibold font-poppins text-primary-foreground/70 justify-self-end">
+          <p className="text-base max-sm:text-base max-sm:text-center font-semibold font-poppins text-foreground/70 justify-self-end">
             Effectuer une recherche parmis les livres disponibles en version
             papier de l'Eneam. Vous pouvez ensuite vous rendre à l'Eneam pour
             les consulter directement ou effectuer un demande de prêt en ligne

@@ -368,7 +368,7 @@ const DepotMemoireForm = () => {
                       name="first_author_matricule"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel className=" text-primary-foreground">
+                          <FormLabel className=" text-foreground">
                             Matricule
                           </FormLabel>
                           <FormControl>
@@ -391,7 +391,7 @@ const DepotMemoireForm = () => {
                       name="first_author_firstname"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel className=" text-primary-foreground">
+                          <FormLabel className=" text-foreground">
                             Prénoms
                           </FormLabel>
                           <FormControl>
@@ -413,7 +413,7 @@ const DepotMemoireForm = () => {
                       name="first_author_lastname"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel className=" text-primary-foreground">
+                          <FormLabel className=" text-foreground">
                             Nom de famille
                           </FormLabel>
                           <FormControl>
@@ -435,7 +435,7 @@ const DepotMemoireForm = () => {
                       name="first_author_email"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel className=" text-primary-foreground">
+                          <FormLabel className=" text-foreground">
                             Email
                           </FormLabel>
                           <FormControl>
@@ -455,7 +455,7 @@ const DepotMemoireForm = () => {
                       name="first_author_phone"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel className=" text-primary-foreground">
+                          <FormLabel className=" text-foreground">
                             Numéro de téléphone
                           </FormLabel>
                           <FormControl>
@@ -498,7 +498,7 @@ const DepotMemoireForm = () => {
                       name="second_author_matricule"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel className=" text-primary-foreground">
+                          <FormLabel className=" text-foreground">
                             Matricule
                           </FormLabel>
                           <FormControl>
@@ -521,7 +521,7 @@ const DepotMemoireForm = () => {
                       name="second_author_firstname"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel className=" text-primary-foreground">
+                          <FormLabel className=" text-foreground">
                             Prénoms
                           </FormLabel>
                           <FormControl>
@@ -543,7 +543,7 @@ const DepotMemoireForm = () => {
                       name="second_author_lastname"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel className=" text-primary-foreground">
+                          <FormLabel className=" text-foreground">
                             Nom de Famille
                           </FormLabel>
                           <FormControl>
@@ -567,7 +567,7 @@ const DepotMemoireForm = () => {
                       name="second_author_email"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel className=" text-primary-foreground">
+                          <FormLabel className=" text-foreground">
                             Email
                           </FormLabel>
                           <FormControl>
@@ -587,7 +587,7 @@ const DepotMemoireForm = () => {
                       name="second_author_phone"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel className=" text-primary-foreground">
+                          <FormLabel className=" text-foreground">
                             Numéro de téléphone
                           </FormLabel>
                           <FormControl>
@@ -630,7 +630,7 @@ const DepotMemoireForm = () => {
                       name="theme"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel className=" text-primary-foreground">
+                          <FormLabel className=" text-foreground">
                             Thème de soutenance
                           </FormLabel>
                           <FormControl>
@@ -740,7 +740,7 @@ const DepotMemoireForm = () => {
                       name="soutenance_id"
                       render={({ field }) => (
                         <FormItem className="flex flex-col justify-center space-y-2">
-                          <FormLabel className=" text-primary-foreground">
+                          <FormLabel className=" text-foreground">
                             Soutenance
                           </FormLabel>
                           {/* <FormControl>
@@ -828,7 +828,7 @@ const DepotMemoireForm = () => {
                       name="start_at"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel className=" text-primary-foreground">
+                          <FormLabel className=" text-foreground">
                             Heure de début
                           </FormLabel>
                           <FormControl>
@@ -848,7 +848,7 @@ const DepotMemoireForm = () => {
                       name="ends_at"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel className=" text-primary-foreground">
+                          <FormLabel className=" text-foreground">
                             Heure de fin
                           </FormLabel>
                           <FormControl>
@@ -871,7 +871,7 @@ const DepotMemoireForm = () => {
                       name="jury_president_name"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel className=" text-primary-foreground">
+                          <FormLabel className=" text-foreground">
                             Président du jury
                           </FormLabel>
                           <FormControl>
@@ -892,7 +892,7 @@ const DepotMemoireForm = () => {
                       name="memory_master_name"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel className=" text-primary-foreground">
+                          <FormLabel className=" text-foreground">
                             Nom du Maitre mémoire
                           </FormLabel>
                           <FormControl>
@@ -913,7 +913,7 @@ const DepotMemoireForm = () => {
                       name="memory_master_email"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel className=" text-primary-foreground">
+                          <FormLabel className=" text-foreground">
                             Email du Maitre mémoire
                           </FormLabel>
                           <FormControl>
@@ -936,7 +936,7 @@ const DepotMemoireForm = () => {
                       name="file_path"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel className=" text-primary-foreground">
+                          <FormLabel className=" text-foreground">
                             Mémoire (Document PDF non Copiable)
                           </FormLabel>
                           <FormControl>
@@ -957,7 +957,7 @@ const DepotMemoireForm = () => {
                       name="cover_page_path"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel className=" text-primary-foreground">
+                          <FormLabel className=" text-foreground">
                             Page de garde
                           </FormLabel>
                           <FormControl>
@@ -1007,7 +1007,7 @@ const DepotMemoireForm = () => {
                 type="button"
                 onClick={prev}
                 disabled={currentStep === 0}
-                className="rounded bg-white px-2 py-1 text-sm font-semibold text-sky-900 shadow-sm ring-1 ring-inset ring-sky-300 hover:bg-sky-50 disabled:cursor-not-allowed disabled:opacity-50"
+                className="rounded bg-background px-2 py-1 text-sm font-semibold text-foreground shadow-sm ring-1 ring-inset ring-ring hover:bg-primary/50 disabled:cursor-not-allowed disabled:opacity-50"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -1028,7 +1028,7 @@ const DepotMemoireForm = () => {
                 type="button"
                 onClick={next}
                 disabled={currentStep === steps.length - 1}
-                className="rounded bg-white px-2 py-1 text-sm font-semibold text-sky-900 shadow-sm ring-1 ring-inset ring-sky-300 hover:bg-sky-50 disabled:cursor-not-allowed disabled:opacity-50"
+                className="rounded bg-background px-2 py-1 text-sm font-semibold text-foreground shadow-sm ring-1 ring-inset ring-ring hover:bg-primary/50 disabled:cursor-not-allowed disabled:opacity-50"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"

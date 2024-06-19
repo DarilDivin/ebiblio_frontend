@@ -369,6 +369,7 @@ export const useAuth = ({
   return {
     user,
     isLoading,
+    error,
     register,
     login,
     forgotPassword,

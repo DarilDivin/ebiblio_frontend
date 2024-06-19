@@ -149,8 +149,8 @@ export interface SingleBook {
   editing_year: string
   cote: string
   number_pages: number
-  IBSN: any
-  available_stock: any
+  ISBN: string
+  available_stock: number
   available: number
   loaned: number
   has_ebooks: number
@@ -159,7 +159,7 @@ export interface SingleBook {
   likes_number: number
   views_number: number
   stars_number: number
-  file_path: any
+  file_path: File | null
   created_at: string
   updated_at: string
   created_by: any

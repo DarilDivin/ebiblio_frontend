@@ -1,14 +1,3 @@
-export interface Role {
-  id: number;
-  name: string;
-  created_by: string | null;
-  updated_by: string | null;
-  deleted_by: string | null;
-  created_at: string;
-  updated_at: string;
-  deleted_at: string | null;
-}
-
 export interface GetAllRoleResponse {
   data: Role[];
   links?: {
@@ -31,4 +20,34 @@ export interface GetAllRoleResponse {
     to: number;
     total: number;
   };
+}
+
+export interface Role {
+  id: number;
+  name: string;
+  slug: string;
+  created_at: string;
+  updated_at: string;
+  created_by: any;
+  updated_by: any;
+  permissions: Permission[];
+}
+
+export interface Permission {
+  id: number;
+  name: string;
+  slug: string;
+  guard_name: string;
+  created_by: any;
+  updated_by: any;
+  deleted_by: any;
+  created_at: string;
+  updated_at: string;
+  deleted_at: any;
+  pivot: Pivot;
+}
+
+export interface Pivot {
+  role_id: number;
+  permission_id: number;
 }

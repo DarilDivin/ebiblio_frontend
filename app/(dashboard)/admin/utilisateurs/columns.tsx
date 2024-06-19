@@ -3,18 +3,37 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
-import { ArrowUpDown, Copy, FileCheck2, MoreHorizontal } from "lucide-react";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+
+import { ArrowUpDown, Copy, FileCheck2, MoreHorizontal, Trash2 } from "lucide-react";
 import MemoireConsultDialog from "@/components/MemoireConsultDialog";
-import {  
-  validateMemory,
-} from "@/lib/data/memories";
+import { validateMemory } from "@/lib/data/memories";
 import RejectMemoryDialog from "@/components/RejectMemoryDialog";
 import { toast } from "sonner";
 import { Memoire } from "@/types/memory";
-import { useMemory } from "@/services/queries";
+import { useMemory, useUser } from "@/services/queries";
+import { User } from "@/types/user";
+import { Badge } from "@/components/ui/badge";
+import { deleteUser } from "@/lib/data/user";
+import { Switch } from "@/components/ui/switch";
 
-export const columns: ColumnDef<Memoire>[] = [
+export const columns: ColumnDef<User>[] = [
   {
     id: "select",
     header: ({ table }) => (
@@ -38,97 +57,181 @@ export const columns: ColumnDef<Memoire>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: "theme",
-    header: "Theme",
-  },
-  {
-    accessorKey: "memory_master_name",
-    header: "Maitre mémoire ",
-  },
-  {
-    accessorKey: "memory_year",
+    accessorKey: "matricule",
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Année
+          Matricule
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+    cell: ({ row }) => {
+      const user = row.original;
+      return (
+        <Badge variant={"secondary"}>
+          {user.matricule ? user.matricule : "Indéfini"}
+        </Badge>
+      );
+    },
+  },
+  {
+    accessorKey: "lastname",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Nom
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
     },
   },
   {
+    accessorKey: "firstname",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Prénoms
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+  },
+  {
+    accessorKey: "email",
+    header: "Email ",
+  },
+  {
+    accessorKey: "sex",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Sex
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+    cell: ({ row }) => {
+      const user = row.original;
+      if (user.sex !== undefined) {
+        if (user.sex === "Masculin") {
+          return <Badge className="bg-blue-400 hover:bg-blue-400/80">{user.sex}</Badge>;
+        } else if (user.sex === "Féminin") {
+          return <Badge className="bg-orange-400 hover:bg-orange-400/80">{user.sex}</Badge>;
+        } else {
+          return <Badge variant={'secondary'}>Indéfini</Badge>;
+        }
+      }
+    },
+  },
+  {
+    accessorKey: "has_paid",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Payé
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+    cell: ({ row }) => {
+      const user = row.original;
+
+      const { mutate } = useUser()
+
+      const handlePaid = () => {
+        toast('Paid')
+        mutate()
+      }
+      return (
+        <Switch className="data-[state=checked]:bg-primary dark:data-[state=checked]:bg-primary focus-visible:ring-ring"
+          checked={user.has_paid ? true : false}
+          onChange={handlePaid}
+        />
+      )
+    }
+  },
+  {
     id: "actions",
     cell: ({ row }) => {
-      const memory = row.original;
+      const user = row.original;
 
-      const { mutate } = useMemory();
+      const { mutate } = useUser();
 
-      const handleValidatedMemory = async (supportedMemory: number) => {
-        console.log(supportedMemory);
-        await validateMemory({ supportedMemory });
-        mutate();
-      };
+      const handleDeleteUser = async (user: number) => {
+        await deleteUser({ user });
+        mutate()
+      }
 
       return (
         <div className="flex gap-2">
-          <MemoireConsultDialog memory_data={memory} />
-          <RejectMemoryDialog idmemory={memory.id} />
-          <Button
-            variant="ghost"
-            className="h-8 w-8 p-0 text-primary/70 hover:bg-primary/20 hover:text-primary rounded-md"
-            memoryid={memory.id}
-            onClick={() => handleValidatedMemory(memory.id)}
-          >
-            <span className="sr-only">Valider le mémoire</span>
-            <FileCheck2 className="text-primary h-4 w-4" />
-          </Button>
           <Button
             variant="ghost"
             className="h-8 w-8 p-0"
             onClick={() => {
-              navigator.clipboard.writeText(memory.cote),
-                toast("Cote du mémoire copié");
+              navigator.clipboard.writeText(
+                user.matricule ? user.matricule : "Il n'a pas de matricule"
+              ),
+                toast("Matricule de l'utilisateur copié");
             }}
           >
             <span className="sr-only">Copier la cote du mémoire</span>
             <Copy className="h-4 w-4" />
           </Button>
-          {/* <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" className="h-8 w-8 p-0">
-                <span className="sr-only">Open menu</span>
-                <MoreHorizontal className="h-4 w-4" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuLabel>Actions</DropdownMenuLabel>
-              <DropdownMenuItem
-                onClick={() =>
-                  navigator.clipboard.writeText(memory.id.toString())
-                }
-              >
-                Copier la cote du doc
-              </DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem
-                className="text-primary hover:bg-primary/20 hover:text-primary"
-                memoryid={memory.id}
-                
-              >
-                Valider
-              </DropdownMenuItem>
-              <DropdownMenuItem
-                className="text-destructive hover:bg-primary/20 hover:text-destructive"
-                memoryid={memory.id}
-                // onClick={handleRejectMemory}
-              >
-                <RejectMemoryDialog idmemory={memory.id} />
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu> */}
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger>
+                <Dialog>
+                  <DialogTrigger className="text-destructive/70 hover:bg-destructive/20 hover:text-destructive h-8 w-8 flex justify-center items-center p-1 rounded-md">
+                    <span className="sr-only">Supprimer l'utilisateur</span>
+                    <Trash2 className="text-destructive h-4 w-4" />
+                  </DialogTrigger>
+                  <DialogContent>
+                    <DialogHeader>
+                      <DialogTitle>
+                        Voulez vraiment supprimer cet utilisateur
+                      </DialogTitle>
+                      <DialogDescription className="">
+                        Lorem ipsum dolor sit, amet consectetur adipisicing
+                        elit. Beatae dolorum maiores cumque eius, quidem veniam?
+                      </DialogDescription>
+                    </DialogHeader>
+                    <DialogFooter className="sm:justify-end">
+                      <DialogClose asChild>
+                        <Button type="button" variant="secondary">
+                          Annuler
+                        </Button>
+                      </DialogClose>
+                      <Button
+                        variant={"destructive"}
+                        onClick={() => handleDeleteUser(user.id)}
+                      >
+                        Supprimer
+                      </Button>
+                    </DialogFooter>
+                  </DialogContent>
+                </Dialog>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Supprimer l' utilisateur</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
         </div>
       );
     },

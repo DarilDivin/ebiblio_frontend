@@ -48,9 +48,14 @@ import { sectorColumns } from "./(sector&specialities)/columns";
 import SectorSpecialityForm from "./(sector&specialities)/Sector&SpecialityForm";
 import { ScrollArea } from "@radix-ui/react-scroll-area";
 import { ScrollBar } from "@/components/ui/scroll-area";
+import { SectorDataTable } from "./(sector&specialities)/SectorDatatable";
+import { roleColumns } from "./(role)/columns";
+import { RoleDataTable } from "./(role)/RoleDatatable";
+import { getAllRole } from "@/lib/data/role";
 
 const ConfigurationPage = () => {
   const cycles = getAllCycle();
+  const roles = getAllRole();
   const soutenances = getAllSoutenance();
   const sectors = getAllFiliere();
   const lastConfig = getLastConfig();
@@ -79,7 +84,7 @@ const ConfigurationPage = () => {
       <Card className="overflow-scroll max-h-[89vh]">
         <CardContent className="flex flex-col gap-4 pt-6">
           <div className="grid grid-cols-3 gap-4 pt-6">
-            <Card className="col-span-2 h-[400px] overflow-y-scroll bg-card card">
+            <Card className="col-span-3 h-[700px] overflow-y-scroll bg-card card">
               <CardHeader>
                 <CardTitle className="text-card-foreground">
                   Configuration rapide
@@ -313,7 +318,7 @@ const ConfigurationPage = () => {
                 </Table>
               </CardContent>
             </Card>
-            {cycles.error ? (
+            {/* {cycles.error ? (
               <div>Erreur de chargement des données</div>
             ) : cycles.isLoading || !cycles.cycles ? (
               <Card className="col-span-1 h-[400px] overflow-y-scroll card bg-card">
@@ -344,7 +349,7 @@ const ConfigurationPage = () => {
                   <CycleDataTable columns={cycleColumns} data={cycles.cycles} />
                 </CardContent>
               </Card>
-            )}
+            )} */}
           </div>
 
           {/* <Card> */}
@@ -416,7 +421,7 @@ const ConfigurationPage = () => {
                 </CardHeader>
                 <CardContent className="">
                   <SectorSpecialityForm />
-                  <SoutenanceDataTable
+                  <SectorDataTable
                     columns={sectorColumns}
                     data={sectors?.sectorsAndSpecialities}
                   />
@@ -425,6 +430,73 @@ const ConfigurationPage = () => {
             )}
           </div>
           {/* </Card> */}
+
+          <div className=" grid grid-cols-2 gap-4">
+            {roles.error ? (
+              <div>Erreur de chargement des données</div>
+            ) : roles.isLoading || !roles.roles ? (
+              <Card className="col-span-1 h-[400px] overflow-y-scroll card bg-card">
+                <CardHeader>
+                  <Skeleton className="h-8 w-16" />
+                  <Skeleton className="h-4 w-40" />
+                </CardHeader>
+                <CardContent>
+                  <Skeleton className="h-8 w-16 mb-4" />
+                  <div className="grid grid-cols-4 gap-4 mb-6">
+                    <Skeleton className="h-8 col-span-3" />
+                    <Skeleton className="h-8 w-full" />
+                  </div>
+
+                  <Skeleton className="w-full h-[200px]" />
+                </CardContent>
+              </Card>
+            ) : (
+              <Card className="col-span-1 h-[400px] overflow-y-scroll card bg-card">
+                <CardHeader>
+                  <CardTitle className="text-card-foreground">Roles</CardTitle>
+                  <CardDescription>
+                    Retrouvez ici les Roles de la plateforme
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="">
+                  {/* <RoleForm /> */}
+                  <RoleDataTable columns={roleColumns} data={roles.roles} />
+                </CardContent>
+              </Card>
+            )}
+            {cycles.error ? (
+              <div>Erreur de chargement des données</div>
+            ) : cycles.isLoading || !cycles.cycles ? (
+              <Card className="col-span-1 h-[400px] overflow-y-scroll card bg-card">
+                <CardHeader>
+                  <Skeleton className="h-8 w-16" />
+                  <Skeleton className="h-4 w-40" />
+                </CardHeader>
+                <CardContent>
+                  <Skeleton className="h-8 w-16 mb-4" />
+                  <div className="grid grid-cols-4 gap-4 mb-6">
+                    <Skeleton className="h-8 col-span-3" />
+                    <Skeleton className="h-8 w-full" />
+                  </div>
+
+                  <Skeleton className="w-full h-[200px]" />
+                </CardContent>
+              </Card>
+            ) : (
+              <Card className="col-span-1 h-[400px] overflow-y-scroll card bg-card">
+                <CardHeader>
+                  <CardTitle className="text-card-foreground">Cycles</CardTitle>
+                  <CardDescription>
+                    Retrouvez ici les cycles de l'Eneam
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="">
+                  <CycleForm />
+                  <CycleDataTable columns={cycleColumns} data={cycles.cycles} />
+                </CardContent>
+              </Card>
+            )}
+          </div>
         </CardContent>
       </Card>
     </div>

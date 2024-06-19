@@ -85,3 +85,18 @@ export const deleteSoutenance = async ({
       }
     });
 };
+
+export const deleteSoutenances = async ({ soutenances }: { soutenances: number[] }) => {
+  await csrf();
+
+  await axios
+    .post(`/api/destroy-soutenances?_method=DELETE`, { ids: soutenances })
+    .then(() => {
+      toast.success("Soutenances supprimées avec succès 👍🏾.");
+    })
+    .catch((error) => {
+      console.log(error);
+
+      toast("Une erreur s'est produite 🧐");
+    });
+};

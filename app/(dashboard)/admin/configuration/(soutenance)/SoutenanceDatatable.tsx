@@ -14,6 +14,13 @@ import {
 } from "@tanstack/react-table";
 
 import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+
+import {
   Table,
   TableBody,
   TableCell,
@@ -31,13 +38,17 @@ import {
 import { Button } from "@/components/ui/button";
 import * as React from "react";
 import { Input } from "@/components/ui/input";
+import { Soutenance } from "@/types/soutenance";
+import { useSoutenance } from "@/services/queries";
+import { deleteSoutenances } from "@/lib/data/soutenance";
+import { Trash2 } from "lucide-react";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
 }
 
-export function SoutenanceDataTable<TData, TValue>({
+export function SoutenanceDataTable<TData extends Soutenance, TValue>({
   columns,
   data,
 }: DataTableProps<TData, TValue>) {
@@ -68,6 +79,17 @@ export function SoutenanceDataTable<TData, TValue>({
     },
   });
 
+  const { mutate } = useSoutenance();
+
+  const selectedIds = table
+    .getFilteredSelectedRowModel()
+    .rows.map((row) => row.original.id);
+
+  const handleDeleteSoutenances = async (soutenances: number[]) => {
+    await deleteSoutenances({ soutenances });
+    mutate();
+  };
+
   return (
     <div>
       <div className="flex items-center py-4 gap-2">
@@ -79,6 +101,29 @@ export function SoutenanceDataTable<TData, TValue>({
           }
           className="max-w-sm"
         />
+
+        {selectedIds.length > 0 && (
+          <div className="flex gap-2">
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger>
+                  <Button
+                    className="group bg-destructive text-background/70 hover:border-destructive hover:border-[1px] hover:bg-destructive/0 hover:text-destructive flex justify-center items-center p-2 rounded-md"
+                    onClick={() => handleDeleteSoutenances(selectedIds)}
+                  >
+                    <span className="sr-only">
+                      Supprimer les soutenances sélectionnées
+                    </span>
+                    <Trash2 className="text-white group-hover:text-destructive h-6 w-6" />
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Supprimer les soutenances sélectionnées</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          </div>
+        )}
 
         <DropdownMenu>
           <DropdownMenuTrigger asChild>

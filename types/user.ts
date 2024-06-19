@@ -50,7 +50,7 @@ export interface User {
   permissions?: Permission[]
 }
 
-export interface Role {
+interface Role {
   id: number
   name: string
   slug: string
@@ -65,13 +65,13 @@ export interface Role {
   pivot: Pivot
 }
 
-export interface Pivot {
+interface Pivot {
   model_type: string
   model_id: number
   role_id: number
 }
 
-export interface Permission {
+interface Permission {
   id: number
   name: string
   slug: string
@@ -85,32 +85,8 @@ export interface Permission {
   pivot: Pivot2
 }
 
-export interface Pivot2 {
+interface Pivot2 {
   model_type: string
   model_id: number
   permission_id: number
-}
-
-export interface Links {
-  first: string
-  last: string
-  prev: any
-  next: any
-}
-
-export interface Meta {
-  current_page: number
-  from: number
-  last_page: number
-  links: Link[]
-  path: string
-  per_page: number
-  to: number
-  total: number
-}
-
-export interface Link {
-  url?: string
-  label: string
-  active: boolean
 }

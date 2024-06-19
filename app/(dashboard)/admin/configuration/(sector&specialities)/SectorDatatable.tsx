@@ -23,6 +23,13 @@ import {
 } from "@/components/ui/table";
 
 import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+
+import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
@@ -31,13 +38,17 @@ import {
 import { Button } from "@/components/ui/button";
 import * as React from "react";
 import { Input } from "@/components/ui/input";
+import { Sector } from "@/types/sector";
+import { useSector } from "@/services/queries";
+import { deleteSectors } from "@/lib/data/sector";
+import { Trash2 } from "lucide-react";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
 }
 
-export function CycleDataTable<TData, TValue>({
+export function SectorDataTable<TData extends Sector, TValue>({
   columns,
   data,
 }: DataTableProps<TData, TValue>) {
@@ -68,6 +79,17 @@ export function CycleDataTable<TData, TValue>({
     },
   });
 
+  const { mutate } = useSector();
+
+  const selectedIds = table
+    .getFilteredSelectedRowModel()
+    .rows.map((row) => row.original.id);
+
+  const handleDeleteSectors = async (sectors: number[]) => {
+    await deleteSectors({ sectors });
+    mutate();
+  };
+
   return (
     <div>
       <div className="flex items-center py-4 gap-2">
@@ -79,6 +101,29 @@ export function CycleDataTable<TData, TValue>({
           }
           className="max-w-sm"
         />
+
+        {selectedIds.length > 0 && (
+          <div className="flex gap-2">
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger>
+                  <Button
+                    className="group bg-destructive text-background/70 hover:border-destructive hover:border-[1px] hover:bg-destructive/0 hover:text-destructive flex justify-center items-center p-2 rounded-md"
+                    onClick={() => handleDeleteSectors(selectedIds)}
+                  >
+                    <span className="sr-only">
+                      Supprimer les Filières sélectionnées
+                    </span>
+                    <Trash2 className="text-white group-hover:text-destructive h-6 w-6" />
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Supprimer les Filières sélectionnées</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          </div>
+        )}
 
         <DropdownMenu>
           <DropdownMenuTrigger asChild>

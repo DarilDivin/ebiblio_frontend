@@ -133,7 +133,7 @@ export const printFillingReport = async ({ memory }: { memory: Memoire }) => {
   console.log("Printing");
 
   await axios
-    .post(`/api/print-filing-report/${memory.id}`, null, {
+    .patch(`/api/print-filing-report/${memory.id}`, null, {
       responseType: "blob", // Indique à Axios de traiter la réponse comme un blob
     })
     .then((response) => {
@@ -169,17 +169,19 @@ export const printFillingReports = async ({
   await csrf();
 
   await axios
-    .post(`/api/print-reports`, { ids: memories })
+    .post(`/api/print-reports?_method=PATCH`, { ids: memories }, {
+      responseType: 'blob',
+    })
     .then((response) => {
-      // console.log(response);
+      console.log(response);
       
-      // const url = window.URL.createObjectURL(new Blob([response.data]));
-      // const link = document.createElement("a");
-      // link.href = url;
-      // link.setAttribute("download", `Fiches-de-dépot-mémoires.pdf`);
-      // document.body.appendChild(link);
-      // link.click();
-      // link.parentNode?.removeChild(link);
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", `Fiches-de-dépot-de-mémoires.zip`);
+      document.body.appendChild(link);
+      link.click();
+      link.parentNode?.removeChild(link);
 
       toast.success("Fiches de retrait téléchargées avec succès 👍🏾.");
     })

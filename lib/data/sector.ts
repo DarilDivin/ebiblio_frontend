@@ -70,3 +70,18 @@ export const deleteSector = async ({sector}: {sector: number}) => {
     })
 
 }
+
+export const deleteSectors = async ({ sectors }: { sectors: number[] }) => {
+  await csrf();
+
+  await axios
+    .post(`/api/destroy-sectors?_method=DELETE`, { ids: sectors })
+    .then(() => {
+      toast.success("Filière supprimées avec succès 👍🏾.");
+    })
+    .catch((error) => {
+      console.log(error);
+
+      toast("Une erreur s'est produite 🧐");
+    });
+};

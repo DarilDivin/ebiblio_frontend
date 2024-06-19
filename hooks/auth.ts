@@ -29,9 +29,9 @@ export const useAuth = ({
     error,
     isLoading,
     mutate,
-  } = useSWR("api/user", () =>
+  } = useSWR("api/auth-user", () =>
     axios
-      .get("api/user")
+      .get("api/auth-user")
       .then((res) => res.data)
       .catch((error) => {
         console.log(error);

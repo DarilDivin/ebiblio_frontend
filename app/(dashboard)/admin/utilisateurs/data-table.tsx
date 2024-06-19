@@ -14,6 +14,13 @@ import {
 } from "@tanstack/react-table";
 
 import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+
+import {
   Table,
   TableBody,
   TableCell,
@@ -31,13 +38,17 @@ import {
 import { Button } from "@/components/ui/button";
 import * as React from "react";
 import { Input } from "@/components/ui/input";
+import { User } from "@/types/user";
+import { useUser } from "@/services/queries";
+import { deleteUsers } from "@/lib/data/user";
+import { Trash2 } from "lucide-react";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
 }
 
-export function DemandeDepotMemoireDataTable<TData, TValue>({
+export function UserDataTable<TData extends User, TValue>({
   columns,
   data,
 }: DataTableProps<TData, TValue>) {
@@ -68,17 +79,53 @@ export function DemandeDepotMemoireDataTable<TData, TValue>({
     },
   });
 
+  const { mutate } = useUser();
+
+  const selectedIds = table
+    .getFilteredSelectedRowModel()
+    .rows.map((row) => row.original.id);
+
+  const handleDeleteUsers = async (users: number[]) => {
+    await deleteUsers({ users });
+    mutate();
+  };
+
   return (
     <div className="w-full">
       <div className="flex items-center py-4 gap-2">
         <Input
-          placeholder="Filter thème..."
-          value={(table.getColumn("theme")?.getFilterValue() as string) ?? ""}
+          placeholder="Filtrer par le nom..."
+          value={
+            (table.getColumn("lastname")?.getFilterValue() as string) ?? ""
+          }
           onChange={(event) =>
-            table.getColumn("theme")?.setFilterValue(event.target.value)
+            table.getColumn("lastname")?.setFilterValue(event.target.value)
           }
           className="max-w-sm"
         />
+
+        {selectedIds.length > 0 && (
+          <div className="flex gap-2">
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger>
+                  <Button
+                    className="group bg-destructive text-background/70 hover:border-destructive hover:border-[1px] hover:bg-destructive/0 hover:text-destructive flex justify-center items-center p-2 rounded-md"
+                    onClick={() => handleDeleteUsers(selectedIds)}
+                  >
+                    <span className="sr-only">
+                      Supprimer les utilisateurs sélectionnés
+                    </span>
+                    <Trash2 className="text-white group-hover:text-destructive h-6 w-6" />
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Supprimer les utilisateurs sélectionnés</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          </div>
+        )}
 
         <DropdownMenu>
           <DropdownMenuTrigger asChild>

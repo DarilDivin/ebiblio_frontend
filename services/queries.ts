@@ -3,13 +3,19 @@ import { LastConfigResponse } from "@/types/configuration";
 import { GetAllCycleResponse } from "@/types/cycle";
 import { GetAllKeywordResponse } from "@/types/keyword";
 import { GetAllMemoryResponse } from "@/types/memory";
+import { GetAllRoleResponse } from "@/types/role";
 import { GetAllSchoolYearResponse } from "@/types/schoolyear";
 import { GetAllSectorResponse } from "@/types/sector";
 import { GetAllSoutenanceResponse } from "@/types/soutenance";
+import { GetAllUserResponse } from "@/types/user";
 import useSWR from "swr";
 
 export function useMemory() {
   return useSWR<GetAllMemoryResponse>('/api/supportedMemory/no-pagination');
+}
+
+export function useUser() {
+  return useSWR<GetAllUserResponse>('/api/user')
 }
 
 export function useBook() {
@@ -50,9 +56,9 @@ export function useLastConfig() {
 }
 
 export function useRole() {
-  return useSWR('api/role');
+  return useSWR<GetAllRoleResponse>('api/role');
 }
 
 export function useKeyword() {
-  return useSWR<GetAllKeywordResponse>('api/keywords');
+  return useSWR<GetAllKeywordResponse>('api/keyword');
 }

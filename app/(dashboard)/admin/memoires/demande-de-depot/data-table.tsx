@@ -12,12 +12,14 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
+
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+
 import {
   Table,
   TableBody,
@@ -83,10 +85,10 @@ export function DemandeDepotMemoireDataTable<TData extends Memoire, TValue>({
     .getFilteredSelectedRowModel()
     .rows.map((row) => row.original.id);
 
-    const handleValidateMemories = async (memories: number[]) => {
-      await validateMemories({ memories });
-      mutate()
-    };
+  const handleValidateMemories = async (memories: number[]) => {
+    await validateMemories({ memories });
+    mutate()
+  };
 
   return (
     <div className="w-full">

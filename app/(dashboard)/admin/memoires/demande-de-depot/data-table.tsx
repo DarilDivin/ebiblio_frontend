@@ -36,15 +36,17 @@ import {
 import { Button } from "@/components/ui/button";
 import * as React from "react";
 import { Input } from "@/components/ui/input";
-import { Printer } from "lucide-react";
-import { printFillingReports } from "@/lib/data/memories";
+import { FileCheck2, Printer } from "lucide-react";
+import { printFillingReports, validateMemories } from "@/lib/data/memories";
+import { useMemory } from "@/services/queries";
+import { Memoire } from "@/types/memory";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
 }
 
-export function DemandeDepotMemoireDataTable<TData, TValue>({
+export function DemandeDepotMemoireDataTable<TData extends Memoire, TValue>({
   columns,
   data,
 }: DataTableProps<TData, TValue>) {
@@ -75,10 +77,16 @@ export function DemandeDepotMemoireDataTable<TData, TValue>({
     },
   });
 
-  // const selectedIds = table
-  //   .getFilteredSelectedRowModel()
-  //   .rows.map((row) => row.original.id)
+  const { mutate } = useMemory()
 
+  const selectedIds = table
+    .getFilteredSelectedRowModel()
+    .rows.map((row) => row.original.id);
+
+    const handleValidateMemories = async (memories: number[]) => {
+      await validateMemories({ memories });
+      mutate()
+    };
 
   return (
     <div className="w-full">
@@ -100,7 +108,28 @@ export function DemandeDepotMemoireDataTable<TData, TValue>({
           className="max-w-sm"
         /> */}
 
-        
+        {selectedIds.length > 0 && (
+          <div className="flex gap-2">
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger>
+                  <Button
+                    className="group bg-primary text-background/70 hover:border-primary hover:border-[1px] hover:bg-primary/0 hover:text-destructive flex justify-center items-center p-2 rounded-md"
+                    onClick={() => handleValidateMemories(selectedIds)}
+                  >
+                    <span className="sr-only">
+                      Valider les mémoires sélectionnés
+                    </span>
+                    <FileCheck2 className="text-white group-hover:text-primary h-6 w-6" />
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Valider les mémoires sélectionnés</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          </div>
+        )}
 
         <DropdownMenu>
           <DropdownMenuTrigger asChild>

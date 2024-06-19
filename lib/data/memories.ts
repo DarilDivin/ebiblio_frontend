@@ -196,7 +196,7 @@ export const deleteMemories = async ({ memories }: { memories: number[] }) => {
   await axios
     .post(`/api/destroy-memories?_method=DELETE`, { ids: memories })
     .then(() => {
-      toast.success("Mémoires suprimés avec succès 👍🏾.");
+      toast.success("Mémoires supprimés avec succès 👍🏾.");
     })
     .catch((error) => {
       console.log(error);
@@ -204,3 +204,18 @@ export const deleteMemories = async ({ memories }: { memories: number[] }) => {
       toast("Une erreur s'est produite 🧐");
     });
 };
+
+export const validateMemories = async ({ memories }: {memories: number[]}) => {
+  await csrf();
+
+  await axios
+    .post(`/api/validate-memories?_method=PATCH`, {ids: memories})
+    .then(() => {
+      toast.success("Mémoires validés avec succès 👍🏾.")
+    })
+    .catch((error) => {
+      console.log(error)
+
+      toast.error("Une erreur s'est produite 🧐")
+    })
+}

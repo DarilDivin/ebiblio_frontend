@@ -166,6 +166,8 @@ export const useAuth = ({
       .post("/api/forgot-password", { email })
       .then((response) => setStatus(response.status.toString()))
       .catch((error) => {
+        console.log(error);
+        
         if (error.response.status !== 422) throw error;
 
         setErrors(error.response.data.errors);
@@ -188,6 +190,8 @@ export const useAuth = ({
         router.push("/login?reset=" + btoa(response.status.toString()))
       )
       .catch((error) => {
+        console.log(error);
+        
         if (error.response.status !== 422) throw error;
 
         setErrors(error.response.data.errors);

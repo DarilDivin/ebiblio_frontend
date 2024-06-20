@@ -87,7 +87,7 @@ const ShowBook = ({ params }: { params: { slug: string; id: string } }) => {
         <div className="flex justify-end">
           <div className="flex justify-between gap-4 w-[500px]">
             {book.is_physical ? (
-              <Button className="gap-2 rounded-3xl">
+              <Button className="gap-2 rounded-3xl bg-primary/70">
                 Demander un prêt
                 <LibraryBig className="size-[16px]" />
               </Button>

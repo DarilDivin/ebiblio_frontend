@@ -62,7 +62,7 @@ const Navbar = () => {
           </Link>
         </div>
         <div className="max-sm:hidden">
-          <div className="w-[250px] sm:w-[300px] lg:w-fit bg-primary h-[40px] rounded-[6px] p-[3px] flex justify-between">
+          <div className="w-[250px] sm:w-[300px] lg:w-fit bg-primary/70 h-[40px] rounded-[6px] p-[3px] flex justify-between">
             <button
               className={`${
                 !showBiblioPages

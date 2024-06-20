@@ -6,6 +6,7 @@ import {
   ChevronRight,
   Files,
   Gauge,
+  HandHelping,
   Home,
   LayoutDashboard,
   List,
@@ -136,6 +137,27 @@ const Sidebar = ({
                       title="Liste des mémoires"
                     >
                       Liste des Livres
+                    </p>
+                  </div>
+                  <ChevronRight size={15} />
+                </Link>
+                <Link
+                  href="/admin/livres/demandes-de-pret"
+                  className={`ml-2 border-none flex gap-1 justify-between items-center p-2 rounded-md hover:bg-primary/30 cursor-pointer ${
+                    openSidebar ? "" : "px-1"
+                  }`}
+                >
+                  <div className="flex gap-2 items-center">
+                    <HandHelping size={17} />
+                    <p
+                      className={`${
+                        openSidebar
+                          ? "text-xs font-medium w-[104px] text-nowrap text-ellipsis overflow-hidden"
+                          : "hidden"
+                      }`}
+                      title="Demandes de prêt"
+                    >
+                      Demandes de prêt
                     </p>
                   </div>
                   <ChevronRight size={15} />

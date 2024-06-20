@@ -30,8 +30,9 @@ import { Memoire } from "@/types/memory";
 import { useMemory, useUser } from "@/services/queries";
 import { User } from "@/types/user";
 import { Badge } from "@/components/ui/badge";
-import { deleteUser } from "@/lib/data/user";
+import { deleteUser, giveAccessToUser } from "@/lib/data/user";
 import { Switch } from "@/components/ui/switch";
+import { useState } from "react";
 
 export const columns: ColumnDef<User>[] = [
   {
@@ -154,14 +155,19 @@ export const columns: ColumnDef<User>[] = [
 
       const { mutate } = useUser()
 
-      const handlePaid = () => {
-        toast('Paid')
+      const [hasPaid, setHasPaid] = useState(user.has_paid ? true : false)
+
+      const handlePaid = async (user: number) => {
+        await giveAccessToUser({ user })
+        setHasPaid(true)
         mutate()
       }
       return (
         <Switch className="data-[state=checked]:bg-primary dark:data-[state=checked]:bg-primary focus-visible:ring-ring"
-          checked={user.has_paid ? true : false}
-          onChange={handlePaid}
+          checked={hasPaid}
+          // onChange={() => handlePaid(user.id)}
+          onCheckedChange={() => handlePaid(user.id)}
+          disabled={user.has_paid ? true : false}
         />
       )
     }

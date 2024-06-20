@@ -40,6 +40,21 @@ export const deleteUsers = async ({ users }: { users: number[] }) => {
     .catch((error) => {
       console.log(error);
 
-      toast("Une erreur s'est produite 🧐");
+      toast.error("Une erreur s'est produite 🧐");
     });
 };
+
+export const giveAccessToUser = async ({ user }: { user: number}) => {
+  await csrf();
+
+  await axios
+    .patch(`/api/give-access-to-user/${user}`)
+    .then(() => {
+      toast.success("Confirmation de payement pour l'utilisateur")
+    })
+    .catch((error) => {
+      console.log(error);
+
+      toast.error("Une erreur s'est produite 🧐")
+    })
+}

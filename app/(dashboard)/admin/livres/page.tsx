@@ -24,7 +24,7 @@ const LivresList = () => {
           </div>
         </div>
         <Avatar>
-          <AvatarImage src="https://github.com/shadcn.png" />
+          <AvatarImage src={`https://api.dicebear.com/9.x/thumbs/svg?seed=Divin`} />
           <AvatarFallback>CN</AvatarFallback>
         </Avatar>
       </div>

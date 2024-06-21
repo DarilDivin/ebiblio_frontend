@@ -102,6 +102,7 @@ const Navbar = () => {
                 Ebooks
               </Link>
               {/* <Link href='/livres/podcasts' className="hover:text-primary text-sm lg:text-sm">Podcasts</Link> */}
+              <Link href='/livres/mon-espace-bibliotheque' className="hover:text-primary text-sm lg:text-sm">Mon Espace Bibliothèque</Link>
             </>
           ) : (
             <>

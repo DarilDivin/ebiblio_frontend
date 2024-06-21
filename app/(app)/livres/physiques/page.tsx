@@ -17,7 +17,7 @@ const PhysicalBooksListPage = () => {
   if (isLoading || !physical) return <div>Chargement...</div>;
   
 
-  console.log(physical)
+  // console.log(physical)
   return (
     <div className="p-2">
       <div className="h-[55vh] max-sm:h-[35vh] w-full bg-primary/5 grid grid-cols-2 max-md:grid-cols-[400px_1fr] max-sm:grid-cols-1 justify-center items-center px-52 max-md:px-10 max-sm:px-12 pt-8 rounded-lg mb-4">

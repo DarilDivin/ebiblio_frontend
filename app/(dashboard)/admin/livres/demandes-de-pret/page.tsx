@@ -27,7 +27,7 @@ const BookAskForLoan = () => {
         </Avatar>
       </div>
 
-      <div className="w-full grid grid-cols-4 gap-4  max-h-[88vh] overflow-scroll items-start justify-start">
+      <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4  max-h-[88vh] overflow-scroll items-start justify-start">
         <AskForLoanAdminCard />
         <AskForLoanAdminCard />
         <AskForLoanAdminCard />

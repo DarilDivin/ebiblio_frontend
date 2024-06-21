@@ -28,20 +28,25 @@ import Link from "next/link";
 import { useAuth } from "@/hooks/auth";
 import { ModeToggle } from "./ui/mode-toggle";
 import { User } from "@/types/user";
+import { usePathname, useRouter } from "next/navigation";
 
 const Navbar = () => {
   const { user, logout, error, isLoading }: {user: User, logout: any, error: any, isLoading: boolean} = useAuth({
     middleware: "auth",
   });
+  const router = useRouter()
 
-  const [showBiblioPages, setShowBiblioPages] = useState(false);
+  const pathname = usePathname()
+  const pathnameContainsLivres = pathname.includes('/livres');
+
+  const [showBiblioPages, setShowBiblioPages] = useState(pathnameContainsLivres);
 
   const toggleTabs = (e: any) => {
     // console.log(e.target.firstChild.data);
-    if (e.target.firstChild.data === "Livres") {
-      setShowBiblioPages(true);
+    if (e.target.firstChild.data === "Livres" ) {
+        setShowBiblioPages(true);
     } else {
-      setShowBiblioPages(false);
+        setShowBiblioPages(false);
     }
   };
 
@@ -69,7 +74,10 @@ const Navbar = () => {
                   ? "text-foreground"
                   : "bg-background text-primary cursor-default"
               } text-[10px] sm:text-xs lg:text-base h-full  w-[200px] px-8 rounded font-semibold`}
-              onClick={toggleTabs}
+              onClick={async (e) => {
+                await router.push('/livres')
+                toggleTabs(e)
+              }}
             >
               Livres
             </button>
@@ -79,7 +87,10 @@ const Navbar = () => {
                   ? "bg-background text-primary cursor-default"
                   : "text-foreground "
               } text-[10px] sm:text-xs lg:text-base w-[150px] font-semibold h-full rounded `}
-              onClick={toggleTabs}
+              onClick={async (e) => {
+                await router.push('/memoires')
+                toggleTabs(e)
+              }}
             >
               Mémoires
             </button>
@@ -91,30 +102,30 @@ const Navbar = () => {
             <>
               <Link
                 href="/livres/physiques"
-                className="hover:text-primary text-sm lg:text-sm"
+                className={`hover:text-primary text-sm lg:text-sm ${pathname === "/livres/physiques" ? 'text-primary font-bold': 'text-foreground'}`}
               >
                 Livres Physiques
               </Link>
               <Link
                 href="/livres/ebooks"
-                className="hover:text-primary text-sm lg:text-sm"
+                className={`hover:text-primary text-sm lg:text-sm ${pathname === "/livres/ebooks" ? 'text-primary font-bold': 'text-foreground'}`}
               >
                 Ebooks
               </Link>
               {/* <Link href='/livres/podcasts' className="hover:text-primary text-sm lg:text-sm">Podcasts</Link> */}
-              <Link href='/livres/mon-espace-bibliotheque' className="hover:text-primary text-sm lg:text-sm">Mon Espace Bibliothèque</Link>
+              <Link href='/livres/mon-espace-bibliotheque' className={`hover:text-primary text-sm lg:text-sm ${pathname === "/livres/mon-espace-bibliotheque" ? 'text-primary font-bold': 'text-foreground'}`}>Mon Espace Bibliothèque</Link>
             </>
           ) : (
             <>
               <Link
                 href="/memoires/deposer"
-                className="hover:text-primary text-sm lg:text-sm"
+                className={`hover:text-primary text-sm lg:text-sm ${pathname === "/memoires/deposer" ? 'text-primary font-bold': 'text-foreground'}`}
               >
                 Dépôt de mémoires
               </Link>
               <Link
                 href="/memoires/consulter"
-                className="hover:text-primary text-sm lg:text-sm"
+                className={`hover:text-primary text-sm lg:text-sm ${pathname === "/memoires/consulter" ? 'text-primary font-bold': 'text-foreground'}`}
               >
                 Consulter
               </Link>

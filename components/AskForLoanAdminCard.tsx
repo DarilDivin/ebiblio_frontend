@@ -12,7 +12,7 @@ const AskForLoanAdminCard = () => {
   return (
     <div className=" p-2 w-full rounded-md bg-primary/5 hover:bg-primary/10 h-60 flex flex-col justify-between">
           <div className="flex flex-col gap-2 ">
-            <h3 className=" text-lg font-poppins font-bold">
+            <h3 className=" text-base font-poppins font-bold">
               Nouvelle demande de Divin DJK
             </h3>
             <Badge className=" w-fit">Externe</Badge>
@@ -20,17 +20,17 @@ const AskForLoanAdminCard = () => {
 
           <div className="flex flex-col gap-2">
             <p>
-              <span className="font-bold text-base">Livre: </span>
-              <span className="font-medium text-base text-foreground/80">Harry Potter et les reliques de la mort</span>
+              <span className="font-bold text-sm">Livre: </span>
+              <span className="font-medium text-sm text-foreground/80">Harry Potter et les reliques de la mort</span>
             </p>
-            <p>
-              <span className="font-bold text-base">Disponibilité: </span>
+            <div>
+              <span className="font-bold text-sm">Disponibilité: </span>
               <Badge className="w-fit" variant={'outline'}>Disponible</Badge>
-            </p>
-            <p>
-              <span className="font-bold text-base">Restant en Stock: </span>
+            </div>
+            <div>
+              <span className="font-bold text-sm">Restant en Stock: </span>
               <Badge className="w-fit" variant={'outline'}>1 / 3</Badge>
-            </p>
+            </div>
           </div>
 
           <div className="justify-self-end flex justify-between items-center h-9">

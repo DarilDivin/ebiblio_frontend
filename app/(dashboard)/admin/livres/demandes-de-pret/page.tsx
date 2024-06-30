@@ -1,8 +1,16 @@
+'use client'
+
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { HandHelping } from "lucide-react";
 import AskForLoanAdminCard from "@/components/AskForLoanAdminCard";
+import { getAllLoan } from "@/lib/data/book";
 
 const BookAskForLoan = () => {
+  const { loans, isLoading, error } = getAllLoan();
+
+  if (error) return <div>Erreur de chargement</div>;
+  if (isLoading) return <div>Chargement...</div>;
+
   return (
     <div className="p-2">
       <div className="flex w-full justify-between px-8 py-4 bg-primary/5 rounded-md mb-4">
@@ -28,14 +36,9 @@ const BookAskForLoan = () => {
       </div>
 
       <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4  max-h-[88vh] overflow-scroll items-start justify-start">
-        <AskForLoanAdminCard />
-        <AskForLoanAdminCard />
-        <AskForLoanAdminCard />
-        <AskForLoanAdminCard />
-        <AskForLoanAdminCard />
-        <AskForLoanAdminCard />
-        <AskForLoanAdminCard />
-        <AskForLoanAdminCard />
+        {loans?.map((loan) => (
+          <AskForLoanAdminCard loan={loan} />
+        ))}
       </div>
     </div>
   );

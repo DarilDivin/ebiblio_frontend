@@ -13,7 +13,12 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { deleteComment, getSpecificBook } from "@/lib/data/book";
+import {
+  askForLoan,
+  canUserAskForLoan,
+  deleteComment,
+  getSpecificBook,
+} from "@/lib/data/book";
 import { useSpecificBook } from "@/services/queries";
 import {
   ArrowDown,
@@ -27,15 +32,26 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 const ShowBook = ({ params }: { params: { slug: string; id: string } }) => {
+  const [canAskForLoan, setCanAskForLoan] = useState(false);
+
   const { book, isLoading, error } = getSpecificBook(params.id);
   const { mutate } = useSpecificBook(params.id);
+
+  useEffect(() => {
+    canUserAskForLoan({ article: parseInt(params.id), setCanAskForLoan });
+  }, []);
 
   const handleDeleteComment = (article: number, comment: number) => {
     deleteComment({ article: article, comment: comment });
     mutate();
+  };
+
+  const handleAskForloan = async (id: number) => {
+    await askForLoan({ article: id });
+    await canUserAskForLoan({ article: id, setCanAskForLoan });
   };
 
   if (error) {
@@ -87,7 +103,11 @@ const ShowBook = ({ params }: { params: { slug: string; id: string } }) => {
         <div className="flex justify-end">
           <div className="flex justify-between gap-4 w-[500px]">
             {book.is_physical ? (
-              <Button className="gap-2 rounded-3xl bg-primary/70">
+              <Button
+                className="gap-2 rounded-3xl bg-primary/70"
+                disabled={!canAskForLoan}
+                onClick={() => handleAskForloan(book.id)}
+              >
                 Demander un prêt
                 <LibraryBig className="size-[16px]" />
               </Button>
@@ -166,12 +186,12 @@ const ShowBook = ({ params }: { params: { slug: string; id: string } }) => {
                   </div>
 
                   {/* {user.id === comment.user_id ? ( */}
-                    <Button
-                      onClick={() => handleDeleteComment(book.id, comment.id)}
-                      className="bg-muted text-muted-foreground rounded-full p-1 flex justify-center items-center self-end hover:bg-destructive hover:text-destructive-foreground transition-colors cursor-pointer size-5"
-                    >
-                      <Trash2 className="size-4" />
-                    </Button>
+                  <Button
+                    onClick={() => handleDeleteComment(book.id, comment.id)}
+                    className="bg-muted text-muted-foreground rounded-full p-1 flex justify-center items-center self-end hover:bg-destructive hover:text-destructive-foreground transition-colors cursor-pointer size-5"
+                  >
+                    <Trash2 className="size-4" />
+                  </Button>
                   {/* ) : (
                     ""
                   )} */}

@@ -57,7 +57,7 @@ const MemoireList = () => {
   return (
     <div>
       <div> Liste des mémoires </div>
-      <div className="px-8 py-4  flex flex-col gap-2">
+      <div className="py-4 flex flex-col gap-2">
         {memoryResponse.data.map(
           (memory) => (
             // <div>

@@ -113,10 +113,10 @@ const Register = () => {
                   name="firstname"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className=" text-primary-foreground">Firstname</FormLabel>
+                      <FormLabel className=" text-foreground">Firstname</FormLabel>
                       <FormControl>
                         <Input 
-                          className="text-primary-foreground border-border focus-visible:ring-ring"
+                          className="text-foreground border-border focus-visible:ring-ring"
                           placeholder="John Doe"
                           {...field}
                         />
@@ -131,10 +131,10 @@ const Register = () => {
                   name="lastname"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className=" text-primary-foreground">Lastname</FormLabel>
+                      <FormLabel className=" text-foreground">Lastname</FormLabel>
                       <FormControl>
                         <Input 
-                          className="text-primary-foreground border-border focus-visible:ring-ring"
+                          className="text-foreground border-border focus-visible:ring-ring"
                           placeholder="John Doe"
                           {...field}
                         />
@@ -149,10 +149,10 @@ const Register = () => {
                   name="email"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className=" text-primary-foreground">Email</FormLabel>
+                      <FormLabel className=" text-foreground">Email</FormLabel>
                       <FormControl>
                         <Input 
-                          className="text-primary-foreground focus-visible:ring-ring"
+                          className="text-foreground focus-visible:ring-ring"
                           placeholder="email@email.com"
                           {...field}
                         />
@@ -167,11 +167,11 @@ const Register = () => {
                   name="password"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-primary-foreground">Password</FormLabel>
+                      <FormLabel className="text-foreground">Password</FormLabel>
                       <FormControl>
                         <Input
                           type='password'
-                          className="bg-transparent text-primary-foreground focus-visible:ring-ring"
+                          className="bg-transparent text-foreground focus-visible:ring-ring"
                           placeholder=""
                           {...field}
                         />
@@ -186,11 +186,11 @@ const Register = () => {
                   name="password_confirmation"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-primary-foreground">Confirm Password</FormLabel>
+                      <FormLabel className="text-foreground">Confirm Password</FormLabel>
                       <FormControl>
                         <Input
                           type='password'
-                          className="bg-transparent text-primary-foreground focus-visible:ring-ring"
+                          className="bg-transparent text-foreground focus-visible:ring-ring"
                           placeholder=""
                           {...field}
                         />
@@ -205,10 +205,10 @@ const Register = () => {
           </CardContent>
           <CardFooter>
             {/* <div>
-              <span className="text-sm text-primary-foreground">Already have an account ? </span>
+              <span className="text-sm text-foreground">Already have an account ? </span>
               <Link
                   href="/registration"
-                  className="underline text-sm text-primary-foreground hover:text-primary">
+                  className="underline text-sm text-foreground hover:text-primary">
                   Log in
               </Link>
             </div> */}

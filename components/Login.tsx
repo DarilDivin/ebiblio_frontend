@@ -99,10 +99,10 @@ const Login = () => {
                   name="email"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className=" text-primary-foreground">Email</FormLabel>
+                      <FormLabel className="text-foreground">Email</FormLabel>
                       <FormControl>
                         <Input 
-                          className="text-primary-foreground"
+                          className="text-foreground"
                           placeholder="email@email.com"
                           {...field}
                         />
@@ -117,11 +117,11 @@ const Login = () => {
                   name="password"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-primary-foreground">Password</FormLabel>
+                      <FormLabel className="text-foreground">Password</FormLabel>
                       <FormControl>
                         <Input
                           type='password'
-                          className="bg-transparent text-primary-foreground"
+                          className="text-foreground"
                           placeholder=""
                           {...field}
                         />

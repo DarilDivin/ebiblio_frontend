@@ -20,9 +20,9 @@ const PhysicalBooksListPage = () => {
   // console.log(physical)
   return (
     <div className="p-2">
-      <div className="h-[55vh] max-sm:h-[35vh] w-full bg-primary/5 grid grid-cols-2 max-md:grid-cols-[400px_1fr] max-sm:grid-cols-1 justify-center items-center px-52 max-md:px-10 max-sm:px-12 pt-8 rounded-lg mb-4">
+      <div className="h-[55vh] max-sm:h-[35vh] w-full bg-primary/5 grid grid-cols-2 max-md:grid-cols-[400px_1fr] max-sm:grid-cols-1 justify-center items-center px-12 lg:px-12 max-sm:px-8 pt-8 rounded-lg mb-4">
         <div>
-          <p className="text-[2.5rem] max-sm:text-[1.5rem] max-sm:text-center font-bold font-poppins text-primary justify-self-end ">
+          <p className="text-[2rem] max-sm:text-[1.5rem] max-sm:text-center font-bold font-poppins text-primary justify-self-end ">
             Vous chercher un livre en particulier ?
           </p>
           <p className="text-base max-sm:text-base max-sm:text-center font-semibold font-poppins text-foreground/70 justify-self-end">
@@ -48,9 +48,9 @@ const PhysicalBooksListPage = () => {
       </div>
       <div className="w-full h-screen overflow-scroll p-2 flex flex-col gap-4">
         <h3>Livres Physiques</h3>
-        <div className="grid grid-cols-4 gap-4 w-full px-32 max-sm:px-8 ">
+        <div className="grid xl:grid-cols-4 lg:grid-cols-3 max-lg:grid-cols-4 max-sm:grid-cols-2 gap-4 w-full xl:px-12 max-lg:px-8 ">
           {filteredData?.map((book) => (
-            <div className="flex p-2 bg-primary/10 hover:bg-primary/30 rounded-md gap-4">
+            <div className="flex max-lg:flex-col p-2 bg-primary/10 hover:bg-primary/30 rounded-md gap-4">
               <div className="min-w-[100px] h-fit overflow-hidden rounded-md bg-red-300">
                 <Image
                   src='/B5.jpg'

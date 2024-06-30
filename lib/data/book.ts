@@ -1,9 +1,10 @@
-import { useBook, useSpecificBook } from "@/services/queries";
+import { useBook, useLoan, useSpecificBook } from "@/services/queries";
 import { CreateBookProps, UpdateBookProps } from "@/types/book";
 import { csrf } from ".";
 import axios from "../axios";
 import { toast } from "sonner";
 import { string } from "zod";
+import { Dispatch, SetStateAction } from "react";
 
 export const getAllBooks = () => {
   const { data: bookResponse, isLoading, error } = useBook();
@@ -128,5 +129,145 @@ export const deleteComment = async ({article, comment}: {article: number, commen
     .catch((error) => {
       console.log(error.response.data.errors);
       toast.error('Le commentaire n\'a pas pu être supprimé')
+    })
+}
+
+export const getAllLoan = () => {
+  const { data: loanResponse, isLoading, error } = useLoan();
+
+  return {
+    loans: loanResponse?.data,
+    isLoading,
+    error
+  }
+}
+
+export const getUserLoan = (id: number) => {
+  const { data: userLoanResponse } = useLoan();
+
+  return {
+    userLoans: userLoanResponse?.data.filter((loan) => loan.user.id === id),
+  }
+}
+
+export const askForLoan = async ({ article }: {article: number}) => {
+  await csrf()
+
+  await axios
+    .post(`/api/do-loan-request/${article}`)
+    .then((res) => {
+      console.log(res);
+      toast.success(res.data.message)
+    })
+
+}
+
+export const canUserAskForLoan = async ({ article, setCanAskForLoan }: {article: number, setCanAskForLoan: Dispatch<SetStateAction<boolean>> }) => {
+  await csrf()
+
+  await axios
+    .get(`/api/can-do-loan-request/${article}`)
+    .then((res) => {
+      console.log(res);
+      
+      setCanAskForLoan(res.data.response)
+    })
+
+}
+export const canUserRenewalsLoan = async ({ loan, setCanRenewals }: {loan: number, setCanRenewals: Dispatch<SetStateAction<boolean>> }) => {
+  await csrf()
+
+  await axios
+    .get(`/api/can-reniew-loan-request/${loan}`)
+    .then((res) => {
+      console.log(res);
+      
+      setCanRenewals(res.data.response)
+    })
+
+}
+
+
+export const acceptLoanRequest = async ({ loan }: { loan: number }) => {
+  await csrf()
+
+  await axios
+    .post(`/api/accept-loan-request/${loan}?_method=PATCH`)
+    .then((res) => {
+      console.log(res)
+      toast.success(res.data.message)
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+}
+
+export const rejectLoanRequest = async ({ loan, reason }: {loan: number, reason: string}) => {
+  await csrf()
+
+  await axios
+    .post(`/api/reject-loan-request/${loan}?_method=DELETE`, { reason: reason })
+    .then((res) => {
+      console.log(res)
+      toast.success(res.data.message)
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+}
+
+export const recoveredBook = async ({ loan }: { loan: number }) => {
+  await csrf()
+
+  await axios
+    .post(`/api/mark-article-as-recovered/${loan}?_method=PATCH`)
+    .then((res) => {
+      console.log(res)
+      toast.success(res.data.message)
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+}
+
+export const returnedBook = async ({ loan }: { loan: number }) => {
+  await csrf()
+
+  await axios
+    .post(`/api/mark-article-as-returned/${loan}?_method=PATCH`)
+    .then((res) => {
+      console.log(res)
+      toast.success(res.data.message)
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+}
+
+export const withdrawedLoan = async ({ loan }: { loan: number }) => {
+  await csrf()
+
+  await axios
+    .post(`/api/mark-as-withdrawed/${loan}?_method=PATCH`)
+    .then((res) => {
+      console.log(res)
+      toast.success(res.data.message)
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+}
+
+export const renewalLoan = async ({ loan }: { loan: number }) => {
+  await csrf()
+
+  await axios
+    .post(`/api/reniew-loan-request/${loan}?_method=PATCH`)
+    .then((res) => {
+      console.log(res)
+      toast.success(res.data.message)
+    })
+    .catch((err) => {
+      console.log(err);
     })
 }

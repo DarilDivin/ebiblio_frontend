@@ -12,7 +12,7 @@ interface DocumentListItemProps {
 const DocumentListItem = ({ memoire }: { memoire: Memoire }) => {
   return (
     <div className="flex gap-4 justify-start bg-primary/5 hover:bg-primary/10 p-2 rounded-md">
-      <div className="flex justify-center items-center size-32 bg-slate-50 rounded-md shadow-sm">
+      <div className="flex justify-center items-center size-32 bg-slate-50 rounded-md shadow-sm max-lg:hidden">
         Illustration Doc
       </div>
       <div className=" flex flex-col w-full">
@@ -39,7 +39,7 @@ const DocumentListItem = ({ memoire }: { memoire: Memoire }) => {
           </span> */}
         </div>
 
-        <div className="flex gap-4 items-start justify-between h-full pt-4">
+        <div className="flex max-sm:flex-col gap-4 items-start justify-between h-full pt-4">
           <div className="flex flex-col text-sm">
             <div className="flex gap-2">
               <p className="font-semibold text-foreground/70">Produit par :</p>

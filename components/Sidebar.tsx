@@ -22,6 +22,8 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { ModeToggle } from "./ui/mode-toggle";
+import { usePathname, useRouter } from "next/navigation";
+import { useDashboard } from "@/hooks/DashBoardContext";
 
 const Sidebar = ({
   open,
@@ -31,6 +33,9 @@ const Sidebar = ({
   onOpen: Dispatch<SetStateAction<boolean>>;
 }) => {
   const [openSidebar, setOpenSidebar] = useState(open);
+  const router = useRouter()
+  const pathname = usePathname()
+  const { setTitle } = useDashboard()
 
   const handleOpen = () => {
     setOpenSidebar(open);
@@ -85,7 +90,9 @@ const Sidebar = ({
 
           <Link
             href="/admin"
-            className="border flex gap-4 justify-between items-center p-2 rounded-md bg-primary/70 hover:bg-primary/90 cursor-pointer"
+            // className="border border-primary/10  flex gap-4 justify-between items-center p-2 rounded-md bg-[#f6fdfa] dark:bg-[#03130f] hover:bg-primary/90 cursor-pointer"
+            className={`border-none flex gap-4 justify-between items-center p-2 rounded-md ${pathname === "/admin" ? 'bg-primary/70 hover:bg-primary/90' : 'hover:bg-primary/30'} cursor-pointer`}
+            onClick={() => setTitle('Overview')}
           >
             <div className="flex gap-2 items-center">
               <Gauge size={17} />
@@ -100,7 +107,7 @@ const Sidebar = ({
           <Accordion type="multiple" className="flex flex-col gap-2">
             <AccordionItem value="item-1" className="border-b-0">
               <AccordionTrigger
-                className={`border-none flex gap-4 justify-between items-center p-2 rounded-md hover:no-underline hover:bg-primary/30 cursor-pointer ${
+                className={`border-none flex gap-4 justify-between items-center p-2 rounded-md hover:no-underline hover:bg-primary/30 cursor-pointer mb-1 ${
                   openSidebar
                     ? ""
                     : "[&[data-state=open]>svg]:hidden [&[data-state=closed]>svg]:hidden"
@@ -122,9 +129,10 @@ const Sidebar = ({
 
                 <Link
                   href="/admin/livres"
-                  className={`ml-2 border-none flex gap-1 justify-between items-center p-2 rounded-md hover:bg-primary/30 cursor-pointer ${
+                  className={`ml-2 border-none flex gap-1 justify-between items-center p-2 rounded-md mb-1 ${pathname === "/admin/livres" ? 'bg-primary/70 hover:bg-primary/90' : 'hover:bg-primary/30'} cursor-pointer ${
                     openSidebar ? "" : "px-1"
                   }`}
+                  onClick={() => setTitle('Liste des livres')}
                 >
                   <div className="flex gap-2 items-center">
                     <List size={17} />
@@ -143,9 +151,10 @@ const Sidebar = ({
                 </Link>
                 <Link
                   href="/admin/livres/demandes-de-pret"
-                  className={`ml-2 border-none flex gap-1 justify-between items-center p-2 rounded-md hover:bg-primary/30 cursor-pointer ${
+                  className={`ml-2 border-none flex gap-1 justify-between items-center p-2 rounded-md mb-1 ${pathname === "/admin/livres/demandes-de-pret" ? 'bg-primary/70 hover:bg-primary/90' : 'hover:bg-primary/30'} cursor-pointer ${
                     openSidebar ? "" : "px-1"
                   }`}
+                  onClick={() => setTitle('Demandes de prêt')}
                 >
                   <div className="flex gap-2 items-center">
                     <HandHelping size={17} />
@@ -166,11 +175,14 @@ const Sidebar = ({
             </AccordionItem>
             <AccordionItem value="item-2" className="border-b-0">
               <AccordionTrigger
-                className={`border-none flex gap-4 justify-between items-center p-2 rounded-md hover:no-underline hover:bg-primary/30 cursor-pointer ${
+                className={`border-none flex gap-4 justify-between items-center p-2 rounded-md hover:no-underline hover:bg-primary/30 cursor-pointer mb-1 ${
                   openSidebar
                     ? ""
                     : "[&[data-state=open]>svg]:hidden [&[data-state=closed]>svg]:hidden"
                 } `}
+                
+                // aria-expanded={pathname === '/admin/memoires/liste-des-memoires' || pathname === '/admin/memoires/demande-de-depot' ? 'open' : 'closed'}
+                // data-state={pathname === '/admin/memoires/liste-des-memoires' || pathname === '/admin/memoires/demande-de-depot' ? 'open' : 'closed'}
               >
                 <div className="flex gap-2 items-center">
                   <Files size={17} />
@@ -188,9 +200,10 @@ const Sidebar = ({
 
                 <Link
                   href="/admin/memoires/liste-des-memoires"
-                  className={`ml-2 border-none flex gap-1 justify-between items-center p-2 rounded-md hover:bg-primary/30 cursor-pointer ${
+                  className={`ml-2 border-none flex gap-1 justify-between items-center p-2 rounded-md mb-1 ${pathname === "/admin/memoires/liste-des-memoires" ? 'bg-primary/70 hover:bg-primary/90' : 'hover:bg-primary/30'} cursor-pointer ${
                     openSidebar ? "" : "px-1"
                   }`}
+                  onClick={() => setTitle('Liste des mémoires')}
                 >
                   <div className="flex gap-2 items-center">
                     <List size={17} />
@@ -210,9 +223,10 @@ const Sidebar = ({
 
                 <Link
                   href="/admin/memoires/demande-de-depot"
-                  className={`ml-2 border-none flex gap-1 justify-between items-center p-2 rounded-md hover:bg-primary/30 cursor-pointer ${
+                  className={`ml-2 border-none flex gap-1 justify-between items-center p-2 rounded-md mb-1 ${pathname === "/admin/memoires/demande-de-depot" ? 'bg-primary/70 hover:bg-primary/90' : 'hover:bg-primary/30'} cursor-pointer ${
                     openSidebar ? "" : "px-1"
                   }`}
+                  onClick={() => setTitle('Liste des demandes de dépôts de mémoires')}
                 >
                   <div className="flex gap-2 items-center">
                     <ShieldQuestion size={17} />
@@ -235,7 +249,8 @@ const Sidebar = ({
 
           <Link
             href="/admin/configuration"
-            className="border-none flex gap-4 justify-between items-center p-2 rounded-md hover:bg-primary/30 cursor-pointer"
+            className={`border-none flex gap-4 justify-between items-center p-2 rounded-md ${pathname === "/admin/configuration" ? 'bg-primary/70 hover:bg-primary/90' : 'hover:bg-primary/30'} cursor-pointer`}
+            onClick={() => setTitle('Configurations')}
           >
             <div className="flex gap-2 items-center">
               <Bolt size={17} />
@@ -254,7 +269,8 @@ const Sidebar = ({
           </Link>
           <Link
             href="/admin/utilisateurs"
-            className="border-none flex gap-4 justify-between items-center p-2 rounded-md hover:bg-primary/30 cursor-pointer"
+            className={`border-none flex gap-4 justify-between items-center p-2 rounded-md ${pathname === "/admin/utilisateurs" ? 'bg-primary/70 hover:bg-primary/90' : 'hover:bg-primary/30'} cursor-pointer`}
+            onClick={() => setTitle('Utilisateurs')}
           >
             <div className="flex gap-2 items-center">
               <UserRound size={17} />
@@ -273,7 +289,8 @@ const Sidebar = ({
           </Link>
           <Link
             href="/home"
-            className="border-none flex gap-4 justify-between items-center p-2 rounded-md hover:bg-primary/30 cursor-pointer"
+            className={`border-none flex gap-4 justify-between items-center p-2 rounded-md ${pathname === "/home" ? 'bg-primary/70 hover:bg-primary/90' : 'hover:bg-primary/30'} cursor-pointer`}
+            onClick={() => setTitle('Overview')}
           >
             <div className="flex gap-2 items-center">
               <Home size={17} />
@@ -293,7 +310,7 @@ const Sidebar = ({
         </div>
       </div>
 
-      <ModeToggle />
+      {/* <ModeToggle /> */}
     </div>
   );
 };

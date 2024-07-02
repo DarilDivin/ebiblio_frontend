@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Check, Redo2, Undo2, X } from "lucide-react";
+import { Check, Redo2, Trash2, Undo2, X } from "lucide-react";
 import {
   Tooltip,
   TooltipContent,
@@ -72,7 +72,7 @@ const AskForLoanAdminCard = ({ loan }: { loan: Loan }) => {
       <div className="justify-self-end flex justify-between items-center h-9">
         <Badge variant={'secondary'} className="w-fit justify-start"> Statut: {loan.status}</Badge>
         <div>
-          {loan.status === "En cours" && (
+          {loan.status === "En cours de traitement" && (
             <>
               <TooltipProvider>
                 <Tooltip>
@@ -146,18 +146,18 @@ const AskForLoanAdminCard = ({ loan }: { loan: Loan }) => {
               </TooltipProvider>
             </>
           )}
-          {loan.book_returned_at && (
+          {(loan.book_returned_at !== null || loan.status === 'Rejetée') && (
             <>
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger asChild>
                     <Button
                       variant="ghost"
-                      className="h-8 w-8 p-0 text-red-500/70 hover:bg-red-500/20 hover:text-red-500 rounded-md"
+                      className="h-8 w-8 p-0 text-orange-500/70 hover:bg-orange-500/20 hover:text-orange-500 rounded-md"
                       onClick={() => handleWithdrawedLoan(loan.id)}
                     >
                       <span className="sr-only">Retirer la demande de la liste</span>
-                      <X className="text-red-500 h-4 w-4" />
+                      <Trash2 className="text-orange-500 h-4 w-4" />
                     </Button>
                   </TooltipTrigger>
                   <TooltipContent>

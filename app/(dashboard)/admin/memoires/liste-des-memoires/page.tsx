@@ -18,7 +18,7 @@ const AdminListeMemoire = () => {
   
   return (
     <div className="">
-      <div className="flex w-full justify-between px-8 py-4 ">
+      {/* <div className="flex w-full justify-between px-8 py-4 ">
         <div className={`ml-2 border-none flex gap-1 justify-between items-center p-2 rounded-md hover:bg-primary/30 cursor-default`}>
           <div className="flex gap-2 items-center">
             <List size={17}/>
@@ -29,7 +29,7 @@ const AdminListeMemoire = () => {
           <AvatarImage src="https://github.com/shadcn.png" />
           <AvatarFallback>CN</AvatarFallback>
         </Avatar>
-      </div>
+      </div> */}
       <div className="max-lg:container px-10 w-full py-4">
         <MemoireListDataTable columns={columns} data={data} />
       </div>

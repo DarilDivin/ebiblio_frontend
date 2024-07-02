@@ -153,16 +153,15 @@ const ShowBook = ({ params }: { params: { slug: string; id: string } }) => {
               </p>
             </div>
             <div className="flex flex-col gap-4">
-              <h3 className="font-bold text-base font-poppins mb-3">Langue</h3>
+              <h3 className="font-bold text-base font-poppins mb-3">Année d'édition</h3>
               <p className="text-sm text-muted-foreground font-normal font-poppins">
-                Lorem ipsum dolor
+                {book?.editing_year}
               </p>
             </div>
             <div className="flex flex-col gap-4">
-              <h3 className="font-bold text-base font-poppins mb-3">Editors</h3>
+              <h3 className="font-bold text-base font-poppins mb-3">ISBN</h3>
               <p className="text-sm text-muted-foreground font-normal font-poppins">
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                Debitis itaque optio eum fuga magnam.
+                {book?.ISBN}
               </p>
             </div>
           </div>

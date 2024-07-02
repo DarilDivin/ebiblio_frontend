@@ -16,7 +16,7 @@ const LivresList = () => {
   const data = books;
   return (
     <div className="">
-      <div className="flex w-full justify-between px-8 py-4 ">
+      {/* <div className="flex w-full justify-between px-8 py-4 ">
         <div className={`ml-2 border-none flex gap-1 justify-between items-center p-2 rounded-md hover:bg-primary/30 cursor-default`}>
           <div className="flex gap-2 items-center">
             <List size={17}/>
@@ -27,7 +27,7 @@ const LivresList = () => {
           <AvatarImage src={`https://api.dicebear.com/9.x/thumbs/svg?seed=Divin`} />
           <AvatarFallback>CN</AvatarFallback>
         </Avatar>
-      </div>
+      </div> */}
       <div className="max-lg:container px-10 w-full py-4">
         <BookForm />
         <BookListDataTable columns={columns} data={data} />

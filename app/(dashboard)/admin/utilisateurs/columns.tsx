@@ -197,7 +197,7 @@ export const columns: ColumnDef<User>[] = [
                 toast("Matricule de l'utilisateur copié");
             }}
           >
-            <span className="sr-only">Copier la cote du mémoire</span>
+            <span className="sr-only">Copier le matricule</span>
             <Copy className="h-4 w-4" />
           </Button>
           <TooltipProvider>

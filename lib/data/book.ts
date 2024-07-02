@@ -134,7 +134,8 @@ export const deleteComment = async ({article, comment}: {article: number, commen
 
 export const getAllLoan = () => {
   const { data: loanResponse, isLoading, error } = useLoan();
-
+  console.log(error);
+  
   return {
     loans: loanResponse?.data,
     isLoading,
@@ -180,7 +181,7 @@ export const canUserRenewalsLoan = async ({ loan, setCanRenewals }: {loan: numbe
   await axios
     .get(`/api/can-reniew-loan-request/${loan}`)
     .then((res) => {
-      console.log(res);
+      // console.log(res);
       
       setCanRenewals(res.data.response)
     })
@@ -263,6 +264,20 @@ export const renewalLoan = async ({ loan }: { loan: number }) => {
 
   await axios
     .post(`/api/reniew-loan-request/${loan}?_method=PATCH`)
+    .then((res) => {
+      console.log(res)
+      toast.success(res.data.message)
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+}
+
+export const cancelLoan = async ({ loan }: { loan: number }) => {
+  await csrf()
+
+  await axios
+    .delete(`/api/cancel-loan-request/${loan}`)
     .then((res) => {
       console.log(res)
       toast.success(res.data.message)

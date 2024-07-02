@@ -5,7 +5,8 @@ import React from 'react'
 
 const Home = () => {
   const { user, isLoading, logout } = useAuth({
-    middleware: "auth"
+    middleware: "auth",
+    redirectIfAuthenticated: '/livres'
   })
 
   if (isLoading || !user) return <div>Chargement...</div>

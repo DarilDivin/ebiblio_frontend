@@ -30,6 +30,7 @@
 
   .dark {
     --background: 168 45% 4%;
+    /* --background: 0 0% 13%; */
     --foreground: 168 38% 98%;
     --muted: 168 14% 14%;
     --muted-foreground: 168 11% 63%;
@@ -132,4 +133,53 @@
   border: .5px solid #0adb96!important;
   border-radius: 3px;
   max-height: 35px;
+}
+
+div.blob1 {
+  background: url('/book1.jpg');
+  background-size: cover;
+  background-position: center center;
+  height: 130px;
+  width: 130px;
+  animation: animate 5s ease-in-out infinite;
+  background-blend-mode: screen;
+}
+div.blob2 {
+  background: url('/book2.jpg');
+  background-size: cover;
+  background-position: center center;
+  height: 190px;
+  width: 180px;
+  animation: animate 5s ease-in-out infinite;
+  background-blend-mode: screen;
+}
+div.blob3 {
+  background: url('/book3.jpg');
+  background-size: cover;
+  background-position: center center;
+  height: 100px;
+  width: 100px;
+  animation: animate 5s ease-in-out infinite;
+  background-blend-mode: screen;
+}
+div.blob4 {
+  background: url('/book4.jpg');
+  background-size: cover;
+  background-position: center center;
+  height: 220px;
+  width: 220px;
+  animation: animate 5s ease-in-out infinite;
+  background-blend-mode: screen;
+}
+
+@keyframes animate {
+  0% {
+    border-radius: 60% 40% 30% 70%/60% 30% 70% 40%;
+  }
+  50% {
+    border-radius: 30% 60% 70% 40%/50% 60% 30% 60%;
+  }
+  100% {
+    border-radius: 60% 40% 30% 70%/ 60% 30% 70% 40%;
+  }
 }

@@ -5,9 +5,10 @@ import Image from "next/image";
 import { useAuth } from "@/hooks/auth";
 import { getUserLoan } from "@/lib/data/book";
 import UserLoanCard from "@/components/UserLoanCard";
+import { User } from "@/types/user";
 
 const page = () => {
-  const { user, isLoading, error } = useAuth();
+  const { user, isLoading, error }: {user: User; isLoading: boolean; error: any} = useAuth();
   const { userLoans } = getUserLoan(user?.id);
 
   if (error) return <div>Erreur de chargement</div>;
@@ -42,7 +43,7 @@ const page = () => {
           <h2 className="font-bold text-2xl max-md:text-xl font-poppins">
             Mes demandes de prêts
           </h2>
-          <Badge>Dette: 500 FCFA</Badge>
+          <Badge>Dette: {user.debt_amount} FCFA</Badge>
         </div>
         <div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 max-h-screen overflow-y-scroll">
           {userLoans?.map((userLoan) => (

@@ -61,7 +61,7 @@ const ConfigurationPage = () => {
   const lastConfig = getLastConfig();
   return (
     <div className="container">
-      <div className="flex w-full justify-between py-4 ">
+      {/* <div className="flex w-full justify-between py-4 ">
         <div
           className={`ml-2 border-none flex gap-1 justify-between items-center p-2 rounded-md hover:bg-primary/30 cursor-default`}
         >
@@ -79,7 +79,7 @@ const ConfigurationPage = () => {
           <AvatarImage src="https://github.com/shadcn.png" />
           <AvatarFallback>CN</AvatarFallback>
         </Avatar>
-      </div>
+      </div> */}
 
       <Card className="overflow-scroll max-h-[89vh] bg-card">
         <CardContent className="flex flex-col gap-4 pt-6">

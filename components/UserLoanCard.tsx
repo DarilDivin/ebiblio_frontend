@@ -7,9 +7,9 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { Button } from "@/components/ui/button";
-import { Repeat, X } from "lucide-react";
+import { Repeat, Trash2, X } from "lucide-react";
 // import { useAuth } from "@/hooks/auth";
-import { canUserRenewalsLoan, getUserLoan, renewalLoan } from "@/lib/data/book";
+import { canUserRenewalsLoan, cancelLoan, getUserLoan, renewalLoan } from "@/lib/data/book";
 import { format } from "date-fns";
 import { fr } from "date-fns/locale";
 import { useEffect, useState } from "react";
@@ -25,6 +25,11 @@ const UserLoanCard = ({ userLoan }: { userLoan: Loan }) => {
 
   const handleRenewalLoan = async (loan: number) => {
     await renewalLoan({ loan: loan })
+    mutate()
+  }
+
+  const handleCancelLoan = async (loan: number) => {
+    await cancelLoan({ loan: loan })
     mutate()
   }
 
@@ -65,7 +70,7 @@ const UserLoanCard = ({ userLoan }: { userLoan: Loan }) => {
           {" "}
           Statut: {userLoan.status}
         </Badge>
-        {userLoan.status !== "Acceptée" && (
+        {userLoan.status === "En cours de traitement" && (
           <div>
             <TooltipProvider>
               <Tooltip>
@@ -73,6 +78,7 @@ const UserLoanCard = ({ userLoan }: { userLoan: Loan }) => {
                   <Button
                     variant="ghost"
                     className="h-8 w-fit p-2 flex gap-2 text-destructive/70 hover:bg-destructive/20 hover:text-destructive rounded-md"
+                    onClick={() => handleCancelLoan(userLoan.id)}
                   >
                     <span className="sr-only">Annuler la demande</span>
                     <X className="text-destructive h-4 w-4" />
@@ -81,6 +87,27 @@ const UserLoanCard = ({ userLoan }: { userLoan: Loan }) => {
                 </TooltipTrigger>
                 <TooltipContent>
                   <p>Annuler la demande</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          </div>
+        )}
+        {(userLoan.status === "Terminée" || userLoan.status === 'Rejetée') && (
+          <div>
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button
+                    variant="ghost"
+                    className="h-8 w-fit p-2 flex gap-2 text-orange-400/70 hover:bg-orange-400/20 hover:text-orange-400 rounded-md"
+                  >
+                    <span className="sr-only">Retirer la demande de la liste</span>
+                    <Trash2 className="text-orange-400 h-4 w-4" />
+                    <span>Retirer</span>
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Retirer la demande de la liste</p>
                 </TooltipContent>
               </Tooltip>
             </TooltipProvider>

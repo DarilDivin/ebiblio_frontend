@@ -97,9 +97,9 @@ const Sidebar = ({
             <div className="flex gap-2 items-center">
               <Gauge size={17} />
               <p
-                className={`${openSidebar ? "text-sm font-medium" : "hidden"}`}
+                className={`${openSidebar ? "text-xs font-medium" : "hidden"}`}
               >
-                Overview
+                Tableau de bord
               </p>
             </div>
             <ChevronRight size={15} />

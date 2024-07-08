@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Accordion,
   AccordionContent,
@@ -55,6 +55,8 @@ const Navbar = () => {
     pathnameContainsMemoires
   );
 
+  const [isActive, setIsActive] = useState(false);
+
   // const toggleTabs = (e: any) => {
   //   // console.log(e.target.firstChild.data);
   //   if (e.target.firstChild.data === "Livres") {
@@ -73,6 +75,27 @@ const Navbar = () => {
     }
   };
 
+  useEffect(() => {
+    let lastScrollTop = 0;
+    const navbar = document.getElementById('navbar');
+    
+    const onScroll = () => {
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      if (scrollTop > lastScrollTop) {
+        setIsActive(true);
+      } else {
+        setIsActive(false);
+      }
+      lastScrollTop = scrollTop;
+    };
+
+    window.addEventListener('scroll', onScroll);
+
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+    };
+  }, []);
+
   const [mobileMenuIsOpen, setMobileMenuIsOpen] = useState(true);
 
   if (error) {
@@ -87,7 +110,7 @@ const Navbar = () => {
 
     const role = userHasRole(user, "Etudiant-Externe")
   return (
-    <div className="w-full px-2 py-1 flex justify-center items-center ">
+    <div className={`w-full px-2 py-1 flex justify-center items-center z-[1000] ${isActive ? 'active' : 'no-active bg-background'}`} id="navbar" >
       <div className="w-full bg-primary/10 shadow-lg rounded-lg h-[50px] flex gap-4 items-center justify-between px-2 lg:px-20 py-2 relative">
         <div className="font-semibold text-primary-foreground bg-primary/10 cursor-pointer flex items-center h-full p-1 rounded-md max-sm:hidden">
           <Link href="/home">

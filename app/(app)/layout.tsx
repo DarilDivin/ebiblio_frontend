@@ -9,7 +9,7 @@ const AppLayout = ({
     <>
       <div>
         <Navbar/>
-        <div>
+        <div className='mt-[58px]'>
           {children}
         </div>
       </div>

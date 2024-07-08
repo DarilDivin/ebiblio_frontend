@@ -5,6 +5,7 @@ import { Poppins } from "next/font/google";
 import { Toaster } from "@/components/ui/sonner";
 import Providers from "./Providers";
 import { ThemeProvider } from "@/components/theme-provider";
+import NextTopLoader from 'nextjs-toploader';
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -32,6 +33,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${poppins.variable} ${alexana.variable}`}>
+      <NextTopLoader
+        color="linear-gradient(to right, rgb(34, 197, 94), rgb(21, 128, 61))"
+      />
         <ThemeProvider
           attribute="class"
           defaultTheme="system"

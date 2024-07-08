@@ -21,7 +21,7 @@ import { LoginErrorType } from "@/types";
 const FormSchema = z.object({
   email: z.string().email({message: 'Invalid email address'}),
   password: z.string().regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/, {
-    message: 'Vous êtes pas respectable avec ce mot de passe foireux'
+    message: 'Mot de passe invalide'
   }),
   remember: z.boolean().default(false).optional(),
 });

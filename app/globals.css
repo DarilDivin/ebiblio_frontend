@@ -1,6 +1,6 @@
 @tailwind base;
-  @tailwind components;
-  @tailwind utilities;
+@tailwind components;
+@tailwind utilities;
 
 /* 10 219 150 */
 /* #0ADB96 */
@@ -26,6 +26,12 @@
     --destructive-foreground: 10 80% 82%;
     --ring: 168 92% 21%;
     --radius: 0.5rem;
+
+    --chart-1: 139 65% 20%;
+    --chart-2: 140 74% 44%;
+    --chart-3: 142 88% 28%;
+    --chart-4: 137 55% 15%;
+    --chart-5: 141 40% 9%;
   }
 
   .dark {
@@ -49,11 +55,14 @@
     --destructive: 10 80% 56%;
     --destructive-foreground: 0 0% 100%;
     --ring: 168 92% 21%;
+
+    --chart-1: 142 88% 28%;
+    --chart-2: 139 65% 20%;
+    --chart-3: 140 74% 24%;
+    --chart-4: 137 55% 15%;
+    --chart-5: 141 40% 9%;
   }
 }
-
-
-  
 
 @layer base {
   * {
@@ -83,10 +92,8 @@
   background-color: hsla(161, 25%, 23%, 0.05);
 }
 
-
-
 .ts-wrapper {
-  border: .5px solid var(--primary);
+  border: 0.5px solid var(--primary);
   border-radius: 5px;
   width: 100%;
   height: 80px;
@@ -102,25 +109,25 @@
   overflow-y: scroll;
 } */
 
-.ts-control::-webkit-scrollbar{
+.ts-control::-webkit-scrollbar {
   display: none;
 }
 
 .ts-control {
   height: 100%;
-  background: #fff!important;
-  border: none!important;
+  background: #fff !important;
+  border: none !important;
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
   align-items: flex-start;
-  flex-wrap: wrap!important;
+  flex-wrap: wrap !important;
 }
 
 .ts-control > input {
-  border: 1px!important;
-  border-color: black!important;
-  width: 250px!important;
+  border: 1px !important;
+  border-color: black !important;
+  width: 250px !important;
 }
 
 .ts-wrapper.multi .ts-control > div {
@@ -128,15 +135,15 @@
   margin: 0 3px 3px 0;
   padding: 2px 6px;
   padding-right: 6px;
-  background: #0adb9620!important;
+  background: #0adb9620 !important;
   color: var(--text-color);
-  border: .5px solid #0adb96!important;
+  border: 0.5px solid #0adb96 !important;
   border-radius: 3px;
   max-height: 35px;
 }
 
 div.blob1 {
-  background: url('/book1.jpg');
+  background: url("/book1.jpg");
   background-size: cover;
   background-position: center center;
   height: 130px;
@@ -145,7 +152,7 @@ div.blob1 {
   background-blend-mode: screen;
 }
 div.blob2 {
-  background: url('/book2.jpg');
+  background: url("/book2.jpg");
   background-size: cover;
   background-position: center center;
   height: 190px;
@@ -154,7 +161,7 @@ div.blob2 {
   background-blend-mode: screen;
 }
 div.blob3 {
-  background: url('/book3.jpg');
+  background: url("/book3.jpg");
   background-size: cover;
   background-position: center center;
   height: 100px;
@@ -163,7 +170,7 @@ div.blob3 {
   background-blend-mode: screen;
 }
 div.blob4 {
-  background: url('/book4.jpg');
+  background: url("/book4.jpg");
   background-size: cover;
   background-position: center center;
   height: 220px;
@@ -182,4 +189,15 @@ div.blob4 {
   100% {
     border-radius: 60% 40% 30% 70%/ 60% 30% 70% 40%;
   }
+}
+
+#navbar {
+  transition: 0.5s;
+  position: fixed;
+  top: 0;
+}
+#navbar.active {
+  top: -58px;
+  transform: translateY(-58px);
+  background: var(--background);
 }

@@ -95,7 +95,7 @@ const DashboardLayout = ({
                       Logout
                     </DropdownMenuItem>
                     <DropdownMenuItem className="cursor-pointer">
-                      <Link href="/admin">Dashboard</Link>
+                      <Link href="/home">User Home</Link>
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>

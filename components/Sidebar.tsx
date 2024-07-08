@@ -287,7 +287,7 @@ const Sidebar = ({
             </div>
             <ChevronRight size={15} />
           </Link>
-          <Link
+          {/* <Link
             href="/home"
             className={`border-none flex gap-4 justify-between items-center p-2 rounded-md ${pathname === "/home" ? 'bg-primary/70 hover:bg-primary/90' : 'hover:bg-primary/30'} cursor-pointer`}
             onClick={() => setTitle('Overview')}
@@ -306,7 +306,7 @@ const Sidebar = ({
               </p>
             </div>
             <ChevronRight size={15} />
-          </Link>
+          </Link> */}
         </div>
       </div>
 

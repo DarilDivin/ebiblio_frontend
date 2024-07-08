@@ -8,6 +8,8 @@ import {
   selectionModePlugin,
 } from "@react-pdf-viewer/selection-mode";
 import { toolbarPlugin } from "@react-pdf-viewer/toolbar";
+// ----------------------- A remettre si le fichier redeviens .tsx ------------------------------
+
 import type {
   ToolbarSlot,
   TransformToolbarSlot,
@@ -31,22 +33,16 @@ import { Button } from "./ui/button";
 import axios from "@/lib/axios";
 
 const ViewPdf = ({ fileUrl }: { fileUrl: string }) => {
-  // console.log(fileUrl);
-  // console.log(`${process.env.NEXT_PUBLIC_BACKEND_URL}/storage/${fileUrl}`);
+// const ViewPdf = ({ fileUrl }) => {
 
-  // axios
-  //   .get(`http://localhost:8000/storage/Supported%20Memories/memories/1718091986-djodjokoutondaril_ticket_qr.pdf`, {
-  //     responseType: "blob", // Important pour recevoir les données sous forme de blob
-  //   })
-  //   .then((res) => {
-  //     const blob = new Blob([res.data], { type: "application/pdf" });
-  //     console.log(blob)
-  //   });
+  // const pdfUrl = `http://localhost:8000/pdf/${fileUrl}` 
+  const pdfUrl = `http://localhost:8000/api/pdf/1720449135-Lary_Murie.pdf` 
 
   // const defaultLayoutPluginInstance = defaultLayoutPlugin();
   const toolbarPluginInstance = toolbarPlugin();
   const { renderDefaultToolbar, Toolbar } = toolbarPluginInstance;
   const transform: TransformToolbarSlot = (slot: ToolbarSlot) => ({
+  // const transform = (slot) => ({
     ...slot,
     Download: () => <></>,
     DownloadMenuItem: () => <></>,
@@ -86,7 +82,8 @@ const ViewPdf = ({ fileUrl }: { fileUrl: string }) => {
             <Viewer
               // fileUrl={`${process.env.NEXT_PUBLIC_BACKEND_URL}/storage/${fileUrl}`}
               // fileUrl="http://localhost:8000/storage/Supported%20Memories/memories/1718091986-djodjokoutondaril_ticket_qr.pdf"
-              fileUrl="/pdfs/pdf.pdf"
+              // fileUrl="/pdfs/pdf.pdf"
+              fileUrl={pdfUrl}
               plugins={[
                 defaultLayoutPluginInstance,
                 selectionModePluginInstance,

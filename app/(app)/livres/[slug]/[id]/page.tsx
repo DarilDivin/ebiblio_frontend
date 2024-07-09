@@ -55,9 +55,12 @@ const ShowBook = ({ params }: { params: { slug: string; id: string } }) => {
   };
 
   if (error) {
-    return <div>Erruer de chargement des données</div>;
+    return <div>Erreur de chargement des données</div>;
   }
   if (isLoading || !book) return <BookShowSkeleton />;
+
+  const filename = book.file_path?.split('/')[2];
+  console.log(filename);
 
   return (
     <div className="w-full h-auto pt-16 px-28 max-sm:px-0 bg-primary/5">
@@ -102,17 +105,32 @@ const ShowBook = ({ params }: { params: { slug: string; id: string } }) => {
       <div className="flex flex-col w-full py-8 bg-background rounded-md px-12 max-lg:mt-56">
         <div className="flex justify-end">
           <div className="flex justify-between gap-4 w-[500px]">
-            {book.is_physical ? (
+            {book.is_physical && book.has_ebooks ? (
+              <>
+                <Button
+                  className="gap-2 rounded-3xl bg-primary/70"
+                  disabled={!canAskForLoan}
+                  onClick={() => handleAskForloan(book.id)}
+                >
+                  Demander un prêt
+                  <LibraryBig className="size-[16px]" />
+                </Button>
+                <Link href={`/livres/epub-reader/${filename}`} className="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors gap-2 rounded-3xl bg-primary/70 px-4 hover:bg-primary/90">
+                  Commencer la lecture
+                  <BookMarked className="size-[16px]" />
+                </Link>
+              </>
+            ) : book.is_physical ? (
               <Button
-                className="gap-2 rounded-3xl bg-primary/70"
-                disabled={!canAskForLoan}
-                onClick={() => handleAskForloan(book.id)}
-              >
-                Demander un prêt
-                <LibraryBig className="size-[16px]" />
-              </Button>
+                  className="gap-2 rounded-3xl bg-primary/70"
+                  disabled={!canAskForLoan}
+                  onClick={() => handleAskForloan(book.id)}
+                >
+                  Demander un prêt
+                  <LibraryBig className="size-[16px]" />
+                </Button>
             ) : (
-              <Button className="gap-2 rounded-3xl">
+              <Button className="gap-2 rounded-3xl bg-primary/70">
                 Commencer la lecture
                 <BookMarked className="size-[16px]" />
               </Button>
@@ -133,8 +151,8 @@ const ShowBook = ({ params }: { params: { slug: string; id: string } }) => {
 
         <div className="grid grid-cols-2 max-lg:grid-cols-1 mt-16">
           <div className="flex gap-4 flex-col px-10 max-sm:px-0">
-            <div className="flex flex-col gap-4">
-              <h3 className="font-bold text-base font-poppins mb-3">Résumé</h3>
+            <div className="flex flex-col gap-1">
+              <h3 className="font-bold text-base font-poppins mb-1">Résumé</h3>
               <p className="text-sm text-muted-foreground font-normal font-poppins leading-relaxed">
                 {/* Lorem ipsum dolor, sit amet consectetur adipisicing elit. Debitis itaque optio eum fuga magnam. A consectetur libero sint error accusamus illo quia quisquam ipsum similique incidunt odio voluptates adipisci provident enim possimus dolorem nam quibusdam quae, dignissimos dolores id quis. Itaque neque molestiae iure odio ea nihil distinctio, quidem minima. */}
                 {book?.summary}
@@ -146,20 +164,22 @@ const ShowBook = ({ params }: { params: { slug: string; id: string } }) => {
           </div>
 
           <div className="flex gap-4 flex-col px-10 max-sm:px-0">
-            <div className="flex flex-col gap-4">
-              <h3 className="font-bold text-base font-poppins mb-3">Editeur</h3>
+            <div className="flex flex-col gap-1">
+              <h3 className="font-bold text-base font-poppins mb-1">Editeur</h3>
               <p className="text-sm text-muted-foreground font-normal font-poppins">
                 {book?.editor}
               </p>
             </div>
-            <div className="flex flex-col gap-4">
-              <h3 className="font-bold text-base font-poppins mb-3">Année d'édition</h3>
+            <div className="flex flex-col gap-1">
+              <h3 className="font-bold text-base font-poppins mb-1">
+                Année d'édition
+              </h3>
               <p className="text-sm text-muted-foreground font-normal font-poppins">
                 {book?.editing_year}
               </p>
             </div>
-            <div className="flex flex-col gap-4">
-              <h3 className="font-bold text-base font-poppins mb-3">ISBN</h3>
+            <div className="flex flex-col gap-1">
+              <h3 className="font-bold text-base font-poppins mb-1">ISBN</h3>
               <p className="text-sm text-muted-foreground font-normal font-poppins">
                 {book?.ISBN}
               </p>
@@ -174,7 +194,7 @@ const ShowBook = ({ params }: { params: { slug: string; id: string } }) => {
               </CardDescription>
             </CardHeader>
             <CardContent className="h-[400px] p-2 space-y-2 overflow-y-scroll scroll-smooth scroll-py-4 card">
-              {book?.comments.map((comment) => (
+              {book?.comments?.map((comment) => (
                 <div className="flex gap-2">
                   <Avatar>
                     <AvatarImage src="https://github.com/shadcn.png" />

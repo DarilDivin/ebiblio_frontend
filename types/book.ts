@@ -159,7 +159,7 @@ export interface SingleBook {
   likes_number: number
   views_number: number
   stars_number: number
-  file_path: File | null
+  file_path: string | null
   created_at: string
   updated_at: string
   created_by: any

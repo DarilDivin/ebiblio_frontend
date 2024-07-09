@@ -8,6 +8,8 @@ import BookSearchbar from "@/components/BookSearchbar";
 import { useState } from "react";
 import { Book } from "@/types/book";
 import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { Eye } from "lucide-react";
 
 const PhysicalBooksListPage = () => {
   const { physical, isLoading, error } = getAllBooks();
@@ -50,7 +52,7 @@ const PhysicalBooksListPage = () => {
         <h3>Livres Physiques</h3>
         <div className="grid xl:grid-cols-4 lg:grid-cols-3 max-lg:grid-cols-4 max-sm:grid-cols-2 gap-4 w-full xl:px-12 max-lg:px-8 ">
           {filteredData?.map((book) => (
-            <div className="flex max-lg:flex-col p-2 bg-primary/10 hover:bg-primary/30 rounded-md gap-4">
+            <div className="flex max-lg:flex-col p-2 bg-primary/10 hover:bg-primary/15 rounded-md gap-4">
               <div className="min-w-[100px] h-fit overflow-hidden rounded-md bg-red-300">
                 <Image
                   src='/B5.jpg'
@@ -61,15 +63,23 @@ const PhysicalBooksListPage = () => {
                   priority
                 />
               </div>
-              <div className="flex flex-col justify-start mt-4">
-                <Link href={`/livres/${book.slug}/${book.id}`} className="font-poppins font-bold text-[13px]">
+              <div className="flex flex-col justify-start mt-4 relative flex-grow">
+                <Link href={`/livres/${book.slug}/${book.id}`} className="font-poppins font-bold text-[14px]">
                   {book.title}
                 </Link>
-                <p className=" text-[11px] font-poppins font-medium text-foreground/80 flex items-center gap-2">
+                <p className=" text-[11px] font-poppins font-medium text-foreground/70 flex items-center gap-2">
                   {book.author} 
                   <span className=" w-1 h-1 rounded-full bg-foreground inline-block"></span>
                   {book.editing_year}
                 </p>
+                <p className="text-xs text-foreground/50">
+                  <span className="line-clamp-2">{book.summary}</span>
+                  <Link href={`/livres/${book.slug}/${book.id}`} className="underline hover:text-foreground">lire plus</Link>
+                </p>
+
+                <Link href={`/livres/${book.slug}/${book.id}`} className="w-8 h-8 flex justify-center items-center absolute bottom-0 right-0 rounded-md text-primary justify-self-end self-end p-1 bg-transparent hover:bg-primary/20">
+                  <Eye className="size-4"/>
+                </Link>
               </div>
             </div>
           ))}

@@ -9,7 +9,7 @@ import { useState } from "react";
 import { Book } from "@/types/book";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Eye } from "lucide-react";
+import { Eye, Plus } from "lucide-react";
 
 const PhysicalBooksListPage = () => {
   const { physical, isLoading, error } = getAllBooks();
@@ -78,7 +78,7 @@ const PhysicalBooksListPage = () => {
                 </p>
 
                 <Link href={`/livres/${book.slug}/${book.id}`} className="w-8 h-8 flex justify-center items-center absolute bottom-0 right-0 rounded-md text-primary justify-self-end self-end p-1 bg-transparent hover:bg-primary/20">
-                  <Eye className="size-4"/>
+                  <Plus className="size-4"/>
                 </Link>
               </div>
             </div>

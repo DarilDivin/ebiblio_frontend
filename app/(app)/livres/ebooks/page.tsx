@@ -8,6 +8,7 @@ import BookSearchbar from "@/components/BookSearchbar";
 import { useState } from "react";
 import { Book } from "@/types/book";
 import Link from "next/link";
+import { Eye } from "lucide-react";
 
 const EbooksListPage = () => {
   const { ebooks, isLoading, error } = getAllBooks();
@@ -58,15 +59,23 @@ const EbooksListPage = () => {
                   priority
                 />
               </div>
-              <div className="flex flex-col justify-start mt-4">
-                <Link href={`/livres/${book.slug}/${book.id}`} className="font-poppins font-bold text-[13px]">
+              <div className="flex flex-col justify-start mt-4 relative flex-grow">
+                <Link href={`/livres/${book.slug}/${book.id}`} className="font-poppins font-bold text-[14px]">
                   {book.title}
                 </Link>
-                <p className=" text-[11px] font-poppins font-medium text-foreground/80 flex items-center gap-2">
+                <p className=" text-[11px] font-poppins font-medium text-foreground/70 flex items-center gap-2">
                   {book.author} 
                   <span className=" w-1 h-1 rounded-full bg-foreground inline-block"></span>
                   {book.editing_year}
                 </p>
+                <p className="text-xs text-foreground/50">
+                  <span className="line-clamp-2">{book.summary}</span>
+                  <Link href={`/livres/${book.slug}/${book.id}`} className="underline hover:text-foreground">lire plus</Link>
+                </p>
+
+                <Link href={`/livres/${book.slug}/${book.id}`} className="w-8 h-8 flex justify-center items-center absolute bottom-0 right-0 rounded-md text-primary justify-self-end self-end p-1 bg-transparent hover:bg-primary/20">
+                  <Eye className="size-4"/>
+                </Link>
               </div>
             </div>
           ))}

@@ -11,6 +11,7 @@ export const getAllBooks = () => {
 
   return {
     books: bookResponse?.data,
+    booksMostViewed: bookResponse?.data.slice(0, 12),
     ebooks: bookResponse?.data.filter((book) => book.has_ebooks === 1),
     physical: bookResponse?.data.filter((book) => book.is_physical === 1),
     podcast: bookResponse?.data.filter((book) => book.has_audios === 1),

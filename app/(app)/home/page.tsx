@@ -9,17 +9,17 @@ const Home = () => {
     redirectIfAuthenticated: '/livres'
   })
 
-  if (isLoading || !user) return <div>Chargement...</div>
-
-  console.log(user)
+  // if (isLoading || !user) return <div>Chargement...</div>
 
   return (
-    <>
-      <p>Welcome back in your HomePage {user?.name}</p>
-      <button onClick={logout}>
-        Logout
-      </button>
-    </>
+    <div className='h-screen'>
+      {isLoading || !user ? (
+        <div>Chargement...</div>
+      ) : (
+        <div>Tadam...</div>
+      )}
+      
+    </div>
   )
 }
 

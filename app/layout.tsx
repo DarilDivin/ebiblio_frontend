@@ -34,7 +34,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${poppins.variable} ${alexana.variable}`}>
       <NextTopLoader
-        color="linear-gradient(to right, rgb(34, 197, 94), rgb(21, 128, 61))"
+        color="#0ADB96"
       />
         <ThemeProvider
           attribute="class"

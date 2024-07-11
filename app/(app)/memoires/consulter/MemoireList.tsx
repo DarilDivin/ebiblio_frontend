@@ -60,22 +60,6 @@ const MemoireList = () => {
       <div className="py-4 flex flex-col gap-2">
         {memoryResponse.data.map(
           (memory) => (
-            // <div>
-            //   <li key={memory.id}>
-            //     <h2 className="font-bold text-2xl">{memory.theme}</h2>
-            //     <p>
-            //       <strong>Auteur :</strong> {memory.first_author_name} et {memory.second_author_name}<br />
-            //       <strong>Email :</strong> {memory.first_author_email}, {memory.second_author_email}<br />
-            //       <strong>Téléphone :</strong> {memory.first_author_phone}, {memory.second_author_phone}<br />
-            //       <strong>Président du jury :</strong> {memory.jury_president_name}<br />
-            //       <strong>Maître de mémoire :</strong> {memory.memory_master_name} ({memory.memory_master_email})<br />
-            //       <strong>Début :</strong> {memory.start_at}<br />
-            //       <strong>Fin :</strong> {memory.ends_at}<br />
-            //       <strong>Status :</strong> {memory.status}<br />
-            //     </p>
-            //   </li>
-            //   <br />
-            // </div>
             (
               <DocumentListItem
                 key={memory.id}

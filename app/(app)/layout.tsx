@@ -12,6 +12,9 @@ const AppLayout = ({
         <div className='mt-[58px]'>
           {children}
         </div>
+        <div className='flex h-16 justify-center items-center bg-primary/10 textf-primary-foreground/70 font-semibold text-sm'>
+          <p>© 2024 - Divin & Euvince. All Right Reserved</p>
+        </div>
       </div>
     </>
   )

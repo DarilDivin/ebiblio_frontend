@@ -49,7 +49,7 @@ const PhysicalBooksListPage = () => {
         <BookSearchbar book={physical} setFilteredData={setFilteredData} />
       </div>
       <div className="w-full h-screen overflow-scroll p-2 flex flex-col gap-4">
-        <h3>Livres Physiques</h3>
+        <h3 className="text-xl text-primary font-poppins font-bold xl:px-12 max-lg:px-8">Liste des Livres Physiques</h3>
         <div className="grid xl:grid-cols-4 lg:grid-cols-3 max-lg:grid-cols-4 max-sm:grid-cols-2 gap-4 w-full xl:px-12 max-lg:px-8 ">
           {filteredData?.map((book) => (
             <div className="flex max-lg:flex-col p-2 bg-primary/10 hover:bg-primary/15 rounded-md gap-4">

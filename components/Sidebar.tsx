@@ -94,7 +94,7 @@ const Sidebar = ({
             href="/admin"
             // className="border border-primary/10  flex gap-4 justify-between items-center p-2 rounded-md bg-[#f6fdfa] dark:bg-[#03130f] hover:bg-primary/90 cursor-pointer"
             className={`border-none flex gap-4 justify-between items-center p-2 rounded-md ${pathname === "/admin" ? 'bg-primary/70 hover:bg-primary/90' : 'hover:bg-primary/30'} cursor-pointer`}
-            onClick={() => setTitle('Overview')}
+            onClick={() => setTitle('Tableau de bord')}
           >
             <div className="flex gap-2 items-center">
               <Gauge size={17} />

@@ -7,8 +7,8 @@ const Registration = () => {
   return (
     <Tabs defaultValue="login" className="w-full px-4 md:w-[500px]">
       <TabsList className="w-full grid grid-cols-2 mb-1">
-        <TabsTrigger value="login">Login</TabsTrigger>
-        <TabsTrigger value="register">Register</TabsTrigger>
+        <TabsTrigger value="login">Se connecter</TabsTrigger>
+        <TabsTrigger value="register">S'inscrire</TabsTrigger>
       </TabsList>
       <Login/>
       <Register/>

@@ -2,7 +2,9 @@ import React from 'react'
 
 const MemoireHomePage = () => {
   return (
-    <div>MemoireHomePage</div>
+    <div className='w-full h-screen'>
+      MemoireHomePage
+    </div>
   )
 }
 

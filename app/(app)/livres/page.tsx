@@ -96,14 +96,14 @@ const BookHomePage = () => {
             </div>
             <div className="flex gap-4 w-full justify-end items-center mb-8">
               <Link
-                className="p-1 rounded-md bg-primary/70 hover:bg-primary transition-colors flex gap-2 text-primary-foreground"
+                className="p-1 rounded-md bg-primary/70 hover:bg-primary transition-all flex gap-2 hover:gap-4 text-primary-foreground"
                 href={"/livres/physiques"}
               >
                 {" "}
                 Voir la liste complète des livres physiques <ChevronRight />
               </Link>
               <Link
-                className="p-1 rounded-md bg-primary/70 hover:bg-primary transition-colors flex gap-2 text-primary-foreground"
+                className="p-1 rounded-md bg-primary/70 hover:bg-primary transition-all flex gap-2 hover:gap-4 text-primary-foreground"
                 href={"/livres/ebooks"}
               >
                 {" "}

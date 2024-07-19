@@ -21,26 +21,26 @@ const FormSchema = z.object({
     firstname: z
       .string()
       .min(2, {
-        message: "Firstname must be at least 2 characters.",
+        message: "Le prénom doit contenir au moins deux caractères",
       })
       .max(50),
     lastname: z
       .string()
       .min(2, {
-        message: "Lastname must be at least 2 characters.",
+        message: "Le nom doit contenir au moins deux caractères",
       })
       .max(50),
-    email: z.string().email({ message: "Invalid email address" }),
+    email: z.string().email({ message: "Adresse email invalide" }),
     password: z
       .string()
       .regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/, {
         message:
-          "Password must contain at least one lowercase letter, one uppercase letter, one digit, and be at least 8 characters long.",
+          "Le mot de passe doit contenir au moins une lettre minuscule, une lettre majuscule, un chiffre et comporter au moins 8 caractères.",
       }),
     password_confirmation: z.string(),
   })
   .refine((data) => data.password === data.password_confirmation, {
-    message: "Passwords do not match",
+    message: "Les mots de passe ne sont pas conformes",
     path: ["password_confirmation"],
   });
 
@@ -113,11 +113,11 @@ const Register = () => {
                   name="firstname"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className=" text-foreground">Firstname</FormLabel>
+                      <FormLabel className=" text-foreground">Prénoms</FormLabel>
                       <FormControl>
                         <Input 
                           className="text-foreground border-border focus-visible:ring-ring"
-                          placeholder="John Doe"
+                          placeholder="John"
                           {...field}
                         />
                       </FormControl>
@@ -131,11 +131,11 @@ const Register = () => {
                   name="lastname"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className=" text-foreground">Lastname</FormLabel>
+                      <FormLabel className=" text-foreground">Nom</FormLabel>
                       <FormControl>
                         <Input 
                           className="text-foreground border-border focus-visible:ring-ring"
-                          placeholder="John Doe"
+                          placeholder="Doe"
                           {...field}
                         />
                       </FormControl>
@@ -167,12 +167,12 @@ const Register = () => {
                   name="password"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-foreground">Password</FormLabel>
+                      <FormLabel className="text-foreground">Mot de passe</FormLabel>
                       <FormControl>
                         <Input
                           type='password'
                           className="bg-transparent text-foreground focus-visible:ring-ring"
-                          placeholder=""
+                          placeholder="exemple0000"
                           {...field}
                         />
                       </FormControl>
@@ -186,12 +186,12 @@ const Register = () => {
                   name="password_confirmation"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-foreground">Confirm Password</FormLabel>
+                      <FormLabel className="text-foreground">Confirmer le mot de passe</FormLabel>
                       <FormControl>
                         <Input
                           type='password'
                           className="bg-transparent text-foreground focus-visible:ring-ring"
-                          placeholder=""
+                          placeholder="exemple0000"
                           {...field}
                         />
                       </FormControl>
@@ -199,7 +199,7 @@ const Register = () => {
                     </FormItem>
                   )}
                 />
-                <Button type="submit" className='text-white mt-4' >Submit</Button>
+                <Button type="submit" className='text-white mt-4' >S'inscrire</Button>
               </form>
             </Form>
           </CardContent>

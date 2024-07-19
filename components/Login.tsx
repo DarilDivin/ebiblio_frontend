@@ -87,8 +87,8 @@ const Login = () => {
       <div className="w-full">
         <Card className='bg-card'>
           <CardHeader>
-            <CardTitle className='text-primary'>Login</CardTitle>
-            <CardDescription>Enter your credentials to log into your account</CardDescription>
+            <CardTitle className='text-primary'>Se connecter</CardTitle>
+            <CardDescription>Rensignez vos informations de connexion</CardDescription>
           </CardHeader>
           <CardContent>
             <AuthSessionStatus className={'mb-4'} status={status} />
@@ -117,12 +117,12 @@ const Login = () => {
                   name="password"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-foreground">Password</FormLabel>
+                      <FormLabel className="text-foreground">Mot de passe</FormLabel>
                       <FormControl>
                         <Input
                           type='password'
                           className="text-foreground"
-                          placeholder=""
+                          placeholder="exemple0000"
                           {...field}
                         />
                       </FormControl>
@@ -149,14 +149,14 @@ const Login = () => {
                             htmlFor="remember"
                             className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                           >
-                            Remember me
+                            Me rappeler
                           </label>
                         </div>
                       </FormControl>
                     </FormItem>
                   )}
                 />
-                <Button type="submit" className='text-input'>Sign In</Button>
+                <Button type="submit" className='text-input'>Se connecter</Button>
               </form>
             </Form>
           </CardContent>
@@ -165,7 +165,7 @@ const Login = () => {
               <Link
                   href="/forgot-password"
                   className="underline text-sm text-primary-foreground hover:text-primary">
-                  Forgot your password?
+                  Mot de passe oublié?
               </Link>
             </div>
           </CardFooter>

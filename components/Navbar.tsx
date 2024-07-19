@@ -104,7 +104,7 @@ const Navbar = () => {
   }
   if (isLoading || !user)
     return (
-      <div className="w-full px-2 py-1 flex justify-center items-center">
+      <div className="w-full px-2 py-1 fixed top-0">
         <Skeleton className="h-[50px] w-full"></Skeleton>
       </div>
     );
@@ -147,7 +147,7 @@ const Navbar = () => {
                 await router.push("/memoires");
                 toggleTabs(e);
               }}
-              disabled={userHasRole(user, "Etudiant-Externe")}
+              // disabled={userHasRole(user, "Etudiant-Externe")}
             >
               Mémoires
             </button>

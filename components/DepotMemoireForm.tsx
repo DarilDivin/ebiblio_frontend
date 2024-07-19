@@ -151,7 +151,7 @@ const DepotMemoireForm = () => {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      theme: "Le thème",
+      theme: "MISE EN PLACE D’UNE PLATEFORME DE GESTION DES ALUMNI",
       start_at: "12:00",
       ends_at: "15:00",
       first_author_matricule: "14141414",
@@ -164,9 +164,9 @@ const DepotMemoireForm = () => {
       second_author_lastname: "Djk",
       second_author_email: "divindjk@gmail.com",
       second_author_phone: "123456789",
-      jury_president_name: "Comlan",
-      memory_master_name: "Charbel",
-      memory_master_email: "charbel@gmail.com",
+      jury_president_name: "BOSSOU Jack",
+      memory_master_name: "AGOSSOU Charlie",
+      memory_master_email: "charlie@gmail.com",
       sector_id: "",
       soutenance_id: "3",
     },
@@ -373,7 +373,7 @@ const DepotMemoireForm = () => {
                           </FormLabel>
                           <FormControl>
                             <Input
-                              className={`text-primary-foreground border-primary focus-visible:ring-ring ${errors.first_author_matricule ? "border-destructive" : ""}`}
+                              className={`border-primary focus-visible:ring-ring ${errors.first_author_matricule ? "border-destructive" : ""}`}
                               type="number"
                               placeholder="1756389"
                               {...field}
@@ -396,7 +396,7 @@ const DepotMemoireForm = () => {
                           </FormLabel>
                           <FormControl>
                             <Input
-                              className={`text-primary-foreground border-primary focus-visible:ring-ring ${errors.first_author_firstname ? "border-destructive" : ""}`}
+                              className={`border-primary focus-visible:ring-ring ${errors.first_author_firstname ? "border-destructive" : ""}`}
                               placeholder="John Doe"
                               {...field}
                             />
@@ -418,7 +418,7 @@ const DepotMemoireForm = () => {
                           </FormLabel>
                           <FormControl>
                             <Input
-                              className={`text-primary-foreground border-primary focus-visible:ring-ring ${errors.first_author_lastname ? "border-destructive" : ""}`}
+                              className={`border-primary focus-visible:ring-ring ${errors.first_author_lastname ? "border-destructive" : ""}`}
                               placeholder="John Doe"
                               {...field}
                             />
@@ -440,7 +440,7 @@ const DepotMemoireForm = () => {
                           </FormLabel>
                           <FormControl>
                             <Input
-                              className={`text-primary-foreground border-primary focus-visible:ring-ring ${errors.first_author_email ? "border-destructive" : ""}`}
+                              className={`border-primary focus-visible:ring-ring ${errors.first_author_email ? "border-destructive" : ""}`}
                               placeholder="John@doe.fr"
                               {...field}
                             />
@@ -460,7 +460,7 @@ const DepotMemoireForm = () => {
                           </FormLabel>
                           <FormControl>
                             <Input
-                              className={`text-primary-foreground border-primary focus-visible:ring-ring ${errors.first_author_phone ? "border-destructive" : ""}`}
+                              className={`border-primary focus-visible:ring-ring ${errors.first_author_phone ? "border-destructive" : ""}`}
                               type="text"
                               placeholder="+22990909090"
                               {...field}
@@ -503,7 +503,7 @@ const DepotMemoireForm = () => {
                           </FormLabel>
                           <FormControl>
                             <Input
-                              className={`text-primary-foreground border-primary focus-visible:ring-ring ${errors.second_author_matricule ? "border-destructive" : ""}`}
+                              className={`border-primary focus-visible:ring-ring ${errors.second_author_matricule ? "border-destructive" : ""}`}
                               type="number"
                               placeholder="1756389"
                               {...field}
@@ -526,7 +526,7 @@ const DepotMemoireForm = () => {
                           </FormLabel>
                           <FormControl>
                             <Input
-                              className={`text-primary-foreground border-primary focus-visible:ring-ring ${errors.second_author_firstname? "border-destructive" : ""}`}
+                              className={`border-primary focus-visible:ring-ring ${errors.second_author_firstname? "border-destructive" : ""}`}
                               placeholder="John Doe"
                               {...field}
                             />
@@ -548,7 +548,7 @@ const DepotMemoireForm = () => {
                           </FormLabel>
                           <FormControl>
                             <Input
-                              className={`text-primary-foreground border-primary focus-visible:ring-ring ${errors.second_author_lastname ? "border-destructive" : ""}`}
+                              className={`border-primary focus-visible:ring-ring ${errors.second_author_lastname ? "border-destructive" : ""}`}
                               placeholder="John Doe"
                               {...field}
                             />
@@ -572,7 +572,7 @@ const DepotMemoireForm = () => {
                           </FormLabel>
                           <FormControl>
                             <Input
-                              className={`text-primary-foreground border-primary focus-visible:ring-ring ${errors.second_author_email ? "border-destructive" : ""}`}
+                              className={`border-primary focus-visible:ring-ring ${errors.second_author_email ? "border-destructive" : ""}`}
                               placeholder="John@doe.fr"
                               {...field}
                             />
@@ -592,7 +592,7 @@ const DepotMemoireForm = () => {
                           </FormLabel>
                           <FormControl>
                             <Input
-                              className={`text-primary-foreground border-primary focus-visible:ring-ring ${errors.second_author_phone? "border-destructive" : ""}`}
+                              className={`border-primary focus-visible:ring-ring ${errors.second_author_phone? "border-destructive" : ""}`}
                               type="text"
                               placeholder="+22990909090"
                               {...field}
@@ -635,7 +635,7 @@ const DepotMemoireForm = () => {
                           </FormLabel>
                           <FormControl>
                             <Input
-                              className={`text-primary-foreground border-primary focus-visible:ring-ring ${errors.theme ? "border-destructive" : ""}`}
+                              className={`border-primary focus-visible:ring-ring ${errors.theme ? "border-destructive" : ""}`}
                               type="text"
                               placeholder="Réalisation de ..."
                               {...field}
@@ -834,7 +834,7 @@ const DepotMemoireForm = () => {
                           <FormControl>
                             <Input
                               type="time"
-                              className={`text-primary-foreground border-primary focus-visible:ring-ring ${errors.start_at ? "border-destructive" : ""}`}
+                              className={`border-primary focus-visible:ring-ring ${errors.start_at ? "border-destructive" : ""}`}
                               {...field}
                             />
                           </FormControl>
@@ -853,7 +853,7 @@ const DepotMemoireForm = () => {
                           </FormLabel>
                           <FormControl>
                             <Input
-                              className={`text-primary-foreground border-primary focus-visible:ring-ring ${errors.ends_at ? "border-destructive" : ""}`}
+                              className={`border-primary focus-visible:ring-ring ${errors.ends_at ? "border-destructive" : ""}`}
                               type="time"
                               {...field}
                             />
@@ -876,7 +876,7 @@ const DepotMemoireForm = () => {
                           </FormLabel>
                           <FormControl>
                             <Input
-                              className={`text-primary-foreground border-primary focus-visible:ring-ring ${errors.jury_president_name ? "border-destructive" : ""}`}
+                              className={`border-primary focus-visible:ring-ring ${errors.jury_president_name ? "border-destructive" : ""}`}
                               type="text"
                               placeholder="Maurice Comlan"
                               {...field}
@@ -897,7 +897,7 @@ const DepotMemoireForm = () => {
                           </FormLabel>
                           <FormControl>
                             <Input
-                              className={`text-primary-foreground border-primary focus-visible:ring-ring ${errors.memory_master_name ? "border-destructive" : ""}`}
+                              className={`border-primary focus-visible:ring-ring ${errors.memory_master_name ? "border-destructive" : ""}`}
                               type="text"
                               placeholder="Maurice Comlan"
                               {...field}
@@ -918,7 +918,7 @@ const DepotMemoireForm = () => {
                           </FormLabel>
                           <FormControl>
                             <Input
-                              className={`text-primary-foreground border-primary focus-visible:ring-ring ${errors.memory_master_email ? "border-destructive" : ""}`}
+                              className={`border-primary focus-visible:ring-ring ${errors.memory_master_email ? "border-destructive" : ""}`}
                               type="email"
                               placeholder="Maurice Comlan"
                               {...field}
@@ -941,7 +941,7 @@ const DepotMemoireForm = () => {
                           </FormLabel>
                           <FormControl>
                             <Input
-                              className={`text-primary-foreground border-primary focus-visible:ring-ring ${errors.file_path ? "border-destructive" : ""}`}
+                              className={`border-primary focus-visible:ring-ring ${errors.file_path ? "border-destructive" : ""}`}
                               type="file"
                               // {...register('file_path')}
                               {...filePathRef}
@@ -962,7 +962,7 @@ const DepotMemoireForm = () => {
                           </FormLabel>
                           <FormControl>
                             <Input
-                              className={`text-primary-foreground border-primary focus-visible:ring-ring ${errors.cover_page_path ? "border-destructive" : ""}`}
+                              className={`border-primary focus-visible:ring-ring ${errors.cover_page_path ? "border-destructive" : ""}`}
                               type="file"
                               // {...register('cover_page_path')}
                               {...coverPathRef}

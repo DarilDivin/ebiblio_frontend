@@ -31,6 +31,7 @@ import { User } from "@/types/user";
 import { usePathname, useRouter } from "next/navigation";
 import { Skeleton } from "./ui/skeleton";
 import { userHasRole } from "@/lib/utils";
+import Image from "next/image";
 
 const Navbar = () => {
   const {
@@ -112,7 +113,8 @@ const Navbar = () => {
   return (
     <div className={`w-full px-2 py-1 flex justify-center items-center z-[1000] ${isActive ? 'active' : 'no-active bg-background'}`} id="navbar" >
       <div className="w-full bg-primary/10 shadow-lg rounded-lg h-[50px] flex gap-4 items-center justify-between px-2 lg:px-20 py-2 relative">
-        <div className="font-semibold text-primary-foreground bg-primary/10 cursor-pointer flex items-center h-full p-1 rounded-md max-sm:hidden">
+        <div className="font-semibold text-primary-foreground bg-primary/10 cursor-pointer flex gap-1 items-center h-full p-1 rounded-md max-sm:hidden">
+          <Image src='/LogoEneam.png' className="size-8" alt="EneamLogo" width={50} height={50}/>
           <Link href="/home">
             <span className="text-primary font-bold text-2xl font-alexana">
               E

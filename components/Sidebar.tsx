@@ -24,6 +24,7 @@ import {
 import { ModeToggle } from "./ui/mode-toggle";
 import { usePathname, useRouter } from "next/navigation";
 import { useDashboard } from "@/hooks/DashBoardContext";
+import Image from "next/image";
 
 const Sidebar = ({
   open,
@@ -59,10 +60,11 @@ const Sidebar = ({
         }`}
       >
         <div
-          className={`font-semibold text-primary-foreground cursor-pointer items-center h-full p-1 max-sm:hidden ${
+          className={`font-semibold text-primary-foreground gap-1 cursor-pointer items-center h-full p-1 max-sm:hidden ${
             openSidebar ? "flex" : "hidden"
           }`}
         >
+          <Image src='/LogoEneam.png' className="size-7" alt="EneamLogo" width={50} height={50}/>
           <Link href="/admin">
             <span className="text-primary font-bold text-2xl font-alexana">
               E

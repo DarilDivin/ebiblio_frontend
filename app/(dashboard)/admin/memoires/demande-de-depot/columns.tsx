@@ -53,7 +53,7 @@ export const columns: ColumnDef<Memoire>[] = [
       const memory = row.original;
 
       return (
-        <Badge variant={"secondary"}>
+        <Badge variant={"secondary"} className="line-clamp-2">
           {memory.first_author_firstname + " " + memory.first_author_lastname}{" "}
           {memory.first_author_firstname
             ? " & " +
@@ -79,7 +79,7 @@ export const columns: ColumnDef<Memoire>[] = [
     cell: ({ row }) => {
       const memory = row.original;
 
-      return <Badge>{memory.sector.name}</Badge>;
+      return <Badge className=" line-clamp-1" title={memory.sector.name}>{memory.sector.name}</Badge>;
     },
   },
   {

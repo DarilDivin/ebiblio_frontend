@@ -13,13 +13,16 @@ const BookHomePage = () => {
     <div className="flex flex-col gap-4">
       <div className="h-[45vh] mb-28 flex  justify-center items-center w-full mt-8 p-4">
         <div className="w-full h-[100%] bg-primary/50 flex flex-col justify-center items-center rounded-full gap-4 relative">
-          <h1 className="text-7xl font-poppins text-background">
-            Découvrez le monde des livres
+          <h1 className="text-4xl w-[900px] text-center font-poppins text-background">
+            Votre Ressource Ultime pour la Connaissance et la Recherche
+            Académique
           </h1>
-          <p className="text-background/70">
-            Find your next adventure, knowledge, and inspiration
+          <p className="text-background/70 w-[500px] text-center">
+            Explorez une vaste collection de mémoires, de thèses, de livres et
+            de ressources numériques. Accédez facilement aux informations dont
+            vous avez besoin pour exceller dans vos études et recherches.
           </p>
-          <Button className="rounded-full bg-primary-foreground text-foreground dark:text-background hover:text-primary-foreground">
+          <Button className="rounded-full bg-primary-foreground text-foreground dark:text-background hover:bg-secondary hover:text-accent">
             Explore now
           </Button>
 
@@ -92,8 +95,20 @@ const BookHomePage = () => {
               ))}
             </div>
             <div className="flex gap-4 w-full justify-end items-center mb-8">
-              <Link className="p-1 rounded-md bg-primary/70 hover:bg-primary transition-colors flex gap-2 text-primary-foreground" href={'/livres/physiques'}> Voir la liste complète des livres physiques <ChevronRight/></Link>
-              <Link className="p-1 rounded-md bg-primary/70 hover:bg-primary transition-colors flex gap-2 text-primary-foreground" href={'/livres/ebooks'}> Voir la liste complète des ebooks <ChevronRight/></Link>
+              <Link
+                className="p-1 rounded-md bg-primary/70 hover:bg-primary transition-colors flex gap-2 text-primary-foreground"
+                href={"/livres/physiques"}
+              >
+                {" "}
+                Voir la liste complète des livres physiques <ChevronRight />
+              </Link>
+              <Link
+                className="p-1 rounded-md bg-primary/70 hover:bg-primary transition-colors flex gap-2 text-primary-foreground"
+                href={"/livres/ebooks"}
+              >
+                {" "}
+                Voir la liste complète des ebooks <ChevronRight />
+              </Link>
             </div>
           </>
         )}

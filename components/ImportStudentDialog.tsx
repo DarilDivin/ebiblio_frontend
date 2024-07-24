@@ -56,7 +56,7 @@ const ImportStudentDialog = () => {
   };
 
   const onSubmit = (values: z.infer<typeof FormSchema>, event: any) => {
-    submitForm(values.file_path[0], event);
+    submitForm(event, values.file_path[0]);
   };
 
   const filePathRef = form.register("file_path");

@@ -73,10 +73,11 @@ export const importStudent = async ({ file }: { file: File }) => {
       toast.success("Utilisateurs importés avec succès");
     })
     .catch((error) => {
+      // console.log(error);
       if (error.response && error.response.status === 422) {
         const errors = error.response.data.errors;
         console.log(errors);
-        toast.error(error.message);
+        toast.error(error.response.data.message);
       } else {
         toast.error("Une erreur inconnue est survenue");
       }
@@ -96,10 +97,11 @@ export const importTeacher = async ({ file }: { file: File }) => {
       toast.success("Enseignants importés avec succès");
     })
     .catch((error) => {
+      // console.log(error);
       if (error.response && error.response.status === 422) {
         const errors = error.response.data.errors;
         console.log(errors);
-        toast.error(error.message);
+        toast.error(error.response.data.message);
       } else {
         toast.error("Une erreur inconnue est survenue");
       }

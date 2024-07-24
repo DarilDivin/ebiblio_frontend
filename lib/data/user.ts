@@ -58,3 +58,50 @@ export const giveAccessToUser = async ({ user }: { user: number}) => {
       toast.error("Une erreur s'est produite 🧐")
     })
 }
+
+
+export const importStudent = async ({ file }: { file: File }) => {
+  await csrf();
+
+  await axios
+    .post('/api/import-eneamiens-students', { file: file }, {
+      headers: {
+        "Content-Type": "multipart/form-data;  boundary=---011000010111000001101001",
+      },
+    })
+    .then(() => {
+      toast.success("Utilisateurs importés avec succès");
+    })
+    .catch((error) => {
+      if (error.response && error.response.status === 422) {
+        const errors = error.response.data.errors;
+        console.log(errors);
+        toast.error(error.message);
+      } else {
+        toast.error("Une erreur inconnue est survenue");
+      }
+    });
+}
+
+export const importTeacher = async ({ file }: { file: File }) => {
+  await csrf();
+
+  await axios
+    .post('/api/import-teachers', { file: file }, {
+      headers: {
+        "Content-Type": "multipart/form-data;  boundary=---011000010111000001101001",
+      },
+    })
+    .then(() => {
+      toast.success("Enseignants importés avec succès");
+    })
+    .catch((error) => {
+      if (error.response && error.response.status === 422) {
+        const errors = error.response.data.errors;
+        console.log(errors);
+        toast.error(error.message);
+      } else {
+        toast.error("Une erreur inconnue est survenue");
+      }
+    });
+}

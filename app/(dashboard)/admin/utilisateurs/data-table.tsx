@@ -43,6 +43,7 @@ import { useUser } from "@/services/queries";
 import { deleteUsers } from "@/lib/data/user";
 import { Trash2 } from "lucide-react";
 import ImportStudentDialog from "@/components/ImportStudentDialog";
+import ImportTeacherDialog from "@/components/ImportTeacherDialog";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -106,6 +107,7 @@ export function UserDataTable<TData extends User, TValue>({
         />
 
         <ImportStudentDialog />
+        <ImportTeacherDialog />
 
         {selectedIds.length > 0 && (
           <div className="flex gap-2">

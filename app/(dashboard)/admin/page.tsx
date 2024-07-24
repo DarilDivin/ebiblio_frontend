@@ -1,5 +1,6 @@
 "use client";
 
+import { BookBarChart } from "@/components/BookBarChart";
 import { MemoireLineChart, MemoireLineChartGradient } from "@/components/MemoireLineChart";
 import {
   Card,
@@ -30,19 +31,19 @@ const Dashboard = () => {
             <div className="flex flex-col gap-4">
               <p className="text-base text-foreground/50">
                 <span className="text-xl text-foreground">
-                  1500&nbsp;
+                  275&nbsp;
                 </span>
                 étudiants
               </p>
               <p className="text-base text-foreground/50">
                 <span className="text-xl text-foreground">
-                  1500&nbsp;
+                  287&nbsp;
                 </span>
                 enseignants
               </p>
               <p className="text-base text-foreground/50">
                 <span className="text-xl text-foreground">
-                  1500&nbsp;
+                  200&nbsp;
                 </span>
                 externes
               </p>
@@ -108,8 +109,8 @@ const Dashboard = () => {
               </p>
             </div>
           </CardContent>
-          <CardFooter>
-            <p>Card Footer</p>
+          <CardFooter className="p-0 flex justify-center">
+            <BookBarChart/>
           </CardFooter>
         </Card>
       </div>

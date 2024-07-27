@@ -88,7 +88,7 @@ const Login = () => {
         <Card className='bg-card'>
           <CardHeader>
             <CardTitle className='text-primary'>Se connecter</CardTitle>
-            <CardDescription>Rensignez vos informations de connexion</CardDescription>
+            <CardDescription>Renseignez vos informations de connexion</CardDescription>
           </CardHeader>
           <CardContent>
             <AuthSessionStatus className={'mb-4'} status={status} />

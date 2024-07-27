@@ -113,7 +113,7 @@ const Register = () => {
                   name="firstname"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className=" text-foreground">Prénoms</FormLabel>
+                      <FormLabel className=" text-foreground">Prénom(s)</FormLabel>
                       <FormControl>
                         <Input 
                           className="text-foreground border-border focus-visible:ring-ring"

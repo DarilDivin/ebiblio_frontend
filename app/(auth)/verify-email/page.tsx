@@ -1,35 +1,36 @@
-'use client'
+"use client";
 
-import { Button } from '@/components/ui/button';
-import { useAuth } from '@/hooks/auth'
-import React, { useState } from 'react'
+import { Button } from "@/components/ui/button";
+import { useAuth } from "@/hooks/auth";
+import React, { useState } from "react";
 
 const VerifyEmail = () => {
   const { logout, resendEmailVerification } = useAuth({
     middleware: "auth",
-    redirectIfAuthenticated: '/home'
+    redirectIfAuthenticated: "/home",
   });
 
   const [status, setStatus] = useState<string | null>(null);
 
   return (
     <>
-      <div className="mb-4 text-primary-foreground text-xl text-center w-[500px]">
-        Thanks for signing up! Before getting started, could you verify your
-        email address by clicking on the link we just emailed to you? If you
-        didn't receive the email, we will gladly send you another.
+      <div className="mb-4 text-primary-foreground text-lg text-center w-[500px]">
+        Merci de vous être inscrit ! Avant de commencer, pourriez-vous vérifier
+        votre adresse e-mail en cliquant sur le lien que nous venons de vous
+        envoyer par e-mail ? Si vous n'avez pas reçu l'e-mail, nous vous en
+        enverrons un autre avec plaisir.
       </div>
 
-      {status === "verification-link-sent" && (
+      {status === "200" && (
         <div className="mb-4 font-medium text-sm text-green-600">
-          A new verification link has been sent to the email address you
-          provided during registration.
+          Un nouveau lien de vérification a été envoyé à l'adresse e-mail que
+          vous avez fournie lors de votre inscription.
         </div>
       )}
 
       <div className="mt-4 flex items-center justify-evenly w-[500px]">
         <Button onClick={() => resendEmailVerification({ setStatus })}>
-          Resend Verification Email
+          Renvoyer l'e-mail de vérification
         </Button>
 
         {/* <Button 
@@ -39,7 +40,7 @@ const VerifyEmail = () => {
         </Button> */}
       </div>
     </>
-  )
-}
+  );
+};
 
-export default VerifyEmail
+export default VerifyEmail;

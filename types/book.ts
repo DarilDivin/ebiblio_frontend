@@ -48,6 +48,7 @@ export interface Book {
   views_number: number
   stars_number: number
   file_path: string | null
+  thumbnail_path: string | null
   created_at: string
   updated_at: string
   created_by: string | null
@@ -76,6 +77,7 @@ export interface CreateBookErrorType {
   stars_number?: string[]
   keywords?: string[]
   file_path?: string[]
+  thumbnail_path?: string[]
   school_year_id?: string[]
 }
 
@@ -100,6 +102,7 @@ export interface CreateBookProps {
   stars_number?: number
   keywords: string[]
   file_path?: File
+  thumbnail_path?: File
   school_year_id: number
 
   setErrors: Dispatch<SetStateAction<CreateBookErrorType>>
@@ -127,6 +130,7 @@ export interface UpdateBookProps {
   stars_number?: number
   keywords: string[]
   file_path?: File | null
+  thumbnail_path?: File | null
   school_year_id: number
 
   article: number
@@ -160,6 +164,7 @@ export interface SingleBook {
   views_number: number
   stars_number: number
   file_path: string | null
+  thumbnail_path: string | null
   created_at: string
   updated_at: string
   created_by: any

@@ -64,6 +64,13 @@ const FormSchema = z
     has_ebooks: z.boolean().optional(),
     keywords: z.array(z.string()).optional(),
     available_stock: z.string().min(1, "Le stock est requis").optional(),
+    thumbnail_path:
+      typeof window === "undefined"
+        ? z.any()
+        : z
+            .instanceof(FileList)
+            .refine((file) => file?.length == 1, "La couverture est requise.")
+            .optional(),
     file_path:
       typeof window === "undefined"
         ? z.any()
@@ -85,7 +92,7 @@ const FormSchema = z
     if (data.is_physical === true && !data.available_stock) {
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
-        message: "Details is required when status is active",
+        message: "le stock est requis",
         path: ["available_stock"],
       });
     }
@@ -134,7 +141,10 @@ const BookForm = ({ book }: { book?: Book }) => {
       cote: book ? book.cote : "125/15/489",
       school_year_id: book ? book.school_year.id.toString() : "",
 
-      available_stock: book ? book.available_stock !== null ? book.available_stock : '0' : '0',
+      is_physical: book ? !!book.is_physical : false,
+      has_ebooks: book ? !!book.has_ebooks : false,
+
+      available_stock: book ? book.available_stock !== null ? book.available_stock : undefined : undefined,
     },
   });
 
@@ -156,7 +166,8 @@ const BookForm = ({ book }: { book?: Book }) => {
     has_ebooks: number,
     school_year_id: number,
     available_stock?: number,
-    file_path?: File
+    file_path?: File,
+    thumbnail_path?: File
   ) => {
     event.preventDefault();
     await createBook({
@@ -173,6 +184,7 @@ const BookForm = ({ book }: { book?: Book }) => {
       has_ebooks,
       available_stock,
       file_path,
+      thumbnail_path,
       school_year_id,
       setStatus,
       setErrors,
@@ -197,7 +209,8 @@ const BookForm = ({ book }: { book?: Book }) => {
     school_year_id: number,
     article: number,
     available_stock?: number,
-    file_path?: File
+    file_path?: File,
+    thumbnail_path?: File
   ) => {
     event.preventDefault();
     await updateBook({
@@ -215,6 +228,7 @@ const BookForm = ({ book }: { book?: Book }) => {
       has_ebooks,
       available_stock,
       file_path,
+      thumbnail_path,
       school_year_id,
       setStatus,
       setErrors,
@@ -242,7 +256,8 @@ const BookForm = ({ book }: { book?: Book }) => {
           parseInt(values.school_year_id),
           book.id,
           values.available_stock ? parseInt(values.available_stock) : undefined,
-          values.file_path ? values.file_path[0] : undefined
+          values.file_path ? values.file_path[0] : undefined,
+          values.thumbnail_path ? values.thumbnail_path[0] : undefined
         )
       : submitCreateBookForm(
           event,
@@ -259,11 +274,13 @@ const BookForm = ({ book }: { book?: Book }) => {
           values.has_ebooks ? 1 : 0,
           parseInt(values.school_year_id),
           values.available_stock ? parseInt(values.available_stock) : undefined,
-          values.file_path ? values.file_path[0] : undefined
+          values.file_path ? values.file_path[0] : undefined,
+          values.thumbnail_path ? values.thumbnail_path[0] : undefined
         );
   };
 
   const filePathRef = form.register("file_path");
+  const thumbnailPathRef = form.register("thumbnail_path");
   const keywordsRef = form.register("keywords");
 
   return (
@@ -512,7 +529,7 @@ const BookForm = ({ book }: { book?: Book }) => {
                 )}
               />
             </div>
-            <div className="w-full">
+            <div className="w-full grid grid-cols-[3fr_2fr] max-sm:grid-cols-1 gap-4 mb-8">
               <FormField
                 control={form.control}
                 name="keywords"
@@ -535,6 +552,29 @@ const BookForm = ({ book }: { book?: Book }) => {
                   </FormItem>
                 )}
               />
+
+              <FormField
+                  control={form.control}
+                  name="thumbnail_path"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className=" ">
+                        Couverture
+                      </FormLabel>
+                      <FormControl>
+                        <Input
+                          className=" border-border focus-visible:ring-ring"
+                          type="file"
+                          // {...field}
+                          {...thumbnailPathRef}
+                          accept="image/*"
+                        />
+                      </FormControl>
+                      <FormMessage />
+                      <InputError messages={errors.thumbnail_path} />
+                    </FormItem>
+                  )}
+                />
             </div>
             <div className="grid grid-cols-3 max-sm:grid-cols-1 gap-4 mb-8">
               <FormField
@@ -598,6 +638,7 @@ const BookForm = ({ book }: { book?: Book }) => {
                         <Input
                           className=" border-border focus-visible:ring-ring"
                           type="file"
+                          accept=".pdf,.epub"
                           // {...field}
                           {...filePathRef}
                         />

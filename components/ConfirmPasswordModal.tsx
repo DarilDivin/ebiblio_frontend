@@ -118,15 +118,15 @@ const ConfirmPasswordModal = ({confirming, setPassword, password, setConfirming,
                 name="password"
                 render={({ field }) => (
                   <FormItem className="flex flex-col items-start">
-                    <FormLabel className="text-primary-foreground items-start">
+                    <FormLabel className="text-foreground items-start">
                       Mot de passe
                     </FormLabel>
                     <FormControl>
                       <Input
-                        className="text-primary-foreground border-border focus-visible:ring-ring w-[500px] max-sm:w-[300px]"
+                        className="text-foreground border-border focus-visible:ring-ring w-[500px] max-sm:w-[300px]"
                         required
                         autoFocus
-                        type="passsword"
+                        type="password"
                         {...field}
                       />
                     </FormControl>

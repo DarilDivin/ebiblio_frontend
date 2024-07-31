@@ -1,4 +1,5 @@
 import axios from "@/lib/axios";
+import { userHasRole } from "@/lib/utils";
 import {
   ConfirmPasswordProps,
   ForgotPasswordProps,
@@ -327,8 +328,13 @@ export const useAuth = ({
       .post("/api/user/confirmed-two-factor-authentication", { code: code })
       .then((response) => {
         setTwoFactorAuthenticationConfirmed(true);
-        setStatus(response.status.toString() + "-2FAConfirmed");
-      });
+        // setStatus(response.status.toString() + "-2FAConfirmed");
+        setStatus('Double authentification activé avec succès');
+        toast.success('Double authentification activé avec succès')
+      })
+      .catch((error) => {
+        toast.success('Une erreur est survenue')
+      })
   };
 
   const twoFactorChallenge = async ({

@@ -81,11 +81,11 @@ const UpdatePassword = () => {
                   name="current_password"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-primary-foreground">Mot de passe actuelle</FormLabel>
+                      <FormLabel className="text-foreground">Mot de passe actuelle</FormLabel>
                       <FormControl>
                         <Input
                           type='password'
-                          className="text-primary-foreground focus-visible:ring-ring"
+                          className="text-foreground focus-visible:ring-ring"
                           placeholder=""
                           {...field}
                         />
@@ -100,11 +100,11 @@ const UpdatePassword = () => {
                   name="password"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-primary-foreground">Nouveau mot de passe</FormLabel>
+                      <FormLabel className="text-foreground">Nouveau mot de passe</FormLabel>
                       <FormControl>
                         <Input
                           type='password'
-                          className="text-primary-foreground focus-visible:ring-ring"
+                          className="text-foreground focus-visible:ring-ring"
                           placeholder=""
                           {...field}
                         />
@@ -119,11 +119,11 @@ const UpdatePassword = () => {
                   name="password_confirmation"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-primary-foreground">Confirmation du mot de passe</FormLabel>
+                      <FormLabel className="text-foreground">Confirmation du mot de passe</FormLabel>
                       <FormControl>
                         <Input
                           type='password'
-                          className="text-primary-foreground focus-visible:ring-ring"
+                          className="text-foreground focus-visible:ring-ring"
                           placeholder=""
                           {...field}
                         />

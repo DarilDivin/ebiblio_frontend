@@ -175,7 +175,7 @@ const Settings = () => {
     //     </div>
     //   }
     // </div>
-    <div className='w-full h-screen flex justify-center items-start gap-4 px-28 max-lg:px-6 max-sm:px-2'>
+    <div className='w-full min-h-screen flex justify-center items-start gap-4 px-28 max-lg:px-6 max-sm:px-2'>
       <div className='w-1/4 h-full relative max-lg:hidden'>
         <div className='sticky flex flex-col gap-5 p-2 w-full top-8'>
           <Link href='/settings#update_profile' className='p-2 rounded-lg text-lg w-3/4 font-semibold text-foreground/80 hover:text-primary'>Information de Profile</Link>

@@ -51,7 +51,8 @@ const BookHomePage = () => {
                 <div className="flex max-lg:flex-col p-2 bg-primary/10 hover:bg-primary/15 rounded-md gap-4">
                   <div className="min-w-[100px] h-fit overflow-hidden rounded-md bg-red-300">
                     <Image
-                      src="/B5.jpg"
+                      // src="/B5.jpg"
+                      src={`http://localhost:8000/api/books-covers/${book.thumbnail_path?.split('/')[2]}`}
                       alt="Book cover"
                       className=" object-cover w-full h-full"
                       width={50}

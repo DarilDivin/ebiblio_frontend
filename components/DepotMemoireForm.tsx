@@ -151,24 +151,24 @@ const DepotMemoireForm = () => {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      theme: "MISE EN PLACE D’UNE PLATEFORME DE GESTION DES ALUMNI",
+      theme: "Mise place d'une plateforme des gestion des mémoires soutenues et de la bibliothèque de l'ENEAM",
       start_at: "12:00",
       ends_at: "15:00",
       first_author_matricule: "14141414",
       first_author_firstname: "Divin",
-      first_author_lastname: "Djk",
+      first_author_lastname: "DJODJO KOUTON",
       first_author_email: "divindjk@gmail.com",
-      first_author_phone: "12345678",
+      first_author_phone: "+229 96909096",
       second_author_matricule: "12121212",
-      second_author_firstname: "Daril",
-      second_author_lastname: "Djk",
+      second_author_firstname: "Daniel",
+      second_author_lastname: "CAPO CHICHI",
       second_author_email: "divindjk@gmail.com",
-      second_author_phone: "123456789",
+      second_author_phone: "+229 90969690",
       jury_president_name: "BOSSOU Jack",
       memory_master_name: "AGOSSOU Charlie",
       memory_master_email: "charlie@gmail.com",
-      sector_id: "",
-      soutenance_id: "3",
+      sector_id: "10",
+      soutenance_id: "1",
     },
   });
 
@@ -945,6 +945,7 @@ const DepotMemoireForm = () => {
                               type="file"
                               // {...register('file_path')}
                               {...filePathRef}
+                              accept=".pdf"
                             />
                           </FormControl>
                           <FormMessage />
@@ -966,6 +967,7 @@ const DepotMemoireForm = () => {
                               type="file"
                               // {...register('cover_page_path')}
                               {...coverPathRef}
+                              accept="image/*"
                             />
                           </FormControl>
                           <FormMessage />

@@ -17,7 +17,8 @@ const PhysicalBooksListPage = () => {
 
   if (error) return <div>Erreur de chargement des données</div>;
   if (isLoading || !physical) return <div>Chargement...</div>;
-  
+  const imageUrl = 'Articles/cover-pages/1722353735-le-parfum-9977.jpg';
+  // http://localhost:8000/api/books-covers/1722353735-le-parfum-9977.jpg
 
   // console.log(physical)
   return (
@@ -25,7 +26,7 @@ const PhysicalBooksListPage = () => {
       <div className="h-[55vh] max-sm:h-[35vh] w-full bg-primary/5 grid grid-cols-2 max-md:grid-cols-[400px_1fr] max-sm:grid-cols-1 justify-center items-center px-12 lg:px-12 max-sm:px-8 pt-8 rounded-lg mb-4">
         <div>
           <p className="text-[2rem] max-sm:text-[1.5rem] max-sm:text-center font-bold font-poppins text-primary justify-self-end ">
-            Vous chercher un livre en particulier ?
+            Vous cherchez un livre en particulier ?
           </p>
           <p className="text-base max-sm:text-base max-sm:text-center font-semibold font-poppins text-foreground/70 justify-self-end">
             Effectuer une recherche parmis les livres disponibles en version
@@ -48,19 +49,20 @@ const PhysicalBooksListPage = () => {
       <div className="w-full flex justify-center items-center -translate-y-1/2 max-sm:-translate-y-8">
         <BookSearchbar book={physical} setFilteredData={setFilteredData} />
       </div>
-      <div className="w-full h-screen overflow-scroll p-2 flex flex-col gap-4">
+      <div className="w-full min-h-screen overflow-scroll p-2 flex flex-col gap-4">
         <h3 className="text-xl text-primary font-poppins font-bold xl:px-12 max-lg:px-8">Liste des Livres Physiques</h3>
         <div className="grid xl:grid-cols-4 lg:grid-cols-3 max-lg:grid-cols-4 max-sm:grid-cols-2 gap-4 w-full xl:px-12 max-lg:px-8 ">
           {filteredData?.map((book) => (
             <div className="flex max-lg:flex-col p-2 bg-primary/10 hover:bg-primary/15 rounded-md gap-4">
               <div className="min-w-[100px] h-fit overflow-hidden rounded-md bg-red-300">
-                <Image
-                  src='/B5.jpg'
+                <img
+                  // src={imageUrl}
+                  src={`http://localhost:8000/api/books-covers/${book.thumbnail_path?.split('/')[2]}`}
                   alt="Book cover"
                   className=" object-cover w-full h-full"
                   width={50}
                   height={100}
-                  priority
+                  // priority
                 />
               </div>
               <div className="flex flex-col justify-start mt-4 relative flex-grow">

@@ -1,15 +1,21 @@
-import { Star } from "lucide-react";
+import { Download, Star } from "lucide-react";
 import { Button } from "./ui/button";
 import { Separator } from "./ui/separator";
 import Link from "next/link";
 import { Memoire } from "@/types/memory";
 import ViewPdf from "./ViewPdf";
+import { downloadMemories } from "@/lib/data/memories";
 
 interface DocumentListItemProps {
   theme: string;
 }
 
 const DocumentListItem = ({ memoire }: { memoire: Memoire }) => {
+
+  const handleDownloadMemory = async (memory: number) => {
+    await downloadMemories({memory: memory});
+  }
+
   return (
     <div className="flex gap-4 justify-start bg-primary/5 hover:bg-primary/10 p-2 rounded-md">
       <div className="flex justify-center items-center size-32 bg-slate-50 rounded-md shadow-sm max-lg:hidden">
@@ -67,7 +73,9 @@ const DocumentListItem = ({ memoire }: { memoire: Memoire }) => {
               </span>
             </div>
             <div className="flex gap-2">
-              <p className="font-semibold text-foreground/70">Président du Jury :</p>
+              <p className="font-semibold text-foreground/70">
+                Président du Jury :
+              </p>
               <span className="font-semibold text-foreground/90">
                 {" "}
                 {memoire.jury_president_name}
@@ -99,7 +107,12 @@ const DocumentListItem = ({ memoire }: { memoire: Memoire }) => {
                 Indisponible
               </Button>
             ) : (
-              <ViewPdf fileUrl={memoire.file_path} />
+              <div className="flex gap-2">
+                <ViewPdf fileUrl={memoire.file_path} />
+                <Button className="self-end" onClick={() => handleDownloadMemory(memoire.id)}>
+                  <Download />
+                </Button>
+              </div>
             )}
           </div>
         </div>

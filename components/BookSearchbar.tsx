@@ -49,7 +49,7 @@ const BookSearchbar = ({book, setFilteredData}: {book: Book[], setFilteredData: 
       return (
         item.title.toLowerCase().includes(query.title.toLowerCase()) &&
         item.author.toLowerCase().includes(query.author.toLowerCase()) &&
-        item.editor.toLowerCase().includes(query.year.toLowerCase())
+        item.editing_year.toLowerCase().includes(query.year.toLowerCase())
       );
     });
     setFilteredData(filtered);
@@ -105,7 +105,7 @@ const BookSearchbar = ({book, setFilteredData}: {book: Book[], setFilteredData: 
           />
 
           <div className="flex flex-1 h-14 justify-evenly items-center gap-2 relative max-sm:w-full">
-            <Key className="absolute left-1 font-bold text-foreground/80" />
+            <Calendar className="absolute left-1 font-bold text-foreground/80" />
             {/* <Select
               value={query.title}
               onValueChange={handleInputChange}
@@ -121,7 +121,7 @@ const BookSearchbar = ({book, setFilteredData}: {book: Book[], setFilteredData: 
             </Select> */}
             <Input
               className="border-none pl-10 outline-none focus-visible:ring-ring"
-              placeholder="Auteur"
+              placeholder="Année"
               name="year"
               value={query.year}
               onChange={handleInputChange}

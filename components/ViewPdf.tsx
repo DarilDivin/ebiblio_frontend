@@ -36,7 +36,8 @@ const ViewPdf = ({ fileUrl }: { fileUrl: string }) => {
 // const ViewPdf = ({ fileUrl }) => {
 
   // const pdfUrl = `http://localhost:8000/pdf/${fileUrl}` 
-  const pdfUrl = `http://localhost:8000/api/pdf/1720449135-Lary_Murie.pdf` 
+  const pdfUrl = `http://localhost:8000/api/pdf/${fileUrl?.split('/')[2]}` 
+  // const pdfUrl = `http://localhost:8000/api/pdf/1720449135-Lary_Murie.pdf` 
 
   // const defaultLayoutPluginInstance = defaultLayoutPlugin();
   const toolbarPluginInstance = toolbarPlugin();

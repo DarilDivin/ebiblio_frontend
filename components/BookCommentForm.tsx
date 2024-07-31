@@ -72,7 +72,7 @@ const BookCommentForm = ({id}: {id: string}) => {
                 />
               </FormControl>
               <FormDescription>
-                Veillez nous laisser un Commentaires
+                Veuillez laisser un commentaire
               </FormDescription>
               <FormMessage />
             </FormItem>

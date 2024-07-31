@@ -42,7 +42,7 @@ const Navbar = () => {
   }: { user: User; logout: any; error: any; isLoading: boolean } = useAuth({
     middleware: "auth",
   });
-  
+
   const router = useRouter();
 
   const pathname = usePathname();
@@ -78,10 +78,11 @@ const Navbar = () => {
 
   useEffect(() => {
     let lastScrollTop = 0;
-    const navbar = document.getElementById('navbar');
-    
+    const navbar = document.getElementById("navbar");
+
     const onScroll = () => {
-      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      const scrollTop =
+        window.pageYOffset || document.documentElement.scrollTop;
       if (scrollTop > lastScrollTop) {
         setIsActive(true);
       } else {
@@ -90,10 +91,10 @@ const Navbar = () => {
       lastScrollTop = scrollTop;
     };
 
-    window.addEventListener('scroll', onScroll);
+    window.addEventListener("scroll", onScroll);
 
     return () => {
-      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener("scroll", onScroll);
     };
   }, []);
 
@@ -109,12 +110,23 @@ const Navbar = () => {
       </div>
     );
 
-    const role = userHasRole(user, "Etudiant-Externe")
+  const role = userHasRole(user, "Etudiant-Externe");
   return (
-    <div className={`w-full px-2 py-1 flex justify-center items-center z-[1000] ${isActive ? 'active' : 'no-active bg-background'}`} id="navbar" >
+    <div
+      className={`w-full px-2 py-1 flex justify-center items-center z-[1000] ${
+        isActive ? "active" : "no-active bg-background"
+      }`}
+      id="navbar"
+    >
       <div className="w-full bg-primary/10 shadow-lg rounded-lg h-[50px] flex gap-4 items-center justify-between px-2 lg:px-20 py-2 relative">
         <div className="font-semibold text-primary-foreground bg-primary/10 cursor-pointer flex gap-1 items-center h-full p-1 rounded-md max-sm:hidden">
-          <Image src='/LogoEneam.png' className="size-8" alt="EneamLogo" width={50} height={50}/>
+          <Image
+            src="/LogoEneam.png"
+            className="size-8"
+            alt="EneamLogo"
+            width={50}
+            height={50}
+          />
           <Link href="/home">
             <span className="text-primary font-bold text-2xl font-alexana">
               E
@@ -191,16 +203,19 @@ const Navbar = () => {
             </>
           ) : (
             <>
-              <Link
-                href="/memoires/deposer"
-                className={`hover:text-primary text-sm lg:text-sm ${
-                  pathname === "/memoires/deposer"
-                    ? "text-primary font-bold"
-                    : "text-foreground"
-                }`}
-              >
-                Dépôt de mémoires
-              </Link>
+              {userHasRole(user, "Etudiant-Eneamien") && (
+                <Link
+                  href="/memoires/deposer"
+                  className={`hover:text-primary text-sm lg:text-sm ${
+                    pathname === "/memoires/deposer"
+                      ? "text-primary font-bold"
+                      : "text-foreground"
+                  }`}
+                >
+                  Dépôt de mémoires
+                </Link>
+              )}
+
               <Link
                 href="/memoires/consulter"
                 className={`hover:text-primary text-sm lg:text-sm ${
@@ -329,11 +344,13 @@ const Navbar = () => {
               <DropdownMenuItem>
                 <Link href="/settings">Settings</Link>
               </DropdownMenuItem>
+              {userHasRole(user, "Administrateur") && (
+                <DropdownMenuItem className="cursor-pointer">
+                  <Link href="/admin">Dashboard</Link>
+                </DropdownMenuItem>
+              )}
               <DropdownMenuItem onClick={logout} className="cursor-pointer">
                 Logout
-              </DropdownMenuItem>
-              <DropdownMenuItem className="cursor-pointer">
-                <Link href="/admin">Dashboard</Link>
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>

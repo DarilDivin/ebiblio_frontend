@@ -151,12 +151,12 @@ const UpdateProfile = ({ user }: { user: User }) => {
                   name="firstname"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className=" text-primary-foreground">
+                      <FormLabel className=" text-foreground">
                         Prénoms
                       </FormLabel>
                       <FormControl>
                         <Input
-                          className="text-primary-foreground border-border focus-visible:ring-ring"
+                          className="text-foreground border-border focus-visible:ring-ring"
                           placeholder="John Doe"
                           {...field}
                         />
@@ -171,12 +171,12 @@ const UpdateProfile = ({ user }: { user: User }) => {
                   name="lastname"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className=" text-primary-foreground">
+                      <FormLabel className=" text-foreground">
                         Nom de Famille
                       </FormLabel>
                       <FormControl>
                         <Input
-                          className="text-primary-foreground border-border focus-visible:ring-ring"
+                          className="text-foreground border-border focus-visible:ring-ring"
                           placeholder="John Doe"
                           {...field}
                         />
@@ -193,12 +193,12 @@ const UpdateProfile = ({ user }: { user: User }) => {
                   name="email"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className=" text-primary-foreground">
+                      <FormLabel className=" text-foreground">
                         Email
                       </FormLabel>
                       <FormControl>
                         <Input
-                          className="text-primary-foreground focus-visible:ring-ring"
+                          className="text-foreground focus-visible:ring-ring"
                           placeholder="email@email.com"
                           {...field}
                         />
@@ -213,12 +213,12 @@ const UpdateProfile = ({ user }: { user: User }) => {
                   name="phone_number"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className=" text-primary-foreground">
+                      <FormLabel className=" text-foreground">
                         Numéro de téléphone
                       </FormLabel>
                       <FormControl>
                         <Input
-                          className="text-primary-foreground border-border focus-visible:ring-ring"
+                          className="text-foreground border-border focus-visible:ring-ring"
                           placeholder="+229 96969696"
                           {...field}
                         />
@@ -235,12 +235,12 @@ const UpdateProfile = ({ user }: { user: User }) => {
                   name="birth_date"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className=" text-primary-foreground">
+                      <FormLabel className=" text-foreground">
                         Date de naissance
                       </FormLabel>
                       <FormControl>
                         <Input
-                          className="text-primary-foreground border-border focus-visible:ring-ring"
+                          className="text-foreground border-border focus-visible:ring-ring"
                           placeholder=""
                           type="date"
                           {...field}
@@ -256,7 +256,7 @@ const UpdateProfile = ({ user }: { user: User }) => {
                   name="sex"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className=" text-primary-foreground">
+                      <FormLabel className=" text-foreground">
                         Date de naissance
                       </FormLabel>
                       <Select

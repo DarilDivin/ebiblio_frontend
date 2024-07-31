@@ -1,6 +1,7 @@
 "use client";
 
 import { useAuth } from "@/hooks/auth";
+import { userHasRole } from "@/lib/utils";
 import { ChevronRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -51,6 +52,15 @@ const Home = () => {
               {" "}
               Voir les livres <ChevronRight />
             </Link>
+            {userHasRole(user, "Administrateur") && (
+              <Link
+                className="p-1 rounded-md bg-primary/70 hover:bg-primary transition-all flex gap-2 hover:gap-4 text-primary-foreground"
+                href={"/admin"}
+              >
+                {" "}
+                Dashboard <ChevronRight />
+              </Link>
+            )}
           </div>
         </div>
         // </div>

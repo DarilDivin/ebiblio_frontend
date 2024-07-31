@@ -32,7 +32,7 @@ export function useBookByLink(url: string) {
 }
 
 export function useMemoryByLink(url: string) {
-  console.log(url)
+  // console.log(url)
   return useSWR<GetAllMemoryResponse>(url);
 }
 

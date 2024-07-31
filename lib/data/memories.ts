@@ -50,6 +50,7 @@ export const supportedMemoireDeposit = async ({
       toast.success("Mémoire envoyé avec succès");
     })
     .catch((error) => {
+      console.log(error);
       if (error.response && error.response.status === 422) {
         const errors = error.response.data.errors;
         console.log(errors);
@@ -214,6 +215,21 @@ export const validateMemories = async ({ memories }: {memories: number[]}) => {
     .post(`/api/validate-memories?_method=PATCH`, {ids: memories})
     .then(() => {
       toast.success("Mémoires validés avec succès 👍🏾.")
+    })
+    .catch((error) => {
+      console.log(error)
+
+      toast.error("Une erreur s'est produite 🧐")
+    })
+}
+
+export const downloadMemories = async ({ memory }: {memory: number}) => {
+  await csrf();
+
+  await axios
+    .patch(`/api/download-memory/${memory}`)
+    .then(() => {
+      toast.success("Mémoire téléchargé avec succès 👍🏾.")
     })
     .catch((error) => {
       console.log(error)

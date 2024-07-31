@@ -142,6 +142,14 @@
   max-height: 35px;
 }
 
+.css-1nmdiq5-menu {
+  background-color: hsl(var(--background));
+}
+
+.css-13cymwt-control {
+  background-color: hsl(var(--background))!important;
+}
+
 div.blob1 {
   background: url("/book1.jpg");
   background-size: cover;

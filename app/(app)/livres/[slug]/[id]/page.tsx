@@ -81,7 +81,8 @@ const ShowBook = ({ params }: { params: { slug: string; id: string } }) => {
         </div>
         <div className="relative">
           <Image
-            src={"/B3.webp"}
+            // src={"/B3.webp"}
+            src={`http://localhost:8000/api/books-covers/${book.thumbnail_path?.split('/')[2]}`}
             alt="Book Cover"
             className="absolute shadow-2xl h-[350px] max-lg:h-[250px] max-lg:w-[170px] max-sm:left-1/4"
             width={250}

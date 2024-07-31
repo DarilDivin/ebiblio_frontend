@@ -75,10 +75,10 @@ const TwoFactorAuthentication = () => {
     setTwofactorIsEnabled(user.two_factor_secret);
   }, []);
 
-  const submitForm = (event: { preventDefault: () => void }, code: string) => {
+  const submitForm = async (event: { preventDefault: () => void }, code: string) => {
     event.preventDefault();
 
-    twoFactorAuthenticationConfirmation({
+    await twoFactorAuthenticationConfirmation({
       code,
       setStatus,
       setTwoFactorAuthenticationConfirmed,
@@ -93,13 +93,16 @@ const TwoFactorAuthentication = () => {
   });
 
   function onSubmit(values: z.infer<typeof FormSchema>, event: any) {
-    console.log(parseInt(values.code));
+    // console.log(parseInt(values.code));
 
     submitForm(event, values.code);
   }
 
   return (
     <div id="2fa">
+      {/* <div className="w-full p-4 rounded-md border border-primary bg-primary/20 text-primary">
+        {status}
+      </div> */}
       <Card className="bg-card">
         <CardHeader>
           <CardTitle className="text-primary">
@@ -176,7 +179,7 @@ const TwoFactorAuthentication = () => {
                                   name="code"
                                   render={({ field }) => (
                                     <FormItem>
-                                      <FormLabel className="text-primary-foreground">
+                                      <FormLabel className="text-foreground">
                                         Code
                                       </FormLabel>
                                       <FormControl>

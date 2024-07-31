@@ -19,10 +19,10 @@ const page = () => {
       <div className="h-[55vh] max-sm:h-[35vh] w-full bg-primary/5 grid grid-cols-2 max-md:grid-cols-[400px_1fr] max-sm:grid-cols-1 justify-center items-center px-52 max-lg:px-10 max-sm:px-12 pt-8 rounded-lg mb-4">
         <div>
           <p className="text-[2.5rem] max-md:text-[1.5rem] max-md:text-center font-bold font-poppins text-primary justify-self-end ">
-            Bienvenue dans vootre espace Bibliothèque
+            Bienvenue dans votre espace Bibliothèque
           </p>
           <p className="text-base max-sm:text-base max-sm:text-center font-semibold font-poppins text-foreground/70 justify-self-end">
-            Ici retrouvez toutes vos demandes de prêt effectué et restez
+            Ici retrouvez toutes vos demandes de prêt effectuées et restez
             informer de leur état d'avancement.
           </p>
         </div>

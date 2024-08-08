@@ -137,15 +137,15 @@ const ShowBook = ({ params }: { params: { slug: string; id: string } }) => {
               </Button>
             )}
             <div className=" flex gap-3">
-              <Button className="bg-muted/50 text-foreground hover:bg-muted/80 transition-colors bg cursor-pointer w-10 h-10 flex justify-center items-center rounded-full p-1">
+              {/* <Button className="bg-muted/50 text-foreground hover:bg-muted/80 transition-colors bg cursor-pointer w-10 h-10 flex justify-center items-center rounded-full p-1">
                 <SaveAll className="size-[18px]" />
-              </Button>
+              </Button> */}
               <Button className="bg-muted/50 text-foreground hover:bg-muted/80 transition-colors bg cursor-pointer w-10 h-10 flex justify-center items-center rounded-full p-1">
                 <Share2 className="size-[18px]" />
               </Button>
-              <Button className="bg-muted/50 text-foreground hover:bg-muted/80 transition-colors bg cursor-pointer w-10 h-10 flex justify-center items-center rounded-full p-1">
+              {/* <Button className="bg-muted/50 text-foreground hover:bg-muted/80 transition-colors bg cursor-pointer w-10 h-10 flex justify-center items-center rounded-full p-1">
                 <ArrowDownToLine className="size-[18px]" />
-              </Button>
+              </Button> */}
             </div>
           </div>
         </div>

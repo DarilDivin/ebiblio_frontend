@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Memoire } from "@/types/memory";
 import ViewPdf from "./ViewPdf";
 import { downloadMemories } from "@/lib/data/memories";
+import Image from "next/image";
 
 interface DocumentListItemProps {
   theme: string;
@@ -12,14 +13,21 @@ interface DocumentListItemProps {
 
 const DocumentListItem = ({ memoire }: { memoire: Memoire }) => {
 
-  const handleDownloadMemory = async (memory: number) => {
+  const handleDownloadMemory = async (memory: Memoire) => {
     await downloadMemories({memory: memory});
   }
 
   return (
     <div className="flex gap-4 justify-start bg-primary/5 hover:bg-primary/10 p-2 rounded-md">
-      <div className="flex justify-center items-center size-32 bg-slate-50 rounded-md shadow-sm max-lg:hidden">
-        Illustration Doc
+      <div className="flex justify-center items-center w-32 h-44 bg-slate-50 rounded-md shadow-sm max-lg:hidden">
+        <Image
+          src={`http://localhost:8000/api/memories-covers/${memoire.cover_page_path?.split('/')[2]}`}
+          alt="Mémory cover"
+          className=" object-cover w-full h-full"
+          width={128}
+          height={176}
+          priority
+        />
       </div>
       <div className=" flex flex-col w-full">
         <div className="w-full flex justify-start gap-2 items-center">
@@ -29,10 +37,10 @@ const DocumentListItem = ({ memoire }: { memoire: Memoire }) => {
           >
             {memoire.theme}
           </Link>
-          <Separator
+          {/* <Separator
             orientation="vertical"
             className="w-[3px] h-[15px] bg-green-500 rounded-md"
-          />
+          /> */}
           {/* <span className=" font-bold text-foreground/80 text-base flex gap-2">
             4.5 / 5
             <span className="flex gap-1 items-center">
@@ -109,7 +117,7 @@ const DocumentListItem = ({ memoire }: { memoire: Memoire }) => {
             ) : (
               <div className="flex gap-2">
                 <ViewPdf fileUrl={memoire.file_path} />
-                <Button className="self-end" onClick={() => handleDownloadMemory(memoire.id)}>
+                <Button className="self-end" onClick={() => handleDownloadMemory(memoire)}>
                   <Download />
                 </Button>
               </div>

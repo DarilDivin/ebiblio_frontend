@@ -2,10 +2,15 @@ import { useUser } from "@/services/queries"
 import { csrf } from ".";
 import axios from "../axios";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 export const getAllUsers = () => {
+  const router = useRouter();
   const { data: userResponse, isLoading, error } = useUser();
-
+  console.log(error);
+  if (error && error.response.status === 403) {
+    router.push('/admin')
+  }
   return {
     users: userResponse?.data,
     isLoading,

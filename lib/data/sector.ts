@@ -3,11 +3,15 @@ import { CreateSectorSpecialityProps, UpdateSectorSpecialityProps } from "@/type
 import { csrf } from ".";
 import axios from "../axios";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 export const getAllFiliere = () => {
   // const { data: sectorResponse } = useSWR<GetAllSectorResponse>("api/sector", fetcher);
   const { data: sectorResponse, isLoading, error } = useSector();
-
+  const router = useRouter();
+  if (error && error.response.status === 403) {
+    router.push('/home')
+  }
   return {
     sectorsAndSpecialities: sectorResponse?.data,
     specialities: sectorResponse?.data.filter((sector) => sector.type === "Spécialité"),

@@ -6,13 +6,15 @@
 /* #0ADB96 */
 @layer base {
   :root {
-    --background: 168 48% 100%;
+    --background: 160, 30%, 96%;
+    /* --background: 168 48% 100%; */
     --foreground: 168 65% 4%;
     --muted: 168 14% 86%;
     --muted-foreground: 168 11% 37%;
     --popover: 168 48% 100%;
     --popover-foreground: 168 65% 4%;
-    --card: 168 48% 100%;
+    --card: 160, 30%, 96%;
+    /* --card: 168 48% 100%; */
     --card-foreground: 168 65% 4%;
     --border: 168 7% 95%;
     --input: 168 7% 95%;
@@ -208,4 +210,6 @@ div.blob4 {
   top: -58px;
   transform: translateY(-58px);
   background: var(--background);
+
+  color: hsl(160, 30%, 96%);
 }

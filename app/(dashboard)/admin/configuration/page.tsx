@@ -61,27 +61,7 @@ const ConfigurationPage = () => {
   const lastConfig = getLastConfig();
   return (
     <div className="container">
-      {/* <div className="flex w-full justify-between py-4 ">
-        <div
-          className={`ml-2 border-none flex gap-1 justify-between items-center p-2 rounded-md hover:bg-primary/30 cursor-default`}
-        >
-          <div className="flex gap-2 items-center">
-            <Bolt size={17} />
-            <p
-              className={`text-xs font-medium w-[104px] text-nowrap text-ellipsis overflow-hidden`}
-              title="Liste des mémoires"
-            >
-              Configuration
-            </p>
-          </div>
-        </div>
-        <Avatar>
-          <AvatarImage src="https://github.com/shadcn.png" />
-          <AvatarFallback>CN</AvatarFallback>
-        </Avatar>
-      </div> */}
-
-      <Card className="overflow-scroll max-h-[89vh] bg-card">
+      <div className="overflow-scroll max-h-[89vh] w-full bg-card">
         <CardContent className="flex flex-col gap-4 pt-6">
           <div className="grid grid-cols-3 gap-4 pt-6">
             <Card className="col-span-3 h-[700px] overflow-y-scroll bg-card card">
@@ -498,7 +478,7 @@ const ConfigurationPage = () => {
             )}
           </div>
         </CardContent>
-      </Card>
+      </div>
     </div>
   );
 };

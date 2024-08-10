@@ -124,8 +124,8 @@ const Navbar = () => {
             src="/LogoEneam.png"
             className="size-8"
             alt="EneamLogo"
-            width={50}
-            height={50}
+            width={500}
+            height={500}
           />
           <Link href="/home">
             <span className="text-primary font-bold text-2xl font-alexana">

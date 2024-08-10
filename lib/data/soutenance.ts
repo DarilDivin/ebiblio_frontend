@@ -9,11 +9,15 @@ import { useSoutenance } from "@/services/queries";
 import axios from "../axios";
 import { toast } from "sonner";
 import { EditCycleProps } from "@/types/cycle";
+import { useRouter } from "next/navigation";
 
 export const getAllSoutenance = () => {
   // const { data: soutenanceResponse } = useSWR<GetAllSoutenanceResponse>("api/soutenance", fetcher);
   const { data: soutenanceResponse, isLoading, error } = useSoutenance();
-
+  const router = useRouter();
+  if (error && error.response.status === 403) {
+    router.push('/home')
+  }
   return { soutenances: soutenanceResponse?.data, isLoading, error };
 };
 

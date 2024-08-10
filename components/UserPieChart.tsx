@@ -8,41 +8,90 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-const chartData = [
-  { userType: "eneamien", visitors: 275, fill: "var(--color-eneamien)" },
-  { userType: "externe", visitors: 200, fill: "var(--color-externe)" },
-  { userType: "enseignant", visitors: 287, fill: "var(--color-enseignant)" },
-  // { userType: "edge", visitors: 173, fill: "var(--color-edge)" },
-  // { userType: "other", visitors: 190, fill: "var(--color-other)" },
-];
+import { getAllStatistics } from "@/lib/data/statistics";
+import { Skeleton } from "./ui/skeleton";
 
-const chartConfig = {
-  visitors: {
-    label: "Visiteurs",
-  },
-  eneamien: {
-    label: "Eneamien",
-    color: "hsl(var(--chart-1))",
-  },
-  externe: {
-    label: "Externe",
-    color: "hsl(var(--chart-2))",
-  },
-  enseignant: {
-    label: "Enseignant",
-    color: "hsl(var(--chart-5))",
-  },
-  // edge: {
-  //   label: "Edge",
-  //   color: "hsl(var(--chart-4))",
-  // },
-  // other: {
-  //   label: "Other",
-  //   color: "hsl(var(--chart-3))",
-  // },
-} satisfies ChartConfig;
+// const { statistics } = getAllStatistics()
 
-export function UserPieChart() {
+// const chartData = [
+//   { userType: "eneamien", visitors: statistics?.eneamiensNumber, fill: "var(--color-eneamien)" },
+//   { userType: "externe", visitors: statistics?.externesNumber, fill: "var(--color-externe)" },
+//   { userType: "enseignant", visitors: statistics?.teachersNumber, fill: "var(--color-enseignant)" },
+//   // { userType: "edge", visitors: 173, fill: "var(--color-edge)" },
+//   // { userType: "other", visitors: 190, fill: "var(--color-other)" },
+// ];
+
+// const chartConfig = {
+//   visitors: {
+//     label: "Visiteurs",
+//   },
+//   eneamien: {
+//     label: "Eneamien",
+//     color: "hsl(var(--chart-1))",
+//   },
+//   externe: {
+//     label: "Externe",
+//     color: "hsl(var(--chart-2))",
+//   },
+//   enseignant: {
+//     label: "Enseignant",
+//     color: "hsl(var(--chart-5))",
+//   },
+//   // edge: {
+//   //   label: "Edge",
+//   //   color: "hsl(var(--chart-4))",
+//   // },
+//   // other: {
+//   //   label: "Other",
+//   //   color: "hsl(var(--chart-3))",
+//   // },
+// } satisfies ChartConfig;
+
+interface UserPieChartProps {
+  eneamiensNumber: number;
+  externesNumber: number;
+  teachersNumber: number;
+}
+
+export function UserPieChart({eneamiensNumber, externesNumber, teachersNumber}: UserPieChartProps) {
+
+  const chartData = [
+    {
+      userType: "eneamien",
+      visitors: eneamiensNumber,
+      // visitors: statistics?.eneamiensNumber,
+      fill: "var(--color-eneamien)",
+    },
+    {
+      userType: "externe",
+      visitors: externesNumber,
+      fill: "var(--color-externe)",
+    },
+    {
+      userType: "enseignant",
+      visitors: teachersNumber,
+      fill: "var(--color-enseignant)",
+    },
+  ];
+
+  const chartConfig = {
+    visitors: {
+      label: "Visiteurs",
+    },
+    eneamien: {
+      label: "Eneamien",
+      color: "hsl(var(--chart-1))",
+    },
+    externe: {
+      label: "Externe",
+      color: "hsl(var(--chart-2))",
+    },
+    enseignant: {
+      label: "Enseignant",
+      color: "hsl(var(--chart-5))",
+    },
+  } satisfies ChartConfig;
+
   const totalVisitors = React.useMemo(() => {
     return chartData.reduce((acc, curr) => acc + curr.visitors, 0);
   }, []);

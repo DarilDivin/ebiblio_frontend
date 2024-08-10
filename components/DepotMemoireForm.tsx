@@ -168,7 +168,7 @@ const DepotMemoireForm = () => {
       memory_master_name: "AGOSSOU Charlie",
       memory_master_email: "charlie@gmail.com",
       sector_id: "10",
-      soutenance_id: "1",
+      soutenance_id: "",
     },
   });
 
@@ -651,7 +651,7 @@ const DepotMemoireForm = () => {
                       name="sector_id"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel className=" text-primary-foreground">
+                          <FormLabel className=" text-foreground">
                             Filière
                           </FormLabel>
                           {/* <FormControl>
@@ -771,8 +771,7 @@ const DepotMemoireForm = () => {
                                   {field.value
                                     ? soutenances?.find(
                                         (soutenance) =>
-                                          soutenance.id.toString() ===
-                                          field.value
+                                         soutenance.id.toString() === field.value
                                       )?.name
                                     : "Selectionner votre soutenance"}
                                   <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />

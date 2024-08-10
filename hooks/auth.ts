@@ -363,6 +363,8 @@ export const useAuth = ({
   };
 
   useEffect(() => {
+    if (middleware === "auth" && error) logout();
+    // if (user && !user?.email_verified_at) router.push('/verify-email');
     if (middleware === "guest" && redirectIfAuthenticated && user)
       router.push(redirectIfAuthenticated);
     if (
@@ -371,8 +373,6 @@ export const useAuth = ({
       redirectIfAuthenticated
     )
       router.push(redirectIfAuthenticated);
-    if (middleware === "auth" && error) logout();
-
     // console.log('user: '+ user, 'error: '+  error);
   }, [user, error]);
 

@@ -60,8 +60,8 @@ const PhysicalBooksListPage = () => {
                   src={`http://localhost:8000/api/books-covers/${book.thumbnail_path?.split('/')[2]}`}
                   alt="Book cover"
                   className=" object-cover w-full h-full"
-                  width={50}
-                  height={100}
+                  width={500}
+                  height={500}
                   priority
                 />
               </div>

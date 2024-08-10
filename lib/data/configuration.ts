@@ -2,10 +2,14 @@ import { useLastConfig } from "@/services/queries";
 import { csrf } from ".";
 import axios from "../axios";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 export const getLastConfig = () => {
   const { data: lastConfigResponse, isLoading, error } = useLastConfig();
-
+  const router = useRouter();
+  if (error && error.response.status === 403) {
+    router.push('/home')
+  }
   return {
     lastConfig: lastConfigResponse?.data,
     isLoading,

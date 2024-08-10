@@ -8,6 +8,7 @@ import { GetAllRoleResponse } from "@/types/role";
 import { GetAllSchoolYearResponse } from "@/types/schoolyear";
 import { GetAllSectorResponse } from "@/types/sector";
 import { GetAllSoutenanceResponse } from "@/types/soutenance";
+import { GetAllStatisticsResponse } from "@/types/statistics";
 import { GetAllUserResponse } from "@/types/user";
 import useSWR from "swr";
 
@@ -66,4 +67,8 @@ export function useKeyword() {
 
 export function useLoan() {
   return useSWR<GetAllLoanResponse>('/api/loan')
+}
+
+export function useStatistics() {
+  return useSWR<GetAllStatisticsResponse>('/api/statistiques')
 }

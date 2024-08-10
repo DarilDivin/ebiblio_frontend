@@ -3,10 +3,16 @@ import { CreateCycleProps, EditCycleProps } from "@/types/cycle";
 import { csrf } from ".";
 import { toast } from "sonner";
 import axios from "../axios";
+import { useRouter } from "next/navigation";
+
 
 export const getAllCycle = () => {
+  const router = useRouter();
   const { data: cycleResponse, isLoading, error } = useCycle();
-
+  // console.log(error);
+  if (error && error.response.status === 403) {
+    router.push('/home')
+  }
   return { cycles: cycleResponse?.data, isLoading, error };
 };
 
@@ -18,7 +24,7 @@ export const createCycle = async ({ ...props }: CreateCycleProps) => {
     .then(() => {
       toast.success("Cycle créer avec succès");
     })
-    .catch((error) => {
+    .catch((error) => {  
       if (error.response && error.response.status === 422) {
         toast.error("Erreur de validation");
       } else {

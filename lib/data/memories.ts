@@ -8,6 +8,7 @@ import {
   ValidateMemoryProps,
 } from "@/types/memory";
 import { useMemory } from "@/services/queries";
+import { useRouter } from "next/navigation";
 
 export const getAllSupportedMemories = () => {
   // const {
@@ -17,7 +18,10 @@ export const getAllSupportedMemories = () => {
   //   mutate,
   // } = useSWR<GetAllMemoryResponse>("api/supportedMemory", fetcher);
   const { data: supportedMemoriesResponse, isLoading, error } = useMemory();
-
+  const router = useRouter();
+  if (error && error.response.status === 403) {
+    router.push("/home");
+  }
   return {
     supportedMemories: supportedMemoriesResponse?.data,
     supportedMemoriesValidated: supportedMemoriesResponse?.data.filter(
@@ -51,6 +55,10 @@ export const supportedMemoireDeposit = async ({
     })
     .catch((error) => {
       console.log(error);
+      const router = useRouter();
+      if (error && error.response.status === 403) {
+        router.push("/home");
+      }
       if (error.response && error.response.status === 422) {
         const errors = error.response.data.errors;
         console.log(errors);
@@ -58,11 +66,6 @@ export const supportedMemoireDeposit = async ({
         toast.error(
           "Un ou plusieurs champs du formulaire sont invalide. Veillez corriger les éventuelles erreurs"
         );
-        // for (const [field, messages] of Object.entries(errors)) {
-        //   messages.forEach((message: string) => {
-        //     toast.error(`${message}`);
-        //   });
-        // }
       } else {
         toast.error("Une erreur est survenue");
       }
@@ -170,12 +173,16 @@ export const printFillingReports = async ({
   await csrf();
 
   await axios
-    .post(`/api/print-reports?_method=PATCH`, { ids: memories }, {
-      responseType: 'blob',
-    })
+    .post(
+      `/api/print-reports?_method=PATCH`,
+      { ids: memories },
+      {
+        responseType: "blob",
+      }
+    )
     .then((response) => {
       console.log(response);
-      
+
       const url = window.URL.createObjectURL(new Blob([response.data]));
       const link = document.createElement("a");
       link.href = url;
@@ -208,32 +215,53 @@ export const deleteMemories = async ({ memories }: { memories: number[] }) => {
     });
 };
 
-export const validateMemories = async ({ memories }: {memories: number[]}) => {
+export const validateMemories = async ({
+  memories,
+}: {
+  memories: number[];
+}) => {
   await csrf();
 
   await axios
-    .post(`/api/validate-memories?_method=PATCH`, {ids: memories})
+    .post(`/api/validate-memories?_method=PATCH`, { ids: memories })
     .then(() => {
-      toast.success("Mémoires validés avec succès 👍🏾.")
+      toast.success("Mémoires validés avec succès 👍🏾.");
     })
     .catch((error) => {
-      console.log(error)
+      console.log(error);
 
-      toast.error("Une erreur s'est produite 🧐")
-    })
-}
+      toast.error("Une erreur s'est produite 🧐");
+    });
+};
 
-export const downloadMemories = async ({ memory }: {memory: number}) => {
+export const downloadMemories = async ({ memory }: { memory: Memoire }) => {
   await csrf();
 
   await axios
-    .patch(`/api/download-memory/${memory}`)
-    .then(() => {
-      toast.success("Mémoire téléchargé avec succès 👍🏾.")
+    .patch(`/api/download-memory/${memory.id}`, null, {
+      responseType: "blob", // Indique à Axios de traiter la réponse comme un blob
+    })
+    .then((response) => {
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute(
+        "download",
+        `${memory.theme} - ${memory.first_author_lastname}${
+          memory.second_author_lastname
+            ? " & " + memory.second_author_lastname
+            : ""
+        }.pdf`
+      );
+      document.body.appendChild(link);
+      link.click();
+      link.parentNode?.removeChild(link);
+
+      toast.success("Mémoire téléchargé avec succès 👍🏾.");
     })
     .catch((error) => {
-      console.log(error)
+      console.log(error);
 
-      toast.error("Une erreur s'est produite 🧐")
-    })
-}
+      toast.error("Une erreur s'est produite 🧐");
+    });
+};

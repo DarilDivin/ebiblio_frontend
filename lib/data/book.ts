@@ -5,10 +5,14 @@ import axios from "../axios";
 import { toast } from "sonner";
 import { string } from "zod";
 import { Dispatch, SetStateAction } from "react";
+import { useRouter } from "next/navigation";
 
 export const getAllBooks = () => {
   const { data: bookResponse, isLoading, error } = useBook();
-
+  const router = useRouter();
+  if (error && error.response.status === 403) {
+    router.push('/home')
+  }
   return {
     books: bookResponse?.data,
     booksMostViewed: bookResponse?.data.slice(0, 12),
@@ -22,7 +26,10 @@ export const getAllBooks = () => {
 
 export const getSpecificBook = (id: string) => {
   const {data: bookResponse, isLoading, error } = useSpecificBook(id);
-
+  const router = useRouter();
+  if (error && error.response.status === 403) {
+    router.push('/home')
+  }
   return { book: bookResponse?.data, isLoading, error }
 }
 
@@ -135,8 +142,11 @@ export const deleteComment = async ({article, comment}: {article: number, commen
 
 export const getAllLoan = () => {
   const { data: loanResponse, isLoading, error } = useLoan();
-  console.log(error);
-  
+  // console.log(error);
+  const router = useRouter();
+  if (error && error.response.status === 403) {
+    router.push('/home')
+  }
   return {
     loans: loanResponse?.data,
     isLoading,
@@ -145,8 +155,11 @@ export const getAllLoan = () => {
 }
 
 export const getUserLoan = (id: number) => {
-  const { data: userLoanResponse } = useLoan();
-
+  const { data: userLoanResponse, error } = useLoan();
+  const router = useRouter();
+  if (error && error.response.status === 403) {
+    router.push('/home')
+  }
   return {
     userLoans: userLoanResponse?.data.filter((loan) => loan.user.id === id),
   }

@@ -17,14 +17,14 @@ export default function AuthLayout({
                 src="/LogoEneam.png"
                 className="size-16"
                 alt="EneamLogo"
-                width={50}
-                height={50}
+                width={500}
+                height={500}
               />
               <div className="text-4xl">
                 <span className="text-primary font-bold text-5xl font-alexana">
                   E
                 </span>
-                <span>Biblio</span>
+                <span className="text-foreground">Biblio</span>
               </div>
             </div>
           </div>

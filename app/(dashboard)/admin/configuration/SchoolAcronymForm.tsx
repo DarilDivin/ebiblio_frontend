@@ -30,7 +30,7 @@ import { useLastConfig } from "@/services/queries";
 const FormSchema = z.object({
   school_acronym: z
     .string()
-    .min(1, { message: "Entrez un nombre avec au moins 1 caractère" }),
+    .min(1, { message: "Entrez un mot avec au moins 1 caractère" }),
 });
 
 const SchoolAcronymForm = ({name}: {name: string}) => {
@@ -79,7 +79,7 @@ const SchoolAcronymForm = ({name}: {name: string}) => {
                 name="school_acronym"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Montant</FormLabel>
+                    <FormLabel>Acronyme</FormLabel>
                     <FormControl>
                       <Input
                         className="outline-none focus-visible:ring-ring w-full"
@@ -89,7 +89,7 @@ const SchoolAcronymForm = ({name}: {name: string}) => {
                       />
                     </FormControl>
                     <FormDescription>
-                      Ceci est le nom de l'établissement
+                      Ceci est l'acronyme de l'établissement
                     </FormDescription>
                     <FormMessage />
                   </FormItem>

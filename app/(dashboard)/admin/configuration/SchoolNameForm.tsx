@@ -30,7 +30,7 @@ import { useLastConfig } from "@/services/queries";
 const FormSchema = z.object({
   school_name: z
     .string()
-    .min(1, { message: "Entrez un nombre avec au moins 1 caractère" }),
+    .min(1, { message: "Entrez un mot avec au moins 1 caractère" }),
 });
 
 const SchoolNameForm = ({name}: {name: string}) => {
@@ -79,12 +79,12 @@ const SchoolNameForm = ({name}: {name: string}) => {
                 name="school_name"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Montant</FormLabel>
+                    <FormLabel>Nom de l'université</FormLabel>
                     <FormControl>
                       <Input
                         className="outline-none focus-visible:ring-ring w-full"
                         type="text"
-                        placeholder="Eneam"
+                        placeholder="Nom"
                         {...field}
                       />
                     </FormControl>

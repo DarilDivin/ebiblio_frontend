@@ -109,7 +109,7 @@ const ImportStudentDialog = () => {
                       </FormItem>
                     )}
                   />
-                  <Button type="submit">Submit</Button>
+                  <Button type="submit">Importer</Button>
                 </form>
               </Form>
             </DialogContent>

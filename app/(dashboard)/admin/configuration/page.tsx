@@ -52,6 +52,8 @@ import { SectorDataTable } from "./(sector&specialities)/SectorDatatable";
 import { roleColumns } from "./(role)/columns";
 import { RoleDataTable } from "./(role)/RoleDatatable";
 import { getAllRole } from "@/lib/data/role";
+import ManagerFullNameForm from "./ManagerFullNameForm";
+import ManagerSignatureForm from "./ManagerSignatureForm";
 
 const ConfigurationPage = () => {
   const cycles = getAllCycle();
@@ -75,7 +77,7 @@ const ConfigurationPage = () => {
                 <Table>
                   <TableHeader>
                     <TableRow>
-                      <TableHead className="w-[100px]">Element</TableHead>
+                      <TableHead>Element</TableHead>
                       <TableHead>Valeur</TableHead>
                       <TableHead>Action</TableHead>
                     </TableRow>
@@ -85,7 +87,7 @@ const ConfigurationPage = () => {
                   ) : lastConfig.isLoading || !lastConfig.lastConfig ? (
                     <TableBody>
                       <TableRow>
-                        <TableCell className="font-bold text-nowrap w-full">
+                        <TableCell className="font-bold">
                           <Skeleton className="h-6 w-[250px]" />
                         </TableCell>
                         <TableCell>
@@ -96,7 +98,7 @@ const ConfigurationPage = () => {
                         </TableCell>
                       </TableRow>
                       <TableRow>
-                        <TableCell className="font-bold text-nowrap w-full">
+                        <TableCell className="font-bold">
                           <Skeleton className="h-6 w-[250px]" />
                         </TableCell>
                         <TableCell>
@@ -107,7 +109,7 @@ const ConfigurationPage = () => {
                         </TableCell>
                       </TableRow>
                       <TableRow>
-                        <TableCell className="font-bold text-nowrap w-full">
+                        <TableCell className="font-bold">
                           <Skeleton className="h-6 w-[250px]" />
                         </TableCell>
                         <TableCell>
@@ -121,7 +123,7 @@ const ConfigurationPage = () => {
                   ) : (
                     <TableBody className="text-xs">
                       <TableRow>
-                        <TableCell className="font-bold text-nowrap w-full">
+                        <TableCell className="font-bold">
                           Nom de L'université
                         </TableCell>
                         <TableCell>
@@ -134,7 +136,7 @@ const ConfigurationPage = () => {
                         </TableCell>
                       </TableRow>
                       <TableRow>
-                        <TableCell className="font-bold text-nowrap w-full">
+                        <TableCell className="font-bold">
                           Acronym de l'Université
                         </TableCell>
                         <TableCell>
@@ -147,7 +149,7 @@ const ConfigurationPage = () => {
                         </TableCell>
                       </TableRow>
                       <TableRow>
-                        <TableCell className="font-bold text-nowrap w-full">
+                        <TableCell className="font-bold">
                           Ville de l'Université
                         </TableCell>
                         <TableCell>
@@ -160,7 +162,31 @@ const ConfigurationPage = () => {
                         </TableCell>
                       </TableRow>
                       <TableRow>
-                        <TableCell className="font-bold text-nowrap w-full">
+                        <TableCell className="font-bold">
+                          Nom du gestionnaire de la bibliothèque
+                        </TableCell>
+                        <TableCell>
+                          {lastConfig.lastConfig.archivist_full_name}
+                        </TableCell>
+                        <TableCell>
+                          <ManagerFullNameForm
+                            archivist_full_name={lastConfig.lastConfig.archivist_full_name}
+                          />
+                        </TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell className="font-bold">
+                          Signature du gestionnaire de la bibliothèque
+                        </TableCell>
+                        <TableCell>
+                          {/* {lastConfig.lastConfig.archivist_full_name} */}
+                        </TableCell>
+                        <TableCell>
+                          <ManagerSignatureForm/>
+                        </TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell className="font-bold">
                           Frais bibliothèque Eneamien
                         </TableCell>
                         <TableCell>
@@ -175,7 +201,7 @@ const ConfigurationPage = () => {
                         </TableCell>
                       </TableRow>
                       <TableRow>
-                        <TableCell className="font-bold text-nowrap w-full">
+                        <TableCell className="font-bold">
                           Frais bibliothèque Externes
                         </TableCell>
                         <TableCell>
@@ -190,7 +216,7 @@ const ConfigurationPage = () => {
                         </TableCell>
                       </TableRow>
                       <TableRow>
-                        <TableCell className="font-bold text-nowrap w-full">
+                        <TableCell className="font-bold">
                           Montant minimale de la dette étudiante
                         </TableCell>
                         <TableCell>
@@ -203,7 +229,7 @@ const ConfigurationPage = () => {
                         </TableCell>
                       </TableRow>
                       <TableRow>
-                        <TableCell className="font-bold text-nowrap w-full">
+                        <TableCell className="font-bold">
                           Montant minimale de la dette enseignante
                         </TableCell>
                         <TableCell>
@@ -216,7 +242,7 @@ const ConfigurationPage = () => {
                         </TableCell>
                       </TableRow>
                       <TableRow>
-                        <TableCell className="font-bold text-nowrap w-full">
+                        <TableCell className="font-bold">
                           Durée maximale du prêt pour les Etudiants
                         </TableCell>
                         <TableCell>
@@ -229,7 +255,7 @@ const ConfigurationPage = () => {
                         </TableCell>
                       </TableRow>
                       <TableRow>
-                        <TableCell className="font-bold text-nowrap w-full">
+                        <TableCell className="font-bold">
                           Durée maximale du prêt pour les enseignants
                         </TableCell>
                         <TableCell>
@@ -242,7 +268,7 @@ const ConfigurationPage = () => {
                         </TableCell>
                       </TableRow>
                       <TableRow>
-                        <TableCell className="font-bold text-nowrap w-full">
+                        <TableCell className="font-bold">
                           Nombre de renouvellement possible pour Etudiant
                         </TableCell>
                         <TableCell>
@@ -255,7 +281,7 @@ const ConfigurationPage = () => {
                         </TableCell>
                       </TableRow>
                       <TableRow>
-                        <TableCell className="font-bold text-nowrap w-full">
+                        <TableCell className="font-bold">
                           Nombre de renouvellement possible pour Enseignant
                         </TableCell>
                         <TableCell>
@@ -268,7 +294,7 @@ const ConfigurationPage = () => {
                         </TableCell>
                       </TableRow>
                       <TableRow>
-                        <TableCell className="font-bold text-nowrap w-full">
+                        <TableCell className="font-bold">
                           Nombre maximale de livre prêté par un Etudiant
                         </TableCell>
                         <TableCell>
@@ -281,7 +307,7 @@ const ConfigurationPage = () => {
                         </TableCell>
                       </TableRow>
                       <TableRow>
-                        <TableCell className="font-bold text-nowrap w-full">
+                        <TableCell className="font-bold">
                           Nombre maximale de livre prêté par un enseignant
                         </TableCell>
                         <TableCell>

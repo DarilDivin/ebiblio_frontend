@@ -72,11 +72,42 @@ export const updateSchoolCity = async ({school_city}: {school_city: string}) => 
         toast.error(
           "Un ou plusieurs champs du formulaire sont invalide. Veillez corriger les éventuelles erreurs"
         );
-        // for (const [field, messages] of Object.entries(errors)) {
-        //   messages.forEach((message: string) => {
-        //     toast.error(`${message}`);
-        //   });
-        // }
+      } else {
+        toast.error("Une erreur est survenue");
+      }
+    });
+};
+export const updateArchivistFullName = async ({archivist_full_name}: {archivist_full_name: string}) => {
+  await csrf();
+  await axios
+    .patch("/api/config/update/archivist-full-name", {archivist_full_name: archivist_full_name})
+    .then(() => toast.success("Nom du gestionnaire modifié aves succès👍🏾"))
+    .catch((error) => {
+      if (error.response && error.response.status === 422) {
+        const errors = error.response.data.errors;
+        toast.error(
+          "Un ou plusieurs champs du formulaire sont invalide. Veillez corriger les éventuelles erreurs"
+        );
+      } else {
+        toast.error("Une erreur est survenue");
+      }
+    });
+};
+export const updateArchivistSignature = async ({archivist_signature}: {archivist_signature: File}) => {
+  await csrf();
+  await axios
+    .patch("/api/config/update/archivist-signature", {archivist_signature: archivist_signature}, {
+      headers: {
+        "Content-Type": "multipart/form-data;  boundary=---011000010111000001101001",
+      },
+    })
+    .then(() => toast.success("Signature du gestionnaire modifié aves succès👍🏾"))
+    .catch((error) => {
+      if (error.response && error.response.status === 422) {
+        const errors = error.response.data.errors;
+        toast.error(
+          "Un ou plusieurs champs du formulaire sont invalide. Veillez corriger les éventuelles erreurs"
+        );
       } else {
         toast.error("Une erreur est survenue");
       }

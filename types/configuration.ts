@@ -8,6 +8,7 @@ export interface LastConfig {
   school_name: string
   school_acronym: string
   school_city: string
+  archivist_full_name: string,
   eneamien_subscribe_amount: number
   extern_subscribe_amount: number
   student_debt_amount: number

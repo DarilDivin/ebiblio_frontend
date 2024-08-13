@@ -35,7 +35,7 @@ export const useAuth = ({
       .get("api/auth-user")
       .then((res) => res.data)
       .catch((error) => {
-        console.log(error);
+        // console.log(error);
         if (error.response.status !== 409) throw error;
         router.push("/verify-email");
       })

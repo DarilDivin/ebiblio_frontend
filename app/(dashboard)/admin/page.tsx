@@ -2,7 +2,6 @@
 
 import { BookBarChart } from "@/components/BookBarChart";
 import {
-  MemoireLineChart,
   MemoireLineChartGradient,
 } from "@/components/MemoireLineChart";
 import {
@@ -23,7 +22,7 @@ const Dashboard = () => {
 
   if (error) return <div>Erreur</div>;
 
-  if (!statistics) return
+  if (isLoading || !statistics) return
   <div className="w-full flex gap-4 items-center">
     <Skeleton className="w-[450px] h-[275px]" />
     <Skeleton className="w-[380px] h-[275px]" />

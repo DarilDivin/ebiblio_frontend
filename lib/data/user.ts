@@ -3,6 +3,7 @@ import { csrf } from ".";
 import axios from "../axios";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { EditUserProps } from "@/types/user";
 
 export const getAllUsers = () => {
   const router = useRouter();
@@ -62,6 +63,30 @@ export const giveAccessToUser = async ({ user }: { user: number}) => {
 
       toast.error("Une erreur s'est produite 🧐")
     })
+}
+
+export const updateUser = async ({
+  setErrors,
+  user,
+  ...props
+}: EditUserProps) => {
+  await csrf();
+  setErrors({});
+
+  await axios
+    .put(`/api/user/${user}`, props)
+    .then(() => toast.success("Informations de l'utilisateur modifiées avec succès 👍🏾"))
+    .catch((error) => {
+      if (error.response.status === 422) {
+        setErrors(error.response.data.errors);
+        console.log(error.response.data.errors);
+
+        toast.error("Erreur de validation");
+      } else {
+        console.log(error);
+        toast.error("Une erreur inattendue est survenue 🧐");
+      }
+    });
 }
 
 

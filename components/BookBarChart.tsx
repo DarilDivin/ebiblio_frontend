@@ -1,43 +1,63 @@
 "use client";
 
-import { TrendingUp } from "lucide-react";
 import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
-
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import {
   ChartConfig,
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-const chartData = [
-  { month: "Janvier", livre: 186, ebook: 80 },
-  { month: "Février", livre: 305, ebook: 200 },
-  { month: "Mars", livre: 237, ebook: 120 },
-  { month: "Avril", livre: 73, ebook: 190 },
-  { month: "Mai", livre: 209, ebook: 130 },
-  { month: "Juin", livre: 214, ebook: 140 },
-];
+import { getAllStatistics } from "@/lib/data/statistics";
 
-const chartConfig = {
-  livre: {
-    label: "Physiques",
-    color: "hsl(var(--chart-1))",
-  },
-  ebook: {
-    label: "Ebook",
-    color: "hsl(var(--chart-2))",
-  },
-} satisfies ChartConfig;
+type GroupedData = {
+  month: string
+  ebooks_number: number
+  physical_books_number: number
+};
+
 
 export function BookBarChart() {
+  const { statistics, isLoading, error } = getAllStatistics();
+
+  if (error) return <div>Erreur</div>;
+
+  if (isLoading || !statistics) return <div>Loading</div>
+
+  const data = statistics.monthlyStats
+  const groupedData: GroupedData[]  = [];
+
+  Object.values(data).forEach((item) => {
+    // const { month, valid_memories_number, invalid_memories_number } = item;
+    groupedData.push(item)
+  });
+  
+  // console.log(groupedData);
+  const chartData = groupedData.map((month) => ({
+    month: month.month,
+    ebook: month.ebooks_number,
+    livre: month.physical_books_number,
+  }));
+
+  // const chartData = [
+  //   { month: "Janvier", livre: 186, ebook: 80 },
+  //   { month: "Février", livre: 305, ebook: 200 },
+  //   { month: "Mars", livre: 237, ebook: 120 },
+  //   { month: "Avril", livre: 73, ebook: 190 },
+  //   { month: "Mai", livre: 209, ebook: 130 },
+  //   { month: "Juin", livre: 214, ebook: 140 },
+  // ];
+  
+  const chartConfig = {
+    livre: {
+      label: "Physiques",
+      color: "hsl(var(--chart-1))",
+    },
+    ebook: {
+      label: "Ebook",
+      color: "hsl(var(--chart-2))",
+    },
+  } satisfies ChartConfig;
+
   return (
     <div className="w-full h-[155px]">
       <ChartContainer className="h-full w-full" config={chartConfig}>

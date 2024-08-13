@@ -1,3 +1,5 @@
+import { Dispatch, SetStateAction } from "react";
+
 export interface GetAllUserResponse {
   data: User[]
   links: {
@@ -46,8 +48,21 @@ export interface User {
   updated_at?: string
   created_by?: any
   updated_by?: any
-  roles?: Role[]
+  roles: Role[]
   permissions?: Permission[]
+}
+
+export interface EditUserErrorType {
+  email?: string[],
+  roles?: string[],
+}
+
+export interface EditUserProps {
+  email: string,
+  user: number,
+  roles: number[],
+
+  setErrors: Dispatch<SetStateAction<EditUserErrorType>>;
 }
 
 interface Role {

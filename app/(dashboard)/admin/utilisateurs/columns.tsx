@@ -33,6 +33,7 @@ import { Badge } from "@/components/ui/badge";
 import { deleteUser, giveAccessToUser } from "@/lib/data/user";
 import { Switch } from "@/components/ui/switch";
 import { useState } from "react";
+import UserForm from "./userForm";
 
 export const columns: ColumnDef<User>[] = [
   {
@@ -200,6 +201,16 @@ export const columns: ColumnDef<User>[] = [
             <span className="sr-only">Copier le matricule</span>
             <Copy className="h-4 w-4" />
           </Button>
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger>
+                <UserForm user={user}/>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Modifier l' utilisateur</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger>

@@ -1,6 +1,7 @@
 "use client";
 
 import {
+  Archive,
   Bolt,
   Book,
   ChevronRight,
@@ -11,6 +12,7 @@ import {
   LayoutDashboard,
   List,
   ShieldQuestion,
+  SquareArrowUpRight,
   UserRound,
 } from "lucide-react";
 import Link from "next/link";
@@ -288,6 +290,27 @@ const Sidebar = ({
               </p>
             </div>
             <ChevronRight size={15} />
+          </Link>
+          <Link
+            href="home"
+            target="_blank"
+            className={`border-none flex gap-4 justify-between items-center p-2 rounded-md ${pathname === "" ? 'bg-primary/70 hover:bg-primary/90' : 'hover:bg-primary/30'} cursor-pointer`}
+            onClick={() => setTitle('Utilisateurs')}
+          >
+            <div className="flex gap-2 items-center">
+              <Archive size={17} />
+              <p
+                className={`${
+                  openSidebar
+                    ? "text-sm font-medium w-[95px] text-nowrap text-ellipsis overflow-hidden"
+                    : "hidden"
+                }`}
+                title="Utilisateurs"
+              >
+                Archives
+              </p>
+            </div>
+            <SquareArrowUpRight size={15} />
           </Link>
           {/* <Link
             href="/home"

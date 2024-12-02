@@ -21,30 +21,9 @@ const MemoireConsultDialog = ({ ...memory_data }) => {
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Soutenance {memory_data.memory_data.memory_year}</DialogTitle>
-          <DialogDescription className="">
-            <div className="w-full p-2 font-bold text-xl">
-              {memory_data.memory_data.theme}
-            </div>
-            <div className="grid grid-cols-[200px_1fr]">
-              <div className="w-full h-[250px] bg-slate-400 rounded-md overflow-hidden">
-                {/* <Image src={'http://localhost:8000/'+ memory_data.memory_data.cover_page_path} width={100} height={250} alt="cover" /> */}
-              </div>
-              <div className="p-2 flex flex-col gap-1">
-                <p>
-                  <span>Auteurs: </span>
-                  <span>{memory_data.memory_data.first_author_name} {'& ' + memory_data.memory_data.second_author_name}</span>
-                </p>
-                <p>
-                  <span>Maitre de mémoire: </span>
-                  <span>{memory_data.memory_data.memory_master}</span>
-                </p>
-                <p>
-                  <span>Président du jury: </span>
-                  <span>{memory_data.memory_data.jury_president}</span>
-                </p>
-              </div>
-            </div>
+          {/* <DialogTitle>Soutenance {memory_data.memory_data.memory_year}</DialogTitle> */}
+          <DialogDescription className="text-center">
+            Aucun fichier n'est disponible pour ce mémoire.
           </DialogDescription>
         </DialogHeader>
       </DialogContent>

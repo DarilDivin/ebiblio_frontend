@@ -27,6 +27,7 @@ import { Badge } from "@/components/ui/badge";
 import { toast } from "sonner";
 import { deleteMemory, printFillingReport } from "@/lib/data/memories";
 import { useMemory } from "@/services/queries";
+import AdminViewPdf from "@/components/AdminViewPdf";
 
 export const columns: ColumnDef<Memoire>[] = [
   {
@@ -62,7 +63,7 @@ export const columns: ColumnDef<Memoire>[] = [
       const memory = row.original;
 
       return (
-        <Badge variant={"secondary"} className="line-clamp-2">
+        <Badge variant={"secondary"} className="line-clamp-2 w-fit">
           {memory.first_author_firstname + " " + memory.first_author_lastname}{" "}
           {memory.second_author_firstname
             ? " & " +
@@ -101,7 +102,7 @@ export const columns: ColumnDef<Memoire>[] = [
     cell: ({ row }) => {
       const memory = row.original;
 
-      return <Badge className="line-clamp-1" title={memory.sector.name}>{memory.sector.name}</Badge>;
+      return <Badge className="line-clamp-1 w-fit max-w-48" title={memory.sector.name}>{memory.sector.name}</Badge>;
     },
   },
   {
@@ -125,8 +126,11 @@ export const columns: ColumnDef<Memoire>[] = [
         <div className="flex gap-2">
           <TooltipProvider>
             <Tooltip>
-              <TooltipTrigger asChild>
-                <MemoireConsultDialog memory_data={memory} />
+              <TooltipTrigger>
+                { memory.file_path ? 
+                  <AdminViewPdf fileUrl={memory.file_path} />
+                : <MemoireConsultDialog memory_data={memory} />
+                }
               </TooltipTrigger>
               <TooltipContent>
                 <p>Voir plus d'informations</p>
@@ -158,7 +162,7 @@ export const columns: ColumnDef<Memoire>[] = [
               <TooltipTrigger>
                 <Dialog>
                   <DialogTrigger className="text-destructive/70 hover:bg-destructive/20 hover:text-destructive h-8 w-8 flex justify-center items-center p-1 rounded-md">
-                    <span className="sr-only">Consulter le mémoire</span>
+                    <span className="sr-only">Supprimer le mémoire</span>
                     <Trash2 className="text-destructive h-4 w-4" />
                   </DialogTrigger>
                   <DialogContent>

@@ -21,7 +21,6 @@ import {
 } from "@/components/ui/dialog";
 
 import { ArrowUpDown, Copy, Trash2 } from "lucide-react";
-import MemoireConsultDialog from "@/components/MemoireConsultDialog";
 import { Badge } from "@/components/ui/badge";
 import { toast } from "sonner";
 import { deleteMemory } from "@/lib/data/memories";
@@ -29,6 +28,7 @@ import { useBook, useMemory } from "@/services/queries";
 import { Book } from "@/types/book";
 import { deleteBook } from "@/lib/data/book";
 import BookForm from "@/components/BookForm";
+import BookConsultDialog from "@/components/BookConsultDialog";
 
 export const columns: ColumnDef<Book>[] = [
   {
@@ -63,11 +63,7 @@ export const columns: ColumnDef<Book>[] = [
     cell: ({ row }) => {
       const book = row.original;
 
-      return (
-        <Badge variant={"secondary"}>
-          {book.author}
-        </Badge>
-      );
+      return <Badge variant={"secondary"}>{book.author}</Badge>;
     },
   },
   {
@@ -88,45 +84,19 @@ export const columns: ColumnDef<Book>[] = [
     cell: ({ row }) => {
       const book = row.original;
 
-      const keywordsString = book.keywords?.map(keywordObj => keywordObj.keyword).join(', ');
+      const keywordsString = book.keywords
+        ?.map((keywordObj) => keywordObj.keyword)
+        .join(", ");
 
-      return (
-        <Badge>
+      return keywordsString?.length > 0 ? (
+        <Badge className=" line-clamp-1 w-fit max-w-48">
           {keywordsString}
         </Badge>
+      ) : (
+        <p>...</p>
       );
     },
   },
-  // {
-  //   accessorKey: "memory_master_name",
-  //   header: "Maitre de mémoire ",
-  // },
-  // {
-  //   accessorKey: "jury_president_name",
-  //   header: "Président du jury ",
-  // },
-  // {
-  //   id: "sector",
-  //   accessorKey: "sector",
-  //   header: ({ column }) => {
-  //     console.log(column);
-
-  //     return (
-  //       <Button
-  //         variant="ghost"
-  //         onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-  //       >
-  //         Filière/Spécialité
-  //         <ArrowUpDown className="ml-2 h-4 w-4" />
-  //       </Button>
-  //     );
-  //   },
-  //   cell: ({ row }) => {
-  //     const memory = row.original;
-
-  //     return <Badge>{memory.sector.name}</Badge>;
-  //   },
-  // },
   {
     id: "actions",
     header: "Actions",
@@ -137,15 +107,15 @@ export const columns: ColumnDef<Book>[] = [
 
       const handleDeleteBook = async (book: number) => {
         await deleteBook({ article: book });
-        mutate()
-      }
+        mutate();
+      };
 
       return (
         <div className="flex gap-2">
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
-                <MemoireConsultDialog memory_data={book} />
+                <BookConsultDialog book_data={book} />
               </TooltipTrigger>
               <TooltipContent>
                 <p>Voir plus d'informations</p>
@@ -175,8 +145,8 @@ export const columns: ColumnDef<Book>[] = [
           {/* <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild> */}
-                  <BookForm book={book} />
-              {/* </TooltipTrigger>
+          <BookForm book={book} />
+          {/* </TooltipTrigger>
               <TooltipContent>
                 <p>Modifier le mémoire</p>
               </TooltipContent>
@@ -206,7 +176,10 @@ export const columns: ColumnDef<Book>[] = [
                           Annuler
                         </Button>
                       </DialogClose>
-                      <Button variant={'destructive'} onClick={() => handleDeleteBook(book.id)}>
+                      <Button
+                        variant={"destructive"}
+                        onClick={() => handleDeleteBook(book.id)}
+                      >
                         Supprimer
                       </Button>
                     </DialogFooter>

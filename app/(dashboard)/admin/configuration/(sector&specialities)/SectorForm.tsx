@@ -97,7 +97,7 @@ const SectorForm = ({ sector }: { sector?: Sector }) => {
                   name="acronym"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className=" text-primary-foreground">Acronyme</FormLabel>
+                      <FormLabel className="text-primary-foreground">Acronyme</FormLabel>
                       <FormControl>
                         <Input 
                           className="text-primary-foreground border-border focus-visible:ring-ring"

@@ -58,7 +58,7 @@ const Home = () => {
                 href={"/admin"}
               >
                 {" "}
-                Dashboard <ChevronRight />
+                SDAE <ChevronRight />
               </Link>
             )}
           </div>

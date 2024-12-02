@@ -46,7 +46,7 @@ export const cycleColumns: ColumnDef<Cycle>[] = [
     header: "Actions",
     cell: ({ row }) => {
       const cycle = row.original;
-
+      
       const { mutate } = useCycle();
 
       return (

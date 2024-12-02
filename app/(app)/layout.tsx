@@ -13,7 +13,8 @@ const AppLayout = ({
           {children}
         </div>
         <div className='flex h-16 justify-center items-center bg-primary/10 textf-primary-foreground/70 font-semibold text-sm'>
-          <p>© 2024 - Divin & Euvince. All Right Reserved</p>
+          {/* <p>© 2024 - Divin & Euvince. All Right Reserved</p> */}
+          <p>© 2024 - Ecole Nationale d'Economie Appliquée et de Management (ENEAM). Tous droits réservés</p>
         </div>
       </div>
     </>

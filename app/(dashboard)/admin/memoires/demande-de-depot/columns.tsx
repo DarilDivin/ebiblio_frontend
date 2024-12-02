@@ -18,6 +18,9 @@ import { toast } from "sonner";
 import { Memoire } from "@/types/memory";
 import { useMemory } from "@/services/queries";
 import { Badge } from "@/components/ui/badge";
+import ValidMemoryDialog from "@/components/ValidMemoryDialog";
+import ViewPdf from "@/components/ViewPdf";
+import AdminViewPdf from "@/components/AdminViewPdf";
 
 export const columns: ColumnDef<Memoire>[] = [
   {
@@ -53,7 +56,7 @@ export const columns: ColumnDef<Memoire>[] = [
       const memory = row.original;
 
       return (
-        <Badge variant={"secondary"} className="line-clamp-2">
+        <Badge variant={"secondary"} className="line-clamp-2 max-w-fit">
           {memory.first_author_firstname + " " + memory.first_author_lastname}{" "}
           {memory.first_author_firstname
             ? " & " +
@@ -79,7 +82,7 @@ export const columns: ColumnDef<Memoire>[] = [
     cell: ({ row }) => {
       const memory = row.original;
 
-      return <Badge className=" line-clamp-1" title={memory.sector.name}>{memory.sector.name}</Badge>;
+      return <Badge className=" line-clamp-1 w-fit max-w-48" title={memory.sector.name}>{memory.sector.name}</Badge>;
     },
   },
   {
@@ -87,23 +90,18 @@ export const columns: ColumnDef<Memoire>[] = [
     cell: ({ row }) => {
       const memory = row.original;
 
-      const { mutate } = useMemory();
-
-      const handleValidatedMemory = async (supportedMemory: number) => {
-        console.log(supportedMemory);
-        await validateMemory({ supportedMemory });
-        mutate();
-      };
-
       return (
         <div className="flex gap-2">
           <TooltipProvider>
             <Tooltip>
-              <TooltipTrigger asChild>
-                <MemoireConsultDialog memory_data={memory} />
+              <TooltipTrigger>
+                { memory.file_path ? 
+                  <AdminViewPdf fileUrl={memory.file_path} />
+                : <MemoireConsultDialog memory_data={memory} />
+                }
               </TooltipTrigger>
               <TooltipContent>
-                <p>Voir plus d'informations</p>
+                <p>Consulter</p>
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>
@@ -120,15 +118,7 @@ export const columns: ColumnDef<Memoire>[] = [
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger>
-                <Button
-                  variant="ghost"
-                  className="h-8 w-8 p-0 text-primary/70 hover:bg-primary/20 hover:text-primary rounded-md"
-                  memoryid={memory.id}
-                  onClick={() => handleValidatedMemory(memory.id)}
-                >
-                  <span className="sr-only">Valider le mémoire</span>
-                  <FileCheck2 className="text-primary h-4 w-4" />
-                </Button>
+                <ValidMemoryDialog memory={memory}/>
               </TooltipTrigger>
               <TooltipContent>
                 <p>Valider le mémoire</p>

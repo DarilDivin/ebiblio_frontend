@@ -3,7 +3,6 @@
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -13,7 +12,6 @@ import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -38,15 +36,14 @@ const FormSchema = z.object({
 });
 
 const CycleForm = ({ cycle }: { cycle?: Cycle }) => {
-  // console.log(cycle);
 
   const { mutate } = useCycle();
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      name: cycle ? cycle.name : "",
-      code: cycle ? cycle.code : "",
+      name: cycle ? cycle.name : '',
+      code: cycle ? cycle.code : '',
     },
   });
 
@@ -74,7 +71,6 @@ const CycleForm = ({ cycle }: { cycle?: Cycle }) => {
   };
 
   function onSubmit(values: z.infer<typeof FormSchema>, event: any) {
-    console.log(values);
     cycle
       ? submitEditCycleForm(event, cycle.id, values.name, values.code)
       : submitCreateCycleForm(event, values.name, values.code);
@@ -84,7 +80,6 @@ const CycleForm = ({ cycle }: { cycle?: Cycle }) => {
     <Dialog>
       {cycle ? (
         <DialogTrigger
-          onClick={() => console.log(cycle)}
           className="h-8 w-8 p-0 flex justify-center items-center text-orange-400/70 hover:bg-orange-400/20 hover:text-orange-400 rounded-md"
         >
           <span className="sr-only">Modifier un cycle</span>
@@ -95,12 +90,9 @@ const CycleForm = ({ cycle }: { cycle?: Cycle }) => {
           Nouveau <PlusCircle className="h-4 w-4" />
         </DialogTrigger>
       )}
-      {/* <DialogTrigger className="inline-flex gap-2 items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-8 p-1 bg-primary/80 hover:bg-primary hover:text-white text-white">
-        Nouveau <PlusCircle className="h-4 w-4" />
-      </DialogTrigger> */}
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Créer un cycle</DialogTitle>
+          <DialogTitle>{cycle ? "Modifier le cycle" : "Créer un cycle"}</DialogTitle>
         </DialogHeader>
         <div className="grid w-full items-center gap-1.5">
           <Form {...form}>
@@ -110,12 +102,12 @@ const CycleForm = ({ cycle }: { cycle?: Cycle }) => {
                 name="name"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Cycle</FormLabel>
+                    <FormLabel className="text-primary-foreground">Cycle</FormLabel>
                     <FormControl>
                       <Input
                         className="outline-none focus-visible:ring-ring w-full"
                         type="text"
-                        placeholder="500"
+                        placeholder="Libellé du cycle"
                         {...field}
                       />
                     </FormControl>
@@ -134,7 +126,7 @@ const CycleForm = ({ cycle }: { cycle?: Cycle }) => {
                       <Input
                         className="outline-none focus-visible:ring-ring w-full"
                         type="text"
-                        placeholder="500"
+                        placeholder="Code du cycle"
                         {...field}
                       />
                     </FormControl>
